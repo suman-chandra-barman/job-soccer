@@ -3,15 +3,15 @@
 import { Button } from "@/components/ui/button";
 import { Check, ArrowRight } from "lucide-react";
 
-interface RegistrationSuccessProps {
+interface SuccessMessageProps {
   userName?: string;
   onNext?: () => void;
 }
 
-export default function RegistrationSuccess({
+export default function SuccessMessage({
   userName = "User",
   onNext,
-}: RegistrationSuccessProps) {
+}: SuccessMessageProps) {
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-2 md:px-5 lg:px-8 ">
       <div className="max-w-xl w-full text-center">

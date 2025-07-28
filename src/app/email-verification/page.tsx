@@ -6,11 +6,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function EmailVerificaionPage() {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [resendTimer, setResendTimer] = useState(56);
+
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+  const router = useRouter();
 
   useEffect(() => {
     if (resendTimer > 0) {
@@ -41,6 +44,10 @@ export default function EmailVerificaionPage() {
   const handleResendCode = () => {
     setResendTimer(56);
   };
+
+  const handleVerity = () => {
+      router.push("/success-message")
+  }
 
   return (
     <div className="min-h-screen flex">
@@ -103,6 +110,7 @@ export default function EmailVerificaionPage() {
             <Button
               className="w-full bg-primary text-[#252525] py-3 rounded-lg text-base font-medium mb-4 cursor-pointer"
               disabled={otp.some((digit) => !digit)}
+              onClick={handleVerity}
             >
               Verify
             </Button>
