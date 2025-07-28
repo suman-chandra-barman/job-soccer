@@ -51,7 +51,7 @@ export default function SignUpPage() {
       });
       // Reset form after successful submission
       form.reset();
-      // router.push("/emailVerification")
+      router.push("/email-verification")
     } catch (error) {
       toast.error("Something went wrong!", {
         description: "Please try again later.",
@@ -141,14 +141,14 @@ export default function SignUpPage() {
                 />
               </div>
 
-              {/* Email or Phone */}
+              {/* Email */}
               <FormField
                 control={form.control}
                 name="email"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-sm font-medium text-gray-700">
-                      E-mail or Phone
+                      E-mail
                     </FormLabel>
                     <FormControl>
                       <Input
