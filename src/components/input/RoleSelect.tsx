@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import { useState, useEffect, useRef } from "react"
-import { Button } from "@/components/ui/button"
-import { Label } from "@/components/ui/label"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { ChevronDown } from "lucide-react"
+import { useState, useEffect, useRef } from "react";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { ChevronDown } from "lucide-react";
 
 const candidateRoles = [
   "Professional Player",
@@ -13,42 +13,51 @@ const candidateRoles = [
   "College Player",
   "Staff on The field",
   "Office Staff",
-]
+];
 
-const employerRoles = ["Club ( professional & amateur)", "Academy", "High School", "College [University", "Agent"]
+const employerRoles = [
+  "Club ( professional & amateur)",
+  "Academy",
+  "High School",
+  "College [University",
+  "Agent",
+];
 
 interface RoleSelectProps {
-  value?: string
-  onValueChange?: (value: string) => void
+  value?: string;
+  onValueChange?: (value: string) => void;
 }
 
 export default function RoleSelect({ value, onValueChange }: RoleSelectProps) {
-  const [open, setOpen] = useState(false)
-  const [selectedRole, setSelectedRole] = useState(value || "")
-  const dropdownRef = useRef<HTMLDivElement>(null)
+  const [open, setOpen] = useState(false);
+  const [selectedRole, setSelectedRole] = useState(value || "");
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    setSelectedRole(value || "")
-  }, [value])
+    setSelectedRole(value || "");
+  }, [value]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setOpen(false)
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setOpen(false);
       }
-    }
+    };
 
-    document.addEventListener("mousedown", handleClickOutside)
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside)
-    }
-  }, [])
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const handleRoleSelect = (role: string) => {
-    setSelectedRole(role)
-    onValueChange?.(role)
-    setOpen(false)
-  }
+    setSelectedRole(role);
+    onValueChange?.(role);
+    setOpen(false);
+  };
 
   return (
     <div className="relative" ref={dropdownRef}>
@@ -59,11 +68,15 @@ export default function RoleSelect({ value, onValueChange }: RoleSelectProps) {
         onClick={() => setOpen(!open)}
       >
         {selectedRole || "Select your role"}
-        <ChevronDown className={`h-4 w-4 opacity-50 transition-transform ${open ? "rotate-180" : ""}`} />
+        <ChevronDown
+          className={`h-4 w-4 opacity-50 transition-transform ${
+            open ? "rotate-180" : ""
+          }`}
+        />
       </Button>
 
       {open && (
-        <div className="absolute top-full right-0 z-50 mt-1 bg-white border-2 rounded-md shadow-lg max-h-80 overflow-y-auto">
+        <div className="absolute top-full left-0 right-0 z-50 mt-1 bg-white border-2 rounded-md shadow-lg max-h-80 overflow-y-auto">
           <div className="p-4 space-y-6">
             {/* Candidates Section */}
             <div>
@@ -71,8 +84,15 @@ export default function RoleSelect({ value, onValueChange }: RoleSelectProps) {
               <RadioGroup value={selectedRole} onValueChange={handleRoleSelect}>
                 {candidateRoles.map((role) => (
                   <div key={role} className="flex items-center space-x-2">
-                    <RadioGroupItem value={role} id={role} className="border-gray-300 text-blue-600" />
-                    <Label htmlFor={role} className="text-gray-700 cursor-pointer font-normal">
+                    <RadioGroupItem
+                      value={role}
+                      id={role}
+                      className="border-gray-300 text-blue-600"
+                    />
+                    <Label
+                      htmlFor={role}
+                      className="text-gray-700 cursor-pointer font-normal"
+                    >
                       {role}
                     </Label>
                   </div>
@@ -86,8 +106,15 @@ export default function RoleSelect({ value, onValueChange }: RoleSelectProps) {
               <RadioGroup value={selectedRole} onValueChange={handleRoleSelect}>
                 {employerRoles.map((role) => (
                   <div key={role} className="flex items-center space-x-2">
-                    <RadioGroupItem value={role} id={role} className="border-gray-300 text-blue-600" />
-                    <Label htmlFor={role} className="text-gray-700 cursor-pointer font-normal">
+                    <RadioGroupItem
+                      value={role}
+                      id={role}
+                      className="border-gray-300 text-blue-600"
+                    />
+                    <Label
+                      htmlFor={role}
+                      className="text-gray-700 cursor-pointer font-normal"
+                    >
                       {role}
                     </Label>
                   </div>
@@ -98,5 +125,5 @@ export default function RoleSelect({ value, onValueChange }: RoleSelectProps) {
         </div>
       )}
     </div>
-  )
+  );
 }

@@ -51,7 +51,7 @@ export default function SignUpPage() {
       });
       // Reset form after successful submission
       form.reset();
-      router.push("/email-verification")
+      router.push("/email-verification");
     } catch (error) {
       toast.error("Something went wrong!", {
         description: "Please try again later.",
@@ -59,12 +59,6 @@ export default function SignUpPage() {
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const handleSocialLogin = (provider: string) => {
-    toast.info(`${provider} login clicked`, {
-      description: "Social login functionality would be implemented here.",
-    });
   };
 
   return (
@@ -249,37 +243,10 @@ export default function SignUpPage() {
                 disabled={isLoading}
                 className="w-full cursor-pointer bg-primary text-[#252525] hover:bg-amber-300 py-3 rounded-md"
               >
-                {isLoading ? "Creating Account..." : "Sign up"}
+                {isLoading ? "Creating Account..." : "Sign Up"}
               </Button>
             </form>
           </Form>
-
-          {/* Divider */}
-          <div className="text-center text-gray-500 text-sm my-4">
-            Or Sign Up with
-          </div>
-
-          {/* Social Login Buttons */}
-          <div className="grid grid-cols-2 gap-4">
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => handleSocialLogin("Google")}
-              className="flex items-center justify-center space-x-2 py-3 bg-transparent cursor-pointer"
-            >
-              <FcGoogle className="w-5 h-5 text-red-500" />
-              <span>Google</span>
-            </Button>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => handleSocialLogin("Facebook")}
-              className="flex items-center justify-center space-x-2 py-3 bg-transparent cursor-pointer"
-            >
-              <FaFacebook className="w-5 h-5 text-blue-600" />
-              <span>Facebook</span>
-            </Button>
-          </div>
 
           {/* Sign in link */}
           <div className="text-center text-sm text-gray-600 mt-4">
