@@ -53,11 +53,15 @@ export default function EmailVerificaionPage() {
   return (
     <div className="min-h-screen flex">
       {/* Left Panel */}
-      <div className="hidden md:block flex-1 bg-primary p-2 md:px-5 lg:px-8">
-        <div className="flex items-center justify-center h-full">
-          <h1 className="text-4xl font-bold text-[#010A18] leading-tight">
-            Confirm Your Email to Access Your Learning Resources!
-          </h1>
+      <div className="hidden flex-1 md:flex items-center justify-center px-2 md:px-5 lg:px-8 bg-primary">
+        <div className="max-w-2xl">
+          <h2 className="text-4xl font-bold text-[#010A18] leading-tight">
+            Confirm Your Email to Activate Your Football Job Profile.
+          </h2>
+          <p className="text-[#837E5B] mt-1">
+            We’ve sent a verification code to your email — enter it below to
+            continue.
+          </p>
         </div>
       </div>
 
