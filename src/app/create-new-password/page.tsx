@@ -1,22 +1,32 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import Link from "next/link"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { toast } from "sonner"
-import { FaEye, FaEyeSlash } from "react-icons/fa"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { createPasswordSchema, type CreatePasswordFormData } from "@/shchemas/passwordValidation"
-import { useRouter } from "next/navigation"
+import { useState } from "react";
+import Link from "next/link";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "sonner";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import {
+  createPasswordSchema,
+  type CreatePasswordFormData,
+} from "@/shchemas/passwordValidation";
+import { useRouter } from "next/navigation";
 
 export default function CreateNewPasswordPage() {
-  const [showNewPassword, setShowNewPassword] = useState(false)
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
-  const router = useRouter()
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const form = useForm<CreatePasswordFormData>({
     resolver: zodResolver(createPasswordSchema),
@@ -24,28 +34,28 @@ export default function CreateNewPasswordPage() {
       newPassword: "",
       confirmPassword: "",
     },
-  })
+  });
 
   const onSubmit = async (data: CreatePasswordFormData) => {
-    setIsLoading(true)
+    setIsLoading(true);
     try {
       // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 2000))
-      console.log("Password reset data:", data)
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      console.log("Password reset data:", data);
       toast.success("Password updated successfully!", {
         description: "You can now log in with your new password.",
-      })
+      });
       // Reset form after successful submission
-      form.reset()
-      router.push("/signin")
+      form.reset();
+      router.push("/signin");
     } catch (error) {
       toast.error("Failed to update password!", {
         description: "Please try again later.",
-      })
+      });
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   return (
     <div className="min-h-screen md:flex">
@@ -53,10 +63,11 @@ export default function CreateNewPasswordPage() {
       <div className="hidden flex-1 md:flex items-center justify-center px-2 md:px-5 lg:px-8 bg-primary">
         <div className="max-w-2xl">
           <h2 className="text-4xl font-bold text-[#010A18] leading-tight">
-            Check your email for the code to activate your Football Job Profile.
+            Create a New Password
           </h2>
           <p className="text-[#837E5B] mt-1">
-            We`&apos;ve sent a verification code to your email — enter it below to continue.
+            Set a new password for your Football Job Profile to complete the
+            setup. Enter your new password below to continue.
           </p>
         </div>
       </div>
@@ -65,7 +76,9 @@ export default function CreateNewPasswordPage() {
       <div className="flex-1 bg-gray-50 flex items-center justify-center p-2 md:p-5 lg:p-8">
         <div className="w-full max-w-md bg-white border-2 rounded-lg p-8">
           <div className="text-center mb-6">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-2">Create new password</h2>
+            <h2 className="text-2xl font-semibold text-gray-900 mb-2">
+              Create new password
+            </h2>
             <p className="text-gray-600 text-sm">Set up a new password</p>
           </div>
 
@@ -77,7 +90,9 @@ export default function CreateNewPasswordPage() {
                 name="newPassword"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-sm font-medium text-gray-700">New Password</FormLabel>
+                    <FormLabel className="text-sm font-medium text-gray-700">
+                      New Password
+                    </FormLabel>
                     <FormControl>
                       <div className="relative">
                         <Input
@@ -110,7 +125,9 @@ export default function CreateNewPasswordPage() {
                 name="confirmPassword"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-sm font-medium text-gray-700">Confirm New Password</FormLabel>
+                    <FormLabel className="text-sm font-medium text-gray-700">
+                      Confirm New Password
+                    </FormLabel>
                     <FormControl>
                       <div className="relative">
                         <Input
@@ -121,7 +138,9 @@ export default function CreateNewPasswordPage() {
                         />
                         <button
                           type="button"
-                          onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                          onClick={() =>
+                            setShowConfirmPassword(!showConfirmPassword)
+                          }
                           className="absolute right-3 top-1/2 transform -translate-y-1/2"
                         >
                           {showConfirmPassword ? (
@@ -151,12 +170,15 @@ export default function CreateNewPasswordPage() {
           {/* Back to sign in link */}
           <div className="text-center text-sm text-gray-600 mt-4">
             Remember your password?{" "}
-            <Link href="/signin" className="underline text-primary-fill-primary">
+            <Link
+              href="/signin"
+              className="underline text-primary-fill-primary"
+            >
               Sign in
             </Link>
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }
