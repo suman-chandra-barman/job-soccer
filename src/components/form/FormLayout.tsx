@@ -43,7 +43,7 @@ export function FormLayout({
 }: IFormLayoutProps) {
   return (
     <div className={`min-h-screen bg-gray-50 p-4 ${className}`}>
-      <div className="max-w-2xl mx-auto">
+      <div className="max-w-3xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-2xl font-semibold text-gray-900 mb-2">{title}</h1>

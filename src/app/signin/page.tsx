@@ -61,12 +61,6 @@ export default function SignInPage() {
     }
   };
 
-  const handleSocialLogin = (provider: string) => {
-    toast.info(`${provider} login clicked`, {
-      description: "Social login functionality would be implemented here.",
-    });
-  };
-
   const handleForgotPassword = () => {
     toast.info("Forgot password clicked", {
       description: "Password reset functionality would be implemented here.",

@@ -15,14 +15,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import {
-  professionalInfoSchema,
-  type ProfessionalInfo,
+  professionalPlayerProfessionalInfoSchema,
+  type TProfessionalPlayerProfessionalInfo,
 } from "@/shchemas/profileValidation";
 
-interface IProfessionalInfoFormProps {
-  onNext: (data: ProfessionalInfo) => void;
+interface IProfessionalPlayerProfessionalInfoFormProps {
+  onNext: (data: TProfessionalPlayerProfessionalInfo) => void;
   onPrev: () => void;
-  initialData?: Partial<ProfessionalInfo>;
+  initialData?: Partial<TProfessionalPlayerProfessionalInfo>;
   steps?: Array<{
     id: number;
     label: string;
@@ -31,25 +31,25 @@ interface IProfessionalInfoFormProps {
   }>;
 }
 
-export function ProfessionalInfoForm({
+export function ProfessionalPlayerProfessionalInfoForm({
   onNext,
   onPrev,
   initialData,
   steps,
-}: IProfessionalInfoFormProps) {
+}: IProfessionalPlayerProfessionalInfoFormProps) {
   const {
     register,
     handleSubmit,
     setValue,
     watch,
     formState: { errors, isValid },
-  } = useForm<ProfessionalInfo>({
-    resolver: zodResolver(professionalInfoSchema),
+  } = useForm<TProfessionalPlayerProfessionalInfo>({
+    resolver: zodResolver(professionalPlayerProfessionalInfoSchema),
     defaultValues: initialData,
     mode: "onChange",
   });
 
-  const onSubmit = (data: ProfessionalInfo) => {
+  const onSubmit = (data: TProfessionalPlayerProfessionalInfo) => {
     onNext(data);
   };
 
@@ -88,9 +88,9 @@ export function ProfessionalInfoForm({
                   <SelectValue placeholder="Availability" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="available">Available</SelectItem>
-                  <SelectItem value="unavailable">Unavailable</SelectItem>
-                  <SelectItem value="partially">Partially Available</SelectItem>
+                  <SelectItem value="now">Now</SelectItem>
+                  <SelectItem value="later">Later</SelectItem>
+                  <SelectItem value="soon">Soon</SelectItem>
                 </SelectContent>
               </Select>
             </FormField>
@@ -134,9 +134,47 @@ export function ProfessionalInfoForm({
             </FormField>
 
             <FormField
-              label="Current club"
+              label="NationalTeamCategory"
+              error={errors.nationalTeamCategory?.message}
+            >
+              <Select
+                onValueChange={(value) =>
+                  setValue("nationalTeamCategory", value)
+                }
+              >
+                <SelectTrigger className="bg-gray-50 border-0 w-full">
+                  <SelectValue placeholder="Select your national team category" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="U14">U14</SelectItem>
+                  <SelectItem value="U15">U15</SelectItem>
+                  <SelectItem value="U16">U16</SelectItem>
+                  <SelectItem value="U17">U17</SelectItem>
+                  <SelectItem value="U18">U18</SelectItem>
+                  <SelectItem value="U19">U19</SelectItem>
+                  <SelectItem value="U20">U20</SelectItem>
+                  <SelectItem value="U21">U21</SelectItem>
+                  <SelectItem value="U22">U22</SelectItem>
+                  <SelectItem value="U23">U23</SelectItem>
+                  <SelectItem value="U24">U24</SelectItem>
+                </SelectContent>
+              </Select>
+            </FormField>
+
+            <FormField
+              label="NationalTeamGames"
+              error={errors.nationalTeamGames?.message}
+            >
+              <Input
+                {...register("nationalTeamGames")}
+                placeholder="How many games did you play?"
+                className="bg-gray-50 border-0"
+              />
+            </FormField>
+
+            <FormField
+              label="Current Club"
               error={errors.currentClub?.message}
-              className="md:col-span-2"
             >
               <Input
                 {...register("currentClub")}
@@ -145,28 +183,45 @@ export function ProfessionalInfoForm({
               />
             </FormField>
 
-            <FormField label="Category" error={errors.category?.message}>
-              <Select onValueChange={(value) => setValue("category", value)}>
+            <FormField
+              label="Social Media"
+              error={errors.socialMedia?.message}
+            >
+              <Input
+                {...register("socialMedia")}
+                placeholder="Social Media"
+                className="bg-gray-50 bord er-0"
+              />
+            </FormField>
+
+            <FormField
+              label="Division Level"
+              error={errors.nationalTeamGames?.message}
+            >
+              <Select
+                onValueChange={(value) => setValue("divisionLevel", value)}
+              >
                 <SelectTrigger className="bg-gray-50 border-0 w-full">
-                  <SelectValue placeholder="Select your category" />
+                  <SelectValue placeholder="Select divion level" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="youth">Youth</SelectItem>
-                  <SelectItem value="senior">Senior</SelectItem>
-                  <SelectItem value="veteran">Veteran</SelectItem>
+                  <SelectItem value="1">1</SelectItem>
+                  <SelectItem value="2">2</SelectItem>
+                  <SelectItem value="3">3</SelectItem>
+                  <SelectItem value="4">4</SelectItem> 
                 </SelectContent>
               </Select>
             </FormField>
 
-            <FormField label="Pool" error={errors.pool?.message}>
-              <Select onValueChange={(value) => setValue("pool", value)}>
+            <FormField label="Foot" error={errors.foot?.message}>
+              <Select onValueChange={(value) => setValue("foot", value)}>
                 <SelectTrigger className="bg-gray-50 border-0 w-full">
-                  <SelectValue placeholder="Pool" />
+                  <SelectValue placeholder="Foot" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="pool-a">Pool A</SelectItem>
-                  <SelectItem value="pool-b">Pool B</SelectItem>
-                  <SelectItem value="pool-c">Pool C</SelectItem>
+                  <SelectItem value="right">Right</SelectItem>
+                  <SelectItem value="left">Left</SelectItem>
+                  <SelectItem value="both">Both</SelectItem>
                 </SelectContent>
               </Select>
             </FormField>
@@ -177,31 +232,38 @@ export function ProfessionalInfoForm({
                   <SelectValue placeholder="Select your position" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="goalkeeper">Goalkeeper</SelectItem>
-                  <SelectItem value="defender">Defender</SelectItem>
-                  <SelectItem value="midfielder">Midfielder</SelectItem>
+                  <SelectItem value="GK">GK</SelectItem>
+                  <SelectItem value="central back">Central back</SelectItem>
+                  <SelectItem value="left back">Left back</SelectItem>
+                  <SelectItem value="right back">Right back</SelectItem>
+                  <SelectItem value="defensive midfielder">
+                    Defensive midfielder
+                  </SelectItem>
+                  <SelectItem value="offensive midfielder">
+                    Offensive midfielder
+                  </SelectItem>
+                  <SelectItem value="right winger">Right winger</SelectItem>
+                  <SelectItem value="left winger">Left winger</SelectItem>
                   <SelectItem value="forward">Forward</SelectItem>
+                  <SelectItem value="striker">Striker</SelectItem>
                 </SelectContent>
               </Select>
             </FormField>
 
-            <FormField label="League" error={errors.league?.message}>
-              <Select onValueChange={(value) => setValue("league", value)}>
-                <SelectTrigger className="bg-gray-50 border-0 w-full">
-                  <SelectValue placeholder="Select League" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="premier">Premier League</SelectItem>
-                  <SelectItem value="championship">Championship</SelectItem>
-                  <SelectItem value="league-one">League One</SelectItem>
-                </SelectContent>
-              </Select>
+             <FormField
+              label="Tearm's Joined"
+              error={errors.teamsJoined?.message}
+            >
+              <Input
+                {...register("teamsJoined")}
+                placeholder="Your Joined details"
+                className="bg-gray-50 bord er-0"
+              />
             </FormField>
 
             <FormField
               label="Agent"
               error={errors.agent?.message}
-              className="md:col-span-2"
             >
               <Select onValueChange={(value) => setValue("agent", value)}>
                 <SelectTrigger className="bg-gray-50 border-0 w-full">
@@ -215,14 +277,13 @@ export function ProfessionalInfoForm({
             </FormField>
 
             <FormField
-              label="Social Media"
-              error={errors.socialMedia?.message}
-              className="md:col-span-2"
+              label="Contract Expires"
+              error={errors.contractExpires?.message}
             >
               <Input
-                {...register("socialMedia")}
-                placeholder="Social Media"
-                className="bg-gray-50 border-0"
+                {...register("contractExpires")}
+                placeholder="Contract expires"
+                className="bg-gray-50 bord er-0"
               />
             </FormField>
           </div>

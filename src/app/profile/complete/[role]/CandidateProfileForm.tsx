@@ -1,0 +1,183 @@
+"use client";
+
+import React, { useState } from "react";
+import { PersonalInfoForm } from "@/components/forms/PersonalInfoForm";
+import { HighlightsForm } from "@/components/forms/HighlightsForm";
+import { toast } from "sonner";
+import type {
+  TPersonalInfo,
+  TProfessionalPlayerProfessionalInfo,
+  THighlights,
+  TAmateurPlayerProfessionalInfo,
+  THighSchoolPlayerProfessionalInfo,
+  TCollegePlayerProfessionalInfo,
+  TOfficeStaffProfessionalInfo,
+  TFieldStaffProfessionalInfo,
+} from "@/shchemas/profileValidation";
+import { useRouter } from "next/navigation";
+import { TCandidateRole, candidateRoleConfig } from "@/shchemas/candidateRole";
+import { MultipleHighlightsForm } from "@/components/forms/MultipleHighlisghtsForm";
+import { AmateurPlayerProfessionalInfoForm } from "@/components/forms/AmateurPlayerProfessionalInfoForm";
+import { ProfessionalPlayerProfessionalInfoForm } from "@/components/forms/ProfessionalPlayerProfessionalInfoForm";
+import { HighSchoolPlayerProfessionalInfoForm } from "@/components/forms/HighSchoolPlayerProfessionalInfoForm";
+import { CollegePlayerProfessionalInfoForm } from "@/components/forms/CollegePlayerProfessionalInfoForm";
+import { FieldOfficerProfessionalInfoForm } from "@/components/forms/FieldStaffProfessionalInfoForm";
+import { OfficeStaffProfessionalInfoForm } from "@/components/forms/OfficeStaffProfessionalInfoForm";
+
+interface CandidateProfileClientProps {
+  role: TCandidateRole;
+}
+
+export default function CompleteProfilePage({
+  role,
+}: CandidateProfileClientProps) {
+  const [currentStep, setCurrentStep] = useState(1);
+  const [formData, setFormData] = useState<{
+    personalInfo?: TPersonalInfo;
+    professionalInfo?:
+      | TProfessionalPlayerProfessionalInfo
+      | TAmateurPlayerProfessionalInfo
+      | THighSchoolPlayerProfessionalInfo
+      | TCollegePlayerProfessionalInfo
+      | TOfficeStaffProfessionalInfo
+      | TFieldStaffProfessionalInfo;
+    highlights?: THighlights;
+  }>({});
+
+  const router = useRouter();
+
+  const config = candidateRoleConfig[role];
+
+  if (!config) {
+    return <div>Invalid role</div>;
+  }
+
+  const steps = [
+    {
+      id: 1,
+      label: "Step 1",
+      completed: currentStep > 1,
+      active: currentStep === 1,
+    },
+    {
+      id: 2,
+      label: "Step 2",
+      completed: currentStep > 2,
+      active: currentStep === 2,
+    },
+    {
+      id: 3,
+      label: "Step 3",
+      completed: currentStep > 3,
+      active: currentStep === 3,
+    },
+  ];
+
+  const handlePersonalInfoNext = (data: TPersonalInfo) => {
+    setFormData((prev) => ({ ...prev, personalInfo: data }));
+    setCurrentStep(2);
+    toast.success("Personal information saved successfully!");
+  };
+
+  const handleProfessionalInfoNext = (
+    data:
+      | TProfessionalPlayerProfessionalInfo
+      | TAmateurPlayerProfessionalInfo
+      | THighSchoolPlayerProfessionalInfo
+      | TCollegePlayerProfessionalInfo
+      | TOfficeStaffProfessionalInfo
+      | TFieldStaffProfessionalInfo
+  ) => {
+    setFormData((prev) => ({ ...prev, professionalInfo: data }));
+    setCurrentStep(3);
+    toast.success("Professional information saved successfully!");
+  };
+
+  const handleHighlightsNext = (data: THighlights) => {
+    setFormData((prev) => ({ ...prev, highlights: data }));
+
+    // Here you would typically submit the complete form data to your API
+    console.log("Complete form data:", { ...formData, highlights: data });
+    toast.success("Profile completed successfully!");
+
+    // Redirect to home page
+    router.push("/");
+  };
+
+  const handlePrevStep = () => {
+    setCurrentStep((prev) => Math.max(1, prev - 1));
+  };
+
+  const renderProfessionalForm = () => {
+    const commonProps = {
+      onNext: handleProfessionalInfoNext,
+      onPrev: handlePrevStep,
+      initialData: formData.professionalInfo,
+      steps,
+    };
+
+    switch (role) {
+      case "professional-player":
+        return <ProfessionalPlayerProfessionalInfoForm {...commonProps} />;
+      case "amateur-player":
+        return <AmateurPlayerProfessionalInfoForm {...commonProps} />;
+      case "high-school-player":
+        return <HighSchoolPlayerProfessionalInfoForm {...commonProps} />;
+      case "college-player":
+        return <CollegePlayerProfessionalInfoForm {...commonProps} />;
+      case "field-staff":
+        return <FieldOfficerProfessionalInfoForm {...commonProps} />;
+      case "office-staff":
+        return <OfficeStaffProfessionalInfoForm {...commonProps} />;
+      default:
+        return <ProfessionalPlayerProfessionalInfoForm {...commonProps} />;
+    }
+  };
+
+  const renderHighlightsForm = () => {
+    const commonProps = {
+      onNext: handleHighlightsNext,
+      onPrev: handlePrevStep,
+      initialData: formData.highlights,
+      steps,
+    };
+
+    if (config.highlightsType === "multiple") {
+      return <MultipleHighlightsForm {...commonProps} />;
+    } else {
+      return <HighlightsForm {...commonProps} />;
+    }
+  };
+
+  return (
+    <div>
+      {currentStep === 1 && (
+        <PersonalInfoForm
+          onNext={handlePersonalInfoNext}
+          initialData={formData.personalInfo}
+          steps={steps}
+        />
+      )}
+      {currentStep === 2 && renderProfessionalForm()}
+      {currentStep === 3 && renderHighlightsForm()}
+
+      {/* {currentStep === 2 && (
+        <ProfessionalInfoForm
+          onNext={handleProfessionalInfoNext}
+          onPrev={handlePrevStep}
+          initialData={formData.professionalInfo}
+          steps={steps}
+        />
+      )}
+
+      {currentStep === 3 && (
+        <HighlightsForm
+          onNext={handleHighlightsNext}
+          onPrev={handlePrevStep}
+          initialData={formData.highlights}
+          steps={steps}
+        />
+      )} */}
+    </div>
+  );
+}
