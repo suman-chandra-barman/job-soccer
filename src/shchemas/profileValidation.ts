@@ -3,13 +3,13 @@ import { z } from "zod";
 // Personal Information Schema
 export const personalInfoSchema = z.object({
   image: z.instanceof(File).optional(),
-  firstName: z.string().min(2, "First name must be at least 2 characters"),
-  lastName: z.string().min(2, "Last name must be at least 2 characters"),
+  firstName: z.string().min(1, "First name is required"),
+  lastName: z.string().min(1, "Last name is required"),
   dateOfBirth: z.string().min(1, "Date of birth is required"),
   placeOfBirth: z
     .string()
-    .min(2, "Place of birth must be at least 2 characters"),
-  nationality: z.string().min(2, "Nationality is required"),
+    .min(1, "Place of birth is required"),
+  nationality: z.string().min(1, "Nationality is required"),
   phoneNumber: z.string().min(10, "Phone number must be at least 10 digits"),
 });
 
@@ -19,13 +19,13 @@ export const amateurPlayerProfessionalInfoSchema = z.object({
   availability: z.string().min(1, "Availability is required"),
   height: z.string().min(1, "Height is required"),
   weight: z.string().min(1, "Weight is required"),
-  currentClub: z.string().min(2, "Current club is required"),
+  currentClub: z.string().min(1, "Current club is required"),
   category: z.string().min(1, "Category is required"),
   foot: z.string().min(1, "Foot is required"),
   position: z.string().min(1, "Position is required"),
   league: z.string().min(1, "League is required"),
-  agent: z.string().optional(),
-  socialMedia: z.string().optional(),
+  agent: z.string().min(1, "Agent is required"),
+  socialMedia: z.string().min(1, "Social media is required"),
 });
 
 // Professional player Professional Information Schema
@@ -36,7 +36,7 @@ export const professionalPlayerProfessionalInfoSchema = z.object({
   weight: z.string().min(1, "Weight is required"),
   nationalTeamCategory: z.string().min(1, "National Team Category is required"),
   nationalTeamGames: z.string().min(1, "National Team Games is required"),
-  currentClub: z.string().min(2, "Current club is required"),
+  currentClub: z.string().min(1, "Current club is required"),
   socialMedia: z.string().min(1, "Social Media is required"),
   foot: z.string().min(1, "Foot is required"),
   position: z.string().min(1, "Position is required"),
@@ -52,7 +52,7 @@ export const highSchoolPlayerProfessionalInfoSchema = z.object({
   availability: z.string().min(1, "Availability is required"),
   height: z.string().min(1, "Height is required"),
   weight: z.string().min(1, "Weight is required"),
-  currentClub: z.string().min(2, "Current club is required"),
+  currentClub: z.string().min(1, "Current club is required"),
   socialMedia: z.string().min(1, "Social Media is required"),
   category: z.string().min(1, "Category is required"),
   foot: z.string().min(1, "Foot is required"),
@@ -70,7 +70,7 @@ export const collegePlayerProfessionalInfoSchema = z.object({
   availability: z.string().min(1, "Availability is required"),
   height: z.string().min(1, "Height is required"),
   weight: z.string().min(1, "Weight is required"),
-  currentClub: z.string().min(2, "Current club is required"),
+  currentClub: z.string().min(1, "Current club is required"),
   socialMedia: z.string().min(1, "Social Media is required"),
   category: z.string().min(1, "Category is required"),
   foot: z.string().min(1, "Foot is required"),
@@ -86,7 +86,7 @@ export const collegePlayerProfessionalInfoSchema = z.object({
 // Field staff Professional Information Schema
 export const fieldStaffProfessionalInfoSchema = z.object({
   availability: z.string().min(1, "Availability is required"),
-  currentClub: z.string().min(2, "Current club is required"),
+  currentClub: z.string().min(1, "Current club is required"),
   socialMedia: z.string().min(1, "Social Media is required"),
   category: z.string().min(1, "Category is required"),
   licenses: z.string().min(1, "License is required"),
@@ -99,7 +99,7 @@ export const fieldStaffProfessionalInfoSchema = z.object({
 // Office staff Professional Information Schema
 export const officeStaffProfessionalInfoSchema = z.object({
   availability: z.string().min(1, "Availability is required"),
-  currentClub: z.string().min(2, "Current club is required"),
+  currentClub: z.string().min(1, "Current club is required"),
   socialMedia: z.string().min(1, "Social Media is required"),
   category: z.string().min(1, "Category is required"),
   licenses: z.string().min(1, "License is required"),
