@@ -16,13 +16,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import {
-  personalInfoSchema,
-  type PersonalInfo,
+  personalInfoSchema
 } from "@/shchemas/profileValidation";
+import { TPersonalInfo } from "@/types/profile";
 
 interface IPersonalInfoFormProps {
-  onNext: (data: PersonalInfo) => void;
-  initialData?: Partial<PersonalInfo>;
+  onNext: (data: TPersonalInfo) => void;
+  initialData?: Partial<TPersonalInfo>;
   steps?: Array<{
     id: number;
     label: string;
@@ -42,7 +42,7 @@ export function PersonalInfoForm({
     setValue,
     watch,
     formState: { errors, isValid },
-  } = useForm<PersonalInfo>({
+  } = useForm<TPersonalInfo>({
     resolver: zodResolver(personalInfoSchema),
     defaultValues: initialData,
     mode: "onChange",
@@ -50,7 +50,7 @@ export function PersonalInfoForm({
 
   const imageValue = watch("image");
 
-  const onSubmit = (data: PersonalInfo) => {
+  const onSubmit = (data: TPersonalInfo) => {
     onNext(data);
   };
 

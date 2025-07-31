@@ -15,9 +15,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import {
-  officeStaffProfessionalInfoSchema,
-  TOfficeStaffProfessionalInfo,
+  officeStaffProfessionalInfoSchema
 } from "@/shchemas/profileValidation";
+import { TOfficeStaffProfessionalInfo } from "@/types/profile";
 
 interface IOfficeStaffProfessionalInfoFormProps {
   onNext: (data: TOfficeStaffProfessionalInfo) => void;
