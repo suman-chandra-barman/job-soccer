@@ -1,3 +1,4 @@
+import { Candidates } from "@/components/home/Canditates";
 import { Discover } from "@/components/home/Discover";
 import { Features } from "@/components/home/Features";
 import FindYourNextJob from "@/components/home/FindYourNextJob";
@@ -15,6 +16,7 @@ export default function HomePage() {
       <Discover />
       <JobCategories />
       <Features />
+      <Candidates />
       <GlobalProfile />
     </div>
   );

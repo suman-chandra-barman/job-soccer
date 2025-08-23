@@ -22,7 +22,7 @@ export function GlobalProfile() {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Side - Earth Image */}
           <div className="flex justify-center">
-            <div className="relative w-full aspect-square">
+            <div className="relative w-full max-w-lg aspect-square">
               <Image
                 src={earth}
                 alt="Global opportunities worldwide"
