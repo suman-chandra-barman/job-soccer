@@ -1,3 +1,4 @@
+import { Discover } from "@/components/home/Discover";
 import FindYourNextJob from "@/components/home/FindYourNextJob";
 import { HeroSection } from "@/components/home/HeroSection";
 import { JobSearch } from "@/components/home/JobSearch";
@@ -8,6 +9,7 @@ export default function HomePage() {
       <HeroSection />
       <JobSearch />
       <FindYourNextJob />
+      <Discover />
     </div>
   );
 }
