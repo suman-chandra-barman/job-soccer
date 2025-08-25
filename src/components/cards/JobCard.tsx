@@ -1,9 +1,10 @@
-import { Clock, MapPin } from "lucide-react";
+import { Bookmark, Clock, MapPin, MessageCircle } from "lucide-react";
 import { TNewJobPost } from "../home/NewJobs";
 import Image from "next/image";
 import employerLogo from "@/assets/employers/compony logo.png";
+import { Button } from "../ui/button";
 
-export function NewJobCard({ job }: { job: TNewJobPost }) {
+export function JobCard({ job }: { job: TNewJobPost }) {
   return (
     <div className="bg-[#FDF9E3] rounded-xl p-4 shadow-sm border border-gray-100">
       <div className="flex items-center gap-3 mb-4 border-b border-gray-200 pb-4">
@@ -22,6 +23,9 @@ export function NewJobCard({ job }: { job: TNewJobPost }) {
             <MapPin className="w-4 h-4" />
             <span>{job.location}</span>
           </div>
+        </div>
+        <div>
+          <Bookmark className="w-7 h-7" />
         </div>
       </div>
 
@@ -44,7 +48,7 @@ export function NewJobCard({ job }: { job: TNewJobPost }) {
       </div>
 
       {/* Bottom section with applicant count, salary, and time */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between mb-4">
         <div className="flex flex-col gap-1">
           <span className="text-gray-600 text-sm">
             {job.applicantCount} Applicant
@@ -58,6 +62,16 @@ export function NewJobCard({ job }: { job: TNewJobPost }) {
           <div className="text-2xl font-bold text-gray-900">{job.salary}</div>
           <div className="text-gray-500 text-sm">/mo</div>
         </div>
+      </div>
+      <div className="border-t border-gray-200 pt-4 flex gap-4 items-center">
+        <Button variant="outline" className="flex-1 bg-transparent">
+          <Bookmark className="w-6 h-6" />
+          Shortlist
+        </Button>
+        <Button className="flex-1">
+          <MessageCircle className="w-6 h-6" />
+          Apply
+        </Button>
       </div>
     </div>
   );
