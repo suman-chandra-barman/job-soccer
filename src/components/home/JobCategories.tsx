@@ -54,7 +54,7 @@ export function JobCategories() {
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="flex flex-col md:flex-row justify-between items-start mb-12 gap-8">
-          <h2 className="text-2xl md:text-4xl font-bold text-gray-900 leading-tight max-w-2xl">
+          <h2 className="text-2xl md:text-4xl font-bold text-[#362F05] leading-tight max-w-2xl">
             Your complete hub for soccer talents, jobs and connections
           </h2>
           <Link
@@ -73,7 +73,7 @@ export function JobCategories() {
               <Link
                 key={category.id}
                 href={`/jobs?category=${category.id}`}
-                className="group bg-white rounded-full p-4 border border-gray-200 hover:bg-[#504A20] hover:text-white transition-all duration-200 cursor-pointer"
+                className="group bg-white rounded-full p-3 border border-gray-200 hover:bg-[#504A20] hover:text-white transition-all duration-200 cursor-pointer"
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-3">

@@ -27,7 +27,7 @@ export function Footer() {
         <div className="flex flex-col md:flex-row items-center md:items-start justify-between gap-8">
           {/* Brand Section */}
           <div className="md:col-span-1 w-full md:w-auto text-center md:text-left">
-            <h2 className="text-5xl font-bold text-[#362F05] mb-2">
+            <h2 className="text-4xl md:text-5xl font-bold text-[#362F05] mb-2">
               JOB SOCCER
             </h2>
             <p className="text-gray-600 text-sm leading-relaxed">
@@ -97,9 +97,9 @@ export function Footer() {
               <Input
                 type="email"
                 placeholder="Enter your email"
-                className="flex-1 text-sm bg-white"
+                className="flex-1 text-sm bg-white p-2"
               />
-              <Button className="bg-yellow-400 hover:bg-yellow-500 text-black px-4">
+              <Button className="bg-yellow-300 hover:bg-yellow-400 text-black px-4">
                 Subscribe
               </Button>
             </div>

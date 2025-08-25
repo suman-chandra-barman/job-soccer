@@ -37,7 +37,7 @@ export function NewJobCard({ job }: { job: TNewJobPost }) {
               />
             </div>
           ))}
-          <div className="relative w-8 h-8 rounded-full bg-yellow-400 flex items-center justify-center text-white text-sm font-semibold">
+          <div className="relative w-8 h-8 rounded-full bg-yellow-300 flex items-center justify-center text-white text-sm font-semibold">
             +
           </div>
         </div>

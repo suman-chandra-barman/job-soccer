@@ -57,19 +57,19 @@ const jobPosts: TNewJobPost[] = [
 
 export function NewJobs() {
   return (
-    <div className="bg-[#F7F6F2] rounded-3xl p-8">
+    <div className="bg-[#F7F6F2] rounded-3xl p-4 md:p-8">
       <div className="flex items-center justify-between mb-8">
-        <h2 className="text-3xl font-bold text-gray-900">New Jobs</h2>
+        <h2 className="text-3xl md:4xl font-bold text-gray-900">New Jobs</h2>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-8">
         {jobPosts.map((job) => (
           <NewJobCard key={job.id} job={job} />
         ))}
       </div>
 
       <div className="flex justify-end">
-        <Button className="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-2 rounded-xl">
+        <Button className="bg-yellow-300 hover:bg-yellow-400 text-black font-semibold px-6 py-2 rounded-xl">
           See All Jobs
         </Button>
       </div>

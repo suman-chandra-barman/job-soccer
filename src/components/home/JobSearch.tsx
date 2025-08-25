@@ -57,7 +57,7 @@ export function JobSearch() {
   };
 
   return (
-    <div className="bg-[#F7F6F2]  px-4 py-8">
+    <div className="bg-[#F7F6F2] px-4 py-8">
       {/* Main Search Container */}
       <div className="container mx-auto pb-4 flex items-center justify-center">
         <div className="flex flex-col p-2 md:flex-row gap-2 items-center justify-center rounded-2xl border border-gray-100 bg-white">
