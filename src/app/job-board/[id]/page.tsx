@@ -129,14 +129,15 @@ const JobDetailsPage = () => {
       </div>
       <div className="container mx-auto px-4 md:px-0 py-16">
         <div className="flex flex-col-reverse md:flex-row justify-between gap-4">
+          {/* left column */}
           <div className="flex-1 flex flex-col gap-4">
             {candidates.map((candidate: TCandidate) => (
               <CandidateCard key={candidate.id} candidate={candidate} />
             ))}
           </div>
 
-          <div className="flex-3 border border-gray-200 shadow-sm rounded-2xl">
-            <div className="rounded-2xl">
+          <div className="flex-3 ">
+            <div className="border border-gray-200 shadow-sm rounded-2xl">
               <div className="p-6">
                 {/* Header Section */}
                 <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start mb-6">
