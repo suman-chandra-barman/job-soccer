@@ -5,6 +5,7 @@ import React from "react";
 import FindYourDreamTeam from "@/components/employer/FindYourDreamTeam";
 import { TClub } from "../all-employer/page";
 import { EmployerCard } from "@/components/cards/EmployerCard";
+import { Link } from "lucide-react";
 
 const clubsData: TClub[] = [
   {
@@ -72,9 +73,9 @@ function EmployersPage() {
         {/* Employer */}
         <div className="my-8">
           <div className="flex items-center justify-between py-4">
-            <span className="text-2xl font-bold">Employer</span>
+            <span className="text-2xl font-bold">Consulting Company</span>
             <Button variant="link" className="text-black">
-              All Jobs
+              <Link href="/job-board">See All Jobs</Link>
             </Button>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">

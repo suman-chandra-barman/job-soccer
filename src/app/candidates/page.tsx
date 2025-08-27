@@ -7,6 +7,7 @@ import React from "react";
 import user1 from "@/assets/candidates/user1.png";
 import user2 from "@/assets/candidates/user2.png";
 import CandidateCard from "@/components/cards/CandidateCard";
+import Link from "next/link";
 
 const candidates: TCandidate[] = [
   {
@@ -63,7 +64,7 @@ function CandidatesPage() {
           <div className="flex items-center justify-between py-4">
             <span className="text-2xl font-bold">Player</span>
             <Button variant="link" className="text-black">
-              All Jobs
+             <Link href="/job-board"> All Jobs</Link>
             </Button>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
@@ -77,7 +78,7 @@ function CandidatesPage() {
           <div className="flex items-center justify-between py-4">
             <span className="text-2xl font-bold">Staff on The Field</span>
             <Button variant="link" className="text-black">
-              All Jobs
+             <Link href="/job-board"> All Jobs</Link>
             </Button>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
@@ -92,7 +93,7 @@ function CandidatesPage() {
           <div className="flex items-center justify-between py-4">
             <span className="text-2xl font-bold">Office Staff</span>
             <Button variant="link" className="text-black">
-              All Jobs
+             <Link href="/job-board"> All Jobs</Link>
             </Button>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">

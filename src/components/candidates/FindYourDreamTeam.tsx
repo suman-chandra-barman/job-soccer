@@ -3,6 +3,7 @@ import React from "react";
 import { EmployerCard } from "../cards/EmployerCard";
 import { Button } from "../ui/button";
 import { TClub } from "@/app/all-employer/page";
+import Link from "next/link";
 
 const FindYourDreamTeam = () => {
   const opportunities: string[] = [
@@ -104,7 +105,7 @@ const FindYourDreamTeam = () => {
 
             <div className="flex justify-end">
               <Button className="bg-yellow-300 hover:bg-yellow-400 text-black font-semibold px-6 py-3 rounded-lg">
-                See All Jobs
+                <Link href="/employers">See All Employers</Link>
               </Button>
             </div>
           </div>

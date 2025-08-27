@@ -39,14 +39,14 @@ export function EmployerCard({ job }: { job: TClub }) {
         <div className="flex gap-2 items-center">
           <Button
             variant="outline"
-            className="flex-1 bg-transparent rounded-full text-green-500 border border-green-500 px-1"
+            className="flex-1 bg-transparent rounded-full text-green-500 border border-green-500 px-0 hover:border-green-500 hover:text-green-500 hover:bg-transparent"
           >
             <ShieldCheck className="w-6 h-6" />
             Verified
           </Button>
           <Button
             variant="outline"
-            className="flex-1 rounded-full bg-transparent border-black px-1"
+            className="flex-1 rounded-full bg-transparent border-black px-1 hover:border-black hover:text-black hover:bg-transparent"
           >
             {job.clubType}
           </Button>

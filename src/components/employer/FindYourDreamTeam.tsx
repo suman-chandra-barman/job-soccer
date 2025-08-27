@@ -1,4 +1,4 @@
-import { Check } from "lucide-react";
+import { Check, Link } from "lucide-react";
 import React from "react";
 import { Button } from "../ui/button";
 import { TCandidate } from "../home/Canditates";
@@ -60,7 +60,7 @@ const FindYourDreamTeam = () => {
             your vision
           </p>
         </div>
-        <div className="md:flex gap-2 lg:gap-12 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 lg:gap-12 items-start">
           {/* Left Column - Opportunities */}
           <div className={`space-y-6 py-8 `}>
             <h2 className="text-3xl md:text-4xl font-bold text-[#362F05] leading-tight">
@@ -79,7 +79,7 @@ const FindYourDreamTeam = () => {
           </div>
 
           {/* Right Column - Jobs */}
-          <div className="bg-[#F7F6F2] rounded-3xl p-2 md:p-4">
+          <div className="bg-[#F7F6F2] rounded-3xl p-2 md:p-4 w-full">
             <div className="flex items-center justify-between mb-8">
               <h2 className="text-3xl md:4xl font-bold text-gray-900">
                 Candidate
@@ -94,7 +94,7 @@ const FindYourDreamTeam = () => {
 
             <div className="flex justify-end">
               <Button className="bg-yellow-300 hover:bg-yellow-400 text-black font-semibold px-6 py-3 rounded-lg">
-                See All Jobs
+                <Link href="/job-board">See All Jobs</Link>
               </Button>
             </div>
           </div>
