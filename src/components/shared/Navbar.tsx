@@ -79,7 +79,7 @@ export function Navbar() {
                         ? "text-teal-600 border-b-2 border-teal-600"
                         : "text-gray-600 border-b-2 border-transparent hover:text-teal-600"
                     }`}
-                    onClick={() => setIsMenuOpen(false)} // Close menu on link click
+                    onClick={() => setIsMenuOpen(false)}
                   >
                     {link.name}
                   </Link>
@@ -108,7 +108,7 @@ export function Navbar() {
                 <div className="relative">
                   <Input
                     type="text"
-                    placeholder="Search skills, name, skill"
+                    placeholder="Search title, name, skill"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     onKeyPress={handleKeyPress}
