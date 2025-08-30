@@ -16,6 +16,7 @@ export function middleware(request: NextRequest) {
     "/notifications",
     "/upgrade",
     "/profile",
+    "/my-profile",
     "/jobs",
     "/companies",
     "/not-found",
