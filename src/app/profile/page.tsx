@@ -634,31 +634,26 @@ export default function MyProfilePage() {
       </div>
 
       {/* Add Experience Modal */}
-      {isAddExperienceModalOpen && (
-        <AddExperienceModal
-          isOpen={isAddExperienceModalOpen}
-          onClose={() => setIsAddExperienceModalOpen(false)}
-          onSave={handleSaveExperience}
-        />
-      )}
+      <AddExperienceModal
+        isOpen={isAddExperienceModalOpen}
+        onClose={() => setIsAddExperienceModalOpen(false)}
+        onSave={handleSaveExperience}
+      />
 
       {/* Add Licenses or Certifications Modal */}
-      {isAddLicensesOrCertificationsModalOpen && (
-        <AddLicensesOrCertificationsModal
-          isOpen={isAddLicensesOrCertificationsModalOpen}
-          onClose={() => setIsAddLicensesOrCertificationsModalOpen(false)}
-          onSave={handleSaveLicensesOrCertifications}
-        />
-      )}
+      <AddLicensesOrCertificationsModal
+        isOpen={isAddLicensesOrCertificationsModalOpen}
+        onClose={() => setIsAddLicensesOrCertificationsModalOpen(false)}
+        onSave={handleSaveLicensesOrCertifications}
+      />
 
       {/* Add Education Modal */}
-      {isAddEducationModalOpen && (
-        <AddEducationModal
-          isOpen={isAddEducationModalOpen}
-          onClose={() => setIsAddEducationModalOpen(false)}
-          onSave={handleAddEducation}
-        />
-      )}
+      <AddEducationModal
+        isOpen={isAddEducationModalOpen}
+        onClose={() => setIsAddEducationModalOpen(false)}
+        onSave={handleAddEducation}
+      />
+
       {/* Upload Resume Modal */}
       <UploadResumeModal
         isOpen={isUploadModalOpen}
