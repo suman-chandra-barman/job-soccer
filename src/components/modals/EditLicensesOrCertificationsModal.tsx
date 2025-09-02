@@ -3,6 +3,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { useEffect } from "react";
 import {
   Dialog,
   DialogContent,
@@ -43,16 +44,30 @@ const formSchema = z.object({
 
 export type FormData = z.infer<typeof formSchema>;
 
-interface AddExperienceModalProps {
-  isOpen: boolean;
-  onClose: () => void;
+export interface LicenseOrCertificationData {
+  id?: string;
+  name: string;
+  issuingOrganization: string;
+  credentialId: string;
+  credentialUrl: string;
+  startMonth: string;
+  startYear: string;
+  endMonth?: string;
+  endYear?: string;
+  description: string;
 }
 
+interface EditLicenseOrCertificationsModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  certificationData: LicenseOrCertificationData | null;
+}
 
-export default function AddExperienceOrCertificationsModal({
+export default function EditLicenseOrCertificationsModal({
   isOpen,
   onClose,
-}: AddExperienceModalProps) {
+  certificationData,
+}: EditLicenseOrCertificationsModalProps) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -68,8 +83,25 @@ export default function AddExperienceOrCertificationsModal({
     },
   });
 
+  // Pre-populate form when certificationData changes
+  useEffect(() => {
+    if (certificationData && isOpen) {
+      form.reset({
+        name: certificationData.name,
+        issuingOrganization: certificationData.issuingOrganization,
+        credentialId: certificationData.credentialId,
+        credentialUrl: certificationData.credentialUrl,
+        startMonth: certificationData.startMonth,
+        startYear: certificationData.startYear,
+        endMonth: certificationData.endMonth || "",
+        endYear: certificationData.endYear || "",
+        description: certificationData.description,
+      });
+    }
+  }, [certificationData, isOpen, form]);
+
   const onSubmit = (data: FormData) => {
-    console.log("LicensesOrCertificaitons data", data);
+    console.log("Updated license/certification data", data);
     form.reset();
     onClose();
   };
@@ -85,7 +117,7 @@ export default function AddExperienceOrCertificationsModal({
         <DialogHeader>
           <div className="flex items-center justify-between">
             <DialogTitle className="text-xl font-semibold">
-              Licenses or Certifications
+              Edit License or Certification
             </DialogTitle>
           </div>
         </DialogHeader>
@@ -143,7 +175,7 @@ export default function AddExperienceOrCertificationsModal({
                     <FormItem>
                       <Select
                         onValueChange={field.onChange}
-                        defaultValue={field.value}
+                        value={field.value}
                       >
                         <FormControl className="w-full">
                           <SelectTrigger>
@@ -154,7 +186,7 @@ export default function AddExperienceOrCertificationsModal({
                           {months.map((month, index) => (
                             <SelectItem
                               key={month}
-                              value={(index + 1).toString()}
+                              value={month}
                             >
                               {month}
                             </SelectItem>
@@ -172,7 +204,7 @@ export default function AddExperienceOrCertificationsModal({
                     <FormItem>
                       <Select
                         onValueChange={field.onChange}
-                        defaultValue={field.value}
+                        value={field.value}
                       >
                         <FormControl className="w-full">
                           <SelectTrigger>
@@ -207,7 +239,7 @@ export default function AddExperienceOrCertificationsModal({
                     <FormItem>
                       <Select
                         onValueChange={field.onChange}
-                        defaultValue={field.value}
+                        value={field.value || ""}
                       >
                         <FormControl className="w-full">
                           <SelectTrigger>
@@ -218,7 +250,7 @@ export default function AddExperienceOrCertificationsModal({
                           {months.map((month, index) => (
                             <SelectItem
                               key={month}
-                              value={(index + 1).toString()}
+                              value={month}
                             >
                               {month}
                             </SelectItem>
@@ -236,7 +268,7 @@ export default function AddExperienceOrCertificationsModal({
                     <FormItem>
                       <Select
                         onValueChange={field.onChange}
-                        defaultValue={field.value}
+                        value={field.value || ""}
                       >
                         <FormControl className="w-full">
                           <SelectTrigger>
@@ -311,7 +343,7 @@ export default function AddExperienceOrCertificationsModal({
                   </FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder="Describe your experience or certification"
+                      placeholder="Describe your license or certification"
                       className="mt-1 min-h-[100px] resize-none"
                       {...field}
                     />
@@ -330,7 +362,7 @@ export default function AddExperienceOrCertificationsModal({
                 type="submit"
                 className="bg-black hover:bg-gray-800 text-white"
               >
-                Save
+                Update
               </Button>
             </div>
           </form>

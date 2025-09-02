@@ -32,6 +32,7 @@ import UploadResumeModal from "@/components/modals/UploadResumeModal";
 import EditPersonalInformationModal from "@/components/modals/EditPersonalInformationModal";
 import EditPlayerDetailsModal from "@/components/modals/EditPlayerDetailsModal";
 import EditExperienceModal from "@/components/modals/EditExperienceModal";
+import EditLicenseOrCertificationsModal from "@/components/modals/EditLicensesOrCertificationsModal";
 
 interface PersonalContact {
   position: string;
@@ -67,7 +68,6 @@ const user = {
     personal: true,
   },
 };
-
 const experiences: TExperience[] = [
   {
     title: "Forward Striker",
@@ -98,20 +98,31 @@ const experiences: TExperience[] = [
 ];
 const certificates = [
   {
-    id: "1",
-    title: "UEFA Pro License",
-    issuer: "UEFA",
-    date: "Dec 2024",
+    id: "cert-001",
+    name: "UEFA Pro License",
+    issuingOrganization: "UEFA",
+    credentialId: "UEFA-PRO-2023-001234",
+    credentialUrl: "https://www.uefa.com/certificates/pro-license/001234",
+    startMonth: "March",
+    startYear: "2023",
+    endMonth: "December",
+    endYear: "2025",
     description:
-      "It's an amazing company with a strong focus on collaboration and design thinking. I'm truly inspired by our team—based work process, where we prioritize research, user and client goals to build better, more",
+      "The highest coaching qualification in European football, covering advanced tactical analysis, leadership development, and elite-level coaching methodologies. This certification enables coaching at the highest professional levels including international teams and top-tier clubs.",
   },
   {
-    id: "2",
-    title: "UEFA Pro License",
-    issuer: "UEFA",
-    date: "Dec 2024",
+    id: "cert-002",
+    name: "FIFA Coaching Certificate Level A",
+    issuingOrganization: "FIFA",
+    credentialId: "FIFA-COACH-A-2022-005678",
+    credentialUrl:
+      "https://www.fifa.com/development/coaching/certificates/005678",
+    startMonth: "June",
+    startYear: "2022",
+    endMonth: "",
+    endYear: "",
     description:
-      "It's an amazing company with a strong focus on collaboration and design thinking. I'm truly inspired by our team—based work process, where we prioritize research, user and client goals to build better, more",
+      "Comprehensive coaching certification covering modern football tactics, player development, sports psychology, and team management. Focuses on developing coaching skills for professional and semi-professional football environments with emphasis on youth development and performance optimization.",
   },
 ];
 const education = [
@@ -164,6 +175,10 @@ export default function MyProfilePage() {
     isAddLicensesOrCertificationsModalOpen,
     setIsAddLicensesOrCertificationsModalOpen,
   ] = useState(false);
+  const [
+    isEditLicensesOrCertificationsModalOpen,
+    setIsEditLicensesOrCertificationsModalOpen,
+  ] = useState(false);
 
   const [isAddEducationModalOpen, setIsAddEducationModalOpen] = useState(false);
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
@@ -202,7 +217,8 @@ export default function MyProfilePage() {
   });
 
   const [editExperienceData, setEditExperienceData] = useState(null);
-
+  const [editLicensesOrCertifications, setEditLicensesOrCertifications] =
+    useState(null);
   return (
     <div className="px-4">
       {/* Hero Section */}
@@ -559,7 +575,11 @@ export default function MyProfilePage() {
           <CardHeader>
             <div className="flex items-center justify-between">
               <CardTitle className="text-lg lg:text-xl">Certificate</CardTitle>
-              <Button variant="ghost" size="sm">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setIsAddLicensesOrCertificationsModalOpen(true)}
+              >
                 <Plus className="h-4 w-4" />
                 <span className="hidden sm:inline ml-1">Add</span>
               </Button>
@@ -581,16 +601,29 @@ export default function MyProfilePage() {
                   <div className="flex items-start justify-between">
                     <div>
                       <h3 className="font-semibold text-gray-900 text-sm lg:text-base">
-                        {cert.title}
+                        {cert.name}
                       </h3>
                       <p className="text-xs lg:text-sm text-gray-600">
-                        {cert.issuer}
+                        {cert.issuingOrganization}
                       </p>
                       <p className="text-xs lg:text-sm text-gray-500">
-                        {cert.date}
+                        {cert.startMonth} {cert.startYear} -{" "}
+                        {`${
+                          !cert.endMonth
+                            ? "Present"
+                            : `${cert.endMonth}
+                              ${cert.endYear}`
+                        }`}
                       </p>
                     </div>
-                    <Button variant="ghost" size="sm">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => {
+                        setEditLicensesOrCertifications(cert);
+                        setIsEditLicensesOrCertificationsModalOpen(true);
+                      }}
+                    >
                       <Edit className="h-3 w-3 lg:h-4 lg:w-4" />
                     </Button>
                   </div>
@@ -729,6 +762,13 @@ export default function MyProfilePage() {
           isOpen={isEditExperienceModalOpen}
           onClose={() => setIsEditExperienceModalOpen(false)}
           experienceData={editExperienceData}
+        />
+      )}
+      {editLicensesOrCertifications && (
+        <EditLicenseOrCertificationsModal
+          isOpen={isEditLicensesOrCertificationsModalOpen}
+          onClose={() => setIsEditLicensesOrCertificationsModalOpen(false)}
+          certificationData={editLicensesOrCertifications}
         />
       )}
     </div>
