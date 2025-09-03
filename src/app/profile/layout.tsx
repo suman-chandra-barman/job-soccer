@@ -5,7 +5,7 @@ function ProfileLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="container mx-auto px-4 md:flex md:min-h-screen gap-6 md:py-10">
       <ProfileSidebar />
-      <div >{children}</div>
+      {children}
     </div>
   );
 }
