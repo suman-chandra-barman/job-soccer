@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef } from "react";
-import { Upload, Video, X, Play } from "lucide-react";
+import { Upload, Video, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
