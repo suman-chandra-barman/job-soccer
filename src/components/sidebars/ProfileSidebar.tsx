@@ -8,7 +8,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const navigationItems = [
-  { id: "", label: "My Profile" },
+  { id: "/", label: "My Profile" },
   { id: "billing", label: "Billing" },
   { id: "jobs", label: "Jobs" },
   { id: "requests", label: "Accept Request" },
@@ -22,8 +22,13 @@ export default function ProfileSidebar() {
     setSidebarOpen(false);
   }, [pathname]);
 
-  let activeSection = pathname.replace(/^\/profile\/?/, "");
-  if (activeSection.includes("/")) activeSection = activeSection.split("/")[0];
+  // Extract active section from pathname
+  let activeSection = pathname.replace(/^\/profile\/candidate\/?/, "");
+  if (activeSection === "") {
+    activeSection = "/"; 
+  } else if (activeSection.includes("/")) {
+    activeSection = activeSection.split("/")[0];
+  }
 
   // Responsive sidebar
   return (
@@ -42,7 +47,10 @@ export default function ProfileSidebar() {
 
       {/* Sidebar Overlay for Mobile */}
       {sidebarOpen && (
-        <div className="flex md:hidden absolute z-50" onClick={() => setSidebarOpen(false)}>
+        <div
+          className="flex md:hidden absolute z-50"
+          onClick={() => setSidebarOpen(false)}
+        >
           <aside
             className="relative w-64 bg-white border rounded-2xl border-gray-200 shadow-lg h-full flex flex-col animate-slide-in"
             onClick={(e) => e.stopPropagation()}
@@ -78,7 +86,11 @@ function SidebarContent({ activeSection }: { activeSection: string }) {
             return (
               <li key={item.id}>
                 <Link
-                  href={item.id ? `/profile/${item.id}` : "/profile"}
+                  href={
+                    item.id
+                      ? `/profile/candidate/${item.id}`
+                      : "/profile/candidate"
+                  }
                   className="block"
                 >
                   <Button
