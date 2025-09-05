@@ -138,28 +138,28 @@ function MyNetworkPage() {
       </div>
 
       {/* Clubs */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
         {clubsData.map((job) => (
           <EmployerCard key={job.id} job={job} />
         ))}
       </div>
       {/* Players */}
       <div className="my-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
           {candidates.map((candidate: TCandidate) => (
             <CandidateCard key={candidate.id} candidate={candidate} />
           ))}
         </div>
       </div>
       {/* Clubs */}
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
         {clubsData.map((job) => (
           <EmployerCard key={job.id} job={job} />
         ))}
       </div>
       {/* Players */}
       <div className="my-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
           {candidates.map((candidate: TCandidate) => (
             <CandidateCard key={candidate.id} candidate={candidate} />
           ))}
