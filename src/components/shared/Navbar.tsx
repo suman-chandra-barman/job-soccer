@@ -25,7 +25,7 @@ export function Navbar() {
     { name: "Job Board", href: "/job-board" },
     { name: "My Network", href: "/my-network" },
     { name: "Sign In", href: "/signin" },
-    { name: "Register", href: "/register" },
+    { name: "Sign Up", href: "/signup" },
   ];
 
   const iconLinks = [

@@ -1,24 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
-import {
-  MapPin,
-  Clock,
-  DollarSign,
-  Users,
-  Calendar,
-  Star,
-  Bookmark,
-  Share2,
-  ArrowLeft,
-  SquareCheck,
-} from "lucide-react";
-import { JobSearch } from "@/components/search/JobSearch";
+import React from "react";
+import { MapPin, SquareCheck } from "lucide-react";
 import { JobFilters } from "@/components/jobs/JobFilters";
 import { TCandidate } from "@/components/home/Canditates";
 import user1 from "@/assets/candidates/user1.png";
 import user2 from "@/assets/candidates/user2.png";
 import CandidateCard from "@/components/cards/CandidateCard";
+import { JobSearch } from "@/components/search/JobSearch";
 
 // TypeScript interfaces
 interface JobDetails {
@@ -128,9 +117,9 @@ const JobDetailsPage = () => {
         <JobFilters />
       </div>
       <div className="container mx-auto px-4 md:px-0 py-16">
-        <div className="flex flex-col-reverse md:flex-row justify-between gap-4">
+        <div className="flex flex-col-reverse lg:flex-row justify-between gap-4">
           {/* left column */}
-          <div className="flex-1 flex flex-col gap-4">
+          <div className="flex-1 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-4">
             {candidates.map((candidate: TCandidate) => (
               <CandidateCard key={candidate.id} candidate={candidate} />
             ))}
