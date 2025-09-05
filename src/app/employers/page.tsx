@@ -6,6 +6,7 @@ import FindYourDreamTeam from "@/components/employer/FindYourDreamTeam";
 import { TClub } from "../all-employer/page";
 import { EmployerCard } from "@/components/cards/EmployerCard";
 import { Link } from "lucide-react";
+import { EmployerSearch } from "@/components/search/EmploerSearch";
 
 const clubsData: TClub[] = [
   {
@@ -59,12 +60,11 @@ function EmployersPage() {
     <div>
       <div className="bg-[#F7F6F2]">
         <h2 className="text-3xl md:text-4xl text-[#362F05] text-center pt-10 mb-24">
-          Find Your <span className="text-green-400">Ultimate Job</span>
+          Find Your <span className="text-green-400">Ultimate Employers</span>
           <br />
           Search Companion
         </h2>
-        <JobSearch />
-        <JobFilters />
+        <EmployerSearch />
       </div>
       {/* Jobs */}
       <div className="container mx-auto px-4 md:px-0">
@@ -78,7 +78,7 @@ function EmployersPage() {
               <Link href="/job-board">See All</Link>
             </Button>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
             {clubsData.map((job) => (
               <EmployerCard key={job.id} job={job} />
             ))}
@@ -92,7 +92,7 @@ function EmployersPage() {
               See All
             </Button>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
             {clubsData.map((job) => (
               <EmployerCard key={job.id} job={job} />
             ))}
@@ -107,7 +107,7 @@ function EmployersPage() {
               See All
             </Button>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
             {clubsData.map((job) => (
               <EmployerCard key={job.id} job={job} />
             ))}
@@ -122,7 +122,7 @@ function EmployersPage() {
               See All
             </Button>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
             {clubsData.map((job) => (
               <EmployerCard key={job.id} job={job} />
             ))}

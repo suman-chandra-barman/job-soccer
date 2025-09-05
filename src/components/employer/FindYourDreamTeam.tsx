@@ -80,14 +80,14 @@ const FindYourDreamTeam = () => {
           </div>
 
           {/* Right Column - Jobs */}
-          <div className="bg-[#F7F6F2] rounded-3xl p-2 md:p-6 lg:w-3/5 w-full">
+          <div className="bg-[#F7F6F2] rounded-3xl p-4 md:p-6 lg:w-3/5 w-full">
             <div className="flex items-center justify-between mb-8">
               <h2 className="text-3xl md:4xl font-bold text-gray-900">
                 Candidate
               </h2>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4 mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 mb-8">
               {candidates.map((candidate: TCandidate) => (
                 <CandidateCard key={candidate.id} candidate={candidate} />
               ))}
