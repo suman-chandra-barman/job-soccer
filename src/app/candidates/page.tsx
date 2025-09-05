@@ -1,6 +1,5 @@
 import FindYourDreamTeam from "@/components/candidates/FindYourDreamTeam";
 import { TCandidate } from "@/components/home/Canditates";
-import { JobFilters } from "@/components/jobs/JobFilters";
 import { Button } from "@/components/ui/button";
 import React from "react";
 import user1 from "@/assets/candidates/user1.png";
@@ -53,7 +52,6 @@ function CandidatesPage() {
           Search Companion
         </h2>
         <CandidateSearch />
-        <JobFilters />
       </div>
       {/* Jobs */}
       <div className="container mx-auto px-4 md:px-0">
@@ -67,7 +65,7 @@ function CandidatesPage() {
               <Link href="/job-board"> See All</Link>
             </Button>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
             {candidates.map((candidate: TCandidate) => (
               <CandidateCard key={candidate.id} candidate={candidate} />
             ))}
@@ -81,7 +79,7 @@ function CandidatesPage() {
               <Link href="/job-board"> See All</Link>
             </Button>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
             {candidates.map((candidate: TCandidate) => (
               <CandidateCard key={candidate.id} candidate={candidate} />
             ))}
@@ -96,7 +94,7 @@ function CandidatesPage() {
               <Link href="/job-board"> See All</Link>
             </Button>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
             {candidates.map((candidate: TCandidate) => (
               <CandidateCard key={candidate.id} candidate={candidate} />
             ))}

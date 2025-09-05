@@ -97,7 +97,7 @@ const FindYourDreamTeam = () => {
               </h2>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4 mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 mb-8">
               {clubsData.map((job) => (
                 <EmployerCard key={job.id} job={job} />
               ))}
