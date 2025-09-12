@@ -142,22 +142,22 @@ export function Navbar() {
   ];
 
   return (
-    <nav className="bg-white border-b sticky top-0 z-50">
+    <nav className="bg-[#FFF8CC] border-b sticky top-0 z-50 text-[#362F05]">
       <div className="container mx-auto px-4">
-        <div className="flex items-center gap-4 justify-between py-4">
+        <div className="flex items-center gap-4 justify-between py-1">
           {/* Logo */}
-          <Link href="/" className="flex items-center">
+          <Link href="/" className="flex items-center bg-white p-1 rounded-full">
             <Image
               src={logo}
               alt="Logo"
-              className="object-cover h-14 w-auto"
+              className="h-16 w-16"
               priority
             />
           </Link>
 
           {/* Hamburger Menu for Mobile */}
           <button
-            className="lg:hidden text-gray-600 hover:text-green-500"
+            className="lg:hidden hover:text-green-500"
             onClick={() => setIsOpen(true)}
             aria-label="Toggle menu"
           >
@@ -174,7 +174,7 @@ export function Navbar() {
                 className={`text-sm font-medium transition-colors pb-1 ${
                   isActiveLink(link.href)
                     ? "text-green-500"
-                    : "text-gray-600 hover:text-green-500"
+                    : " hover:text-green-500"
                 }`}
               >
                 {link.name}
@@ -189,7 +189,7 @@ export function Navbar() {
                 className={`flex flex-col items-center transition-colors ${
                   isActiveLink(link.href)
                     ? "text-green-500"
-                    : "text-gray-600 hover:text-green-500"
+                    : " hover:text-green-500"
                 }`}
               >
                 <link.icon className="h-5 w-5" />
