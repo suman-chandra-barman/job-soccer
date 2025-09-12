@@ -50,7 +50,7 @@ export function Features() {
   return (
     <section className="bg-[#F7F6F2]">
       <div className="py-8 text-center bg-[#FFF8CC]">
-        <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900">
+        <h2 className="text-2xl md:text-4xl font-bold text-center text-gray-900">
           Why is Jobsoccer unique?
         </h2>
       </div>

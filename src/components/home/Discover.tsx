@@ -8,7 +8,7 @@ export function Discover() {
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-[#362F05] mb-4">
+          <h2 className="text-2xl md:text-4xl font-bold text-[#362F05] mb-4">
             What You Will Discover Here
           </h2>
         </div>

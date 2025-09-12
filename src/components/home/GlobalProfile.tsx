@@ -7,7 +7,7 @@ export function GlobalProfile() {
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-8">
-          <h2 className="text-3xl md:text-4xl  font-bold text-gray-900 mb-4">
+          <h2 className="text-2xl md:text-4xl  font-bold text-gray-900 mb-4">
             Create your profile and get seen globally!
           </h2>
         </div>

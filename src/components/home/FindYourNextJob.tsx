@@ -17,7 +17,7 @@ const FindYourNextJob = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
           {/* Left Column - Opportunities */}
           <div className={`space-y-6 py-8`}>
-            <h2 className="text-3xl md:text-4xl font-bold text-[#362F05] leading-tight">
+            <h2 className="text-2xl md:text-4xl font-bold text-[#362F05] leading-tight">
               Find the Right Opportunity for You
             </h2>
 

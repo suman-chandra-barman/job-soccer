@@ -55,7 +55,7 @@ export function Candidates() {
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-[#362F05] mb-3">
+          <h2 className="text-2xl md:text-4xl font-bold text-[#362F05] mb-3">
             Find Your Dream Team
           </h2>
           <p className=" text-[#504A20] max-w-3xl mx-auto">
