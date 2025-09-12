@@ -10,14 +10,10 @@ export function GlobalProfile() {
           <h2 className="text-3xl md:text-4xl  font-bold text-gray-900 mb-4">
             Create your profile and get seen globally!
           </h2>
-          <p className="text-gray-600 text-lg">
-            We need more space for this section. It&apos;s too close to the
-            section above.
-          </p>
         </div>
 
         {/* Main Content */}
-        <div className="grid md:grid-cols-2 gap-12 items-center">
+        <div className="grid md:grid-cols-2 gap-4 items-center">
           {/* Left Side - Earth Image */}
           <div className="flex justify-center">
             <div className="relative w-full max-w-lg aspect-square overflow-hidden">
@@ -45,34 +41,34 @@ export function GlobalProfile() {
           {/* Right Side - Content */}
           <div className="space-y-8">
             {/* Feature Cards */}
-            <div className="grid gap-4">
+            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
               {/* Global Access */}
               <div className="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm">
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                <h3 className="text-xl font-bold text-[#362F05] mb-2">
                   Global Access
                 </h3>
-                <p className="text-gray-600">
-                  Connect with clubs & agents from 50+ countries
+                <p className="text-[#A19C80]">
+                  Connect with clubs and agent around the world
                 </p>
               </div>
 
               {/* Visibility */}
               <div className="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm">
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                <h3 className="text-xl font-bold text-[#362F05] mb-2">
                   Visibility
                 </h3>
-                <p className="text-gray-600">
+                <p className="text-[#A19C80]">
                   Showcase your game. Get scouted. Go global
                 </p>
               </div>
 
               {/* Opportunities */}
               <div className="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm">
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                <h3 className="text-xl font-bold text-[#362F05] mb-2">
                   Opportunities
                 </h3>
-                <p className="text-gray-600">
-                  1,253 active job offers from 62 countries
+                <p className="text-[#A19C80]">
+                  Discover jobs offer and trials worldwide
                 </p>
               </div>
             </div>
