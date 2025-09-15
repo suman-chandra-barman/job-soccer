@@ -51,7 +51,7 @@ const FindYourDreamTeam = () => {
             Find Your Dream Team
           </h2>
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-stretch">
           {/* Left Column - Opportunities */}
           <div className={``}>
             <Image
@@ -69,7 +69,7 @@ const FindYourDreamTeam = () => {
               </h2>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
               {candidates.map((candidate: TCandidate) => (
                 <CandidateCard key={candidate.id} candidate={candidate} />
               ))}
