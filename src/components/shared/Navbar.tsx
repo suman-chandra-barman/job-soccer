@@ -148,14 +148,33 @@ export function Navbar() {
           </Link>
 
           {/* Hamburger Menu for Mobile */}
-          <button
-            className="lg:hidden hover:text-green-500"
-            onClick={() => setIsOpen(true)}
-            aria-label="Toggle menu"
-          >
-            <Menu className="h-6 w-6" />
-          </button>
-
+          <div className="lg:hidden flex items-center gap-2">
+            <button
+              className=" hover:text-green-500"
+              onClick={() => setIsOpen(true)}
+              aria-label="Toggle menu"
+            >
+              <Menu className="h-6 w-6" />
+            </button>
+            {isLoggedIn && (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Avatar className="w-8 h-8 cursor-pointer">
+                    <AvatarImage
+                      src="https://github.com/shadcn.png"
+                      alt="@shadcn"
+                    />
+                    <AvatarFallback>S</AvatarFallback>
+                  </Avatar>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-56" align="start">
+                  <DropdownMenuItem>Profile</DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem>Log out</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            )}
+          </div>
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center justify-end gap-4 lg:gap-8 w-full">
             {/* Icon Links */}
