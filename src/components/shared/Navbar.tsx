@@ -5,22 +5,31 @@ import {
   Home,
   MessageCircle,
   Bell,
-  CircleUserRound,
+  Users,
+  Building2,
+  Briefcase,
+  LogIn,
   Crown,
   Menu,
-  X,
+  UserPlus,
+  UserSquare,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import logo from "@/assets/logo.png";
 import Link from "next/link";
 import NotificationModal from "../modals/NotificationModal";
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from "../ui/sheet";
 import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from "../ui/sheet";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
+import { Avatar, AvatarFallback } from "../ui/avatar";
+import { AvatarImage } from "@radix-ui/react-avatar";
 
 // Types for notification data
 interface NotificationItem {
@@ -35,48 +44,33 @@ export function Navbar() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
-  const isLoggedIn = false;
-
-  const topNavLinks = isLoggedIn
-    ? [
-        { name: "Candidates", href: "/candidates" },
-        { name: "Employers", href: "/employers" },
-        { name: "Job Board", href: "/job-board" },
-        { name: "My Network", href: "/my-network" },
-      ]
-    : [
-        { name: "Candidates", href: "/candidates" },
-        { name: "Employers", href: "/employers" },
-        { name: "Job Board", href: "/job-board" },
-        { name: "My Network", href: "/my-network" },
-        { name: "Sign In", href: "/signin" },
-        { name: "Sign Up", href: "/signup" },
-      ];
+  const isLoggedIn = true;
 
   const iconLinks = isLoggedIn
     ? [
         { name: "Home", href: "/", icon: Home },
-        { name: "Message", href: "/messages", icon: MessageCircle },
+        { name: "Candidates", href: "/candidates", icon: Users },
+        { name: "Employers", href: "/employers", icon: Building2 },
+        { name: "Job Board", href: "/job-board", icon: Briefcase },
+        { name: "My Network", href: "/my-network", icon: UserSquare },
         { name: "Upgrade", href: "/upgrade", icon: Crown },
+        { name: "Message", href: "/messages", icon: MessageCircle },
         {
           name: "Notification",
           href: "#",
           icon: Bell,
           onClick: () => setIsNotificationOpen(true),
         },
-        { name: "Profile", href: "/profile/candidate", icon: CircleUserRound },
       ]
     : [
         { name: "Home", href: "/", icon: Home },
-        { name: "Message", href: "/messages", icon: MessageCircle },
+        { name: "Candidates", href: "/candidates", icon: Users },
+        { name: "Employers", href: "/employers", icon: Building2 },
+        { name: "Job Board", href: "/job-board", icon: Briefcase },
         { name: "Upgrade", href: "/upgrade", icon: Crown },
-        {
-          name: "Notification",
-          href: "#",
-          icon: Bell,
-          onClick: () => setIsNotificationOpen(true),
-        },
-        { name: "Profile", href: "/profile/candidate", icon: CircleUserRound },
+        { name: "Messages", href: "/messages", icon: MessageCircle },
+        { name: "Sign In", href: "/signin", icon: LogIn },
+        { name: "Sign Up", href: "/signup", icon: UserPlus },
       ];
 
   const isActiveLink = (href) => pathname === href;
@@ -146,13 +140,11 @@ export function Navbar() {
       <div className="container mx-auto px-4">
         <div className="flex items-center gap-4 justify-between py-1">
           {/* Logo */}
-          <Link href="/" className="flex items-center bg-white p-1 rounded-full">
-            <Image
-              src={logo}
-              alt="Logo"
-              className="h-16 w-16"
-              priority
-            />
+          <Link
+            href="/"
+            className="flex items-center bg-white p-1 rounded-full"
+          >
+            <Image src={logo} alt="Logo" className="h-16 w-16" priority />
           </Link>
 
           {/* Hamburger Menu for Mobile */}
@@ -166,20 +158,6 @@ export function Navbar() {
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center justify-end gap-4 lg:gap-8 w-full">
-            {/* Text Links */}
-            {topNavLinks.map((link) => (
-              <Link
-                key={link.name}
-                href={link.href}
-                className={`text-sm font-medium transition-colors pb-1 ${
-                  isActiveLink(link.href)
-                    ? "text-green-500"
-                    : " hover:text-green-500"
-                }`}
-              >
-                {link.name}
-              </Link>
-            ))}
             {/* Icon Links */}
             {iconLinks.map((link) => (
               <Link
@@ -196,6 +174,24 @@ export function Navbar() {
                 <span className="text-xs mt-1">{link.name}</span>
               </Link>
             ))}
+            {isLoggedIn && (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Avatar className="w-10 h-10 cursor-pointer">
+                    <AvatarImage
+                      src="https://github.com/shadcn.png"
+                      alt="@shadcn"
+                    />
+                    <AvatarFallback>S</AvatarFallback>
+                  </Avatar>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-56" align="start">
+                  <DropdownMenuItem>Profile</DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem>Log out</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            )}
           </div>
         </div>
 
@@ -216,20 +212,6 @@ export function Navbar() {
                 </SheetTitle>
               </SheetHeader>
               <div className="flex flex-col space-y-6 mt-8 px-4">
-                {topNavLinks.map((link) => (
-                  <Link
-                    key={link.name}
-                    href={link.href}
-                    onClick={() => setIsOpen(false)}
-                    className={`transition-colors ${
-                      isActiveLink(link.href)
-                        ? "text-green-500"
-                        : "text-gray-600 hover:text-green-500"
-                    }`}
-                  >
-                    {link.name}
-                  </Link>
-                ))}
                 {iconLinks.map((link) => (
                   <Link
                     key={link.name}
