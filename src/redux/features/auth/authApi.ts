@@ -12,7 +12,19 @@ const authApi = baseApi.injectEndpoints({
       },
       invalidatesTags:[""]
     }),
+    signup: builder.mutation({
+      query: (userInfo) => {
+        console.log("userInfo from authapi", userInfo)
+        return {
+          url: "/auth/signup",
+          method: "POST",
+          body: userInfo,
+        };
+      },
+      invalidatesTags:[""]
+
+    }),
   }),
 });
 
-export const { useLoginMutation } = authApi;
+export const { useLoginMutation, useSignupMutation } = authApi;

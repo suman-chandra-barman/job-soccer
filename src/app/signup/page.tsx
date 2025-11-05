@@ -8,7 +8,6 @@ import { toast } from "sonner";
 import { FaUser, FaEye, FaEyeSlash } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Checkbox } from "@/components/ui/checkbox";
 import {
   Form,
   FormControl,
@@ -20,10 +19,12 @@ import {
 import { signUpSchema, type SignUpFormData } from "@/shchemas/signupValidation";
 import { useRouter } from "next/navigation";
 import RoleSelect from "@/components/input/SelectRole";
+import { useSignupMutation } from "@/redux/features/auth/authApi";
 
 export default function SignUpPage() {
+  const [userRype, setUserRype] = useState<string>("");
   const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [signup, { isLoading }] = useSignupMutation();
 
   const router = useRouter();
 
@@ -35,27 +36,33 @@ export default function SignUpPage() {
       email: "",
       role: undefined,
       password: "",
-      agreeToTerms: false,
     },
   });
 
-  const onSubmit = async (data: SignUpFormData) => {
-    setIsLoading(true);
+  const onSubmit = async (formData: SignUpFormData) => {
     try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      console.log("Signup data:", data);
-      toast.success("Account created successfully!", {
-        description: "Welcome to our platform",
-      });
-      form.reset();
-      router.push("/email-verification");
-    } catch (error) {
+      const payload = {
+        ...formData,
+        userType: userRype,
+        loginProvider: "email",
+      } as unknown;
+
+      // Call the signup mutation
+      const userData = await signup(payload).unwrap();
+
+      if (userData.success) {
+        console.log("User data:", userData);
+
+        toast.success("Account created successfully!", {
+          description: "Welcome to our platform",
+        });
+        form.reset();
+        router.push(`/email-verification?email=${encodeURIComponent(formData.email)}&reason=account_verification`);
+      }
+    } catch {
       toast.error("Something went wrong!", {
         description: "Please try again later.",
       });
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -140,11 +147,11 @@ export default function SignUpPage() {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-sm font-medium text-gray-700">
-                      E-mail
+                      Email
                     </FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="Enter your mail"
+                        placeholder="Enter your email"
                         className="bg-gray-100 border-gray-200"
                         {...field}
                       />
@@ -167,6 +174,7 @@ export default function SignUpPage() {
                       <RoleSelect
                         value={field.value}
                         onValueChange={field.onChange}
+                        setUserRype={setUserRype}
                       />
                     </FormControl>
                     <FormMessage />
@@ -187,7 +195,7 @@ export default function SignUpPage() {
                       <div className="relative">
                         <Input
                           type={showPassword ? "text" : "password"}
-                          placeholder="Enter your Password"
+                          placeholder="Enter your password"
                           className="pr-10 bg-gray-100 border-gray-200"
                           {...field}
                         />
@@ -205,32 +213,6 @@ export default function SignUpPage() {
                       </div>
                     </FormControl>
                     <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              {/* Terms and Conditions */}
-              <FormField
-                control={form.control}
-                name="agreeToTerms"
-                render={({ field }) => (
-                  <FormItem className="flex flex-row items-start space-x-3 space-y-0 text-black">
-                    <FormControl>
-                      <Checkbox
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
-                        className="cursor-pointer"
-                      />
-                    </FormControl>
-                    <div className="space-y-1 leading-none">
-                      <FormLabel className="text-sm text-gray-600">
-                        I agree to the{" "}
-                        <Link href="#" className="underline">
-                          Terms & Conditions
-                        </Link>
-                      </FormLabel>
-                      <FormMessage />
-                    </div>
                   </FormItem>
                 )}
               />

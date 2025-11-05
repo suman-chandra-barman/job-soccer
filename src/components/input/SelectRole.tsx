@@ -5,30 +5,26 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { ChevronDown } from "lucide-react";
+import { CandidateRole, EmployerRole } from "@/types/profile";
 
-const candidateRoles = [
-  "Professional Player",
-  "Amateur Player",
-  "High School Player",
-  "College Player",
-  "Staff on The field",
-  "Office Staff",
-];
-
-const employerRoles = [
-  "Club ( professional & amateur)",
-  "Academy",
-  "High School",
-  "College [University",
-  "Agent",
-];
+const candidateRoles = Object.values(CandidateRole).filter(
+  (value) => typeof value === "string"
+) as string[];
+const employerRoles = Object.values(EmployerRole).filter(
+  (value) => typeof value === "string"
+) as string[];
 
 interface RoleSelectProps {
   value?: string;
   onValueChange?: (value: string) => void;
+  setUserRype: (value: string) => void;
 }
 
-export default function RoleSelect({ value, onValueChange }: RoleSelectProps) {
+export default function RoleSelect({
+  value,
+  onValueChange,
+  setUserRype,
+}: RoleSelectProps) {
   const [open, setOpen] = useState(false);
   const [selectedRole, setSelectedRole] = useState(value || "");
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -56,6 +52,18 @@ export default function RoleSelect({ value, onValueChange }: RoleSelectProps) {
   const handleRoleSelect = (role: string) => {
     setSelectedRole(role);
     onValueChange?.(role);
+    // Determine whether the selected role belongs to candidates or employers
+    const lowerRole = role.toString();
+    const isCandidate = candidateRoles.includes(lowerRole);
+    const userType = isCandidate ? "candidate" : "employer";
+
+    // Inform parent about the user type (keeps existing prop name `setUserRype`)
+    try {
+      setUserRype(userType);
+    } catch {
+      // If caller didn't pass a setter or it throws, ignore silently
+    }
+
     setOpen(false);
   };
 

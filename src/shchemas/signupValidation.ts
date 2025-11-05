@@ -1,24 +1,16 @@
+import { CandidateRole, EmployerRole } from "@/types/profile";
 import { z } from "zod";
 
-const candidateRoles = [
-  "Professional Player",
-  "Amateur Player",
-  "High School Player",
-  "College Player",
-  "Staff on The field",
-  "Office Staff",
-] as const;
+// Create arrays of the string values from the enums
+const candidateRoles = Object.values(CandidateRole).filter(
+  (value) => typeof value === "string"
+) as string[];
+const employerRoles = Object.values(EmployerRole).filter(
+  (value) => typeof value === "string"
+) as string[];
 
-const employerRoles = [
-  "Club ( professional & amateur)",
-  "Academy",
-  "High School",
-  "College [University",
-  "Agent",
-] as const;
-
-// Combine all valid roles
-const allRoles = [...candidateRoles, ...employerRoles] as const;
+// Combine all valid roles as a union type for Zod
+const allRoles = [...candidateRoles, ...employerRoles] as [string, ...string[]];
 
 export const signUpSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
@@ -32,20 +24,13 @@ export const signUpSchema = z.object({
         return emailRegex.test(value) || "";
       },
       {
-        message: "Please enter a valid email or phone number",
+        message: "Please enter a valid email address",
       }
     ),
-  password: z
-    .string()
-    .min(6, "Password must be at least 6 characters")
-    .regex(/[A-Z]/, "Password must contain at least one uppercase letter"),
-  role: z.enum(allRoles, {
-    required_error: "Please select a role",
-    invalid_type_error: "Please select a valid role",
-  }),
-  agreeToTerms: z.boolean().refine((value) => value === true, {
-    message: "You must agree to the terms and conditions",
-  }),
+  password: z.string().min(4, "Password must be at least 4 characters long"),
+  role: z
+    .enum(allRoles as [string, ...string[]])
+    .describe("Please select a valid role"),
 });
 
 export type SignUpFormData = z.infer<typeof signUpSchema>;

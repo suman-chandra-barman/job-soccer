@@ -44,7 +44,7 @@ export function Navbar() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
-  const isLoggedIn = true;
+  const isLoggedIn = false;
 
   const iconLinks = isLoggedIn
     ? [
