@@ -13,13 +13,7 @@ import {
 } from "@/shchemas/profileValidation";
 import z from "zod";
 
-export type TCandidateRole =
-  | "professional-player"
-  | "amateur-player"
-  | "high-school-player"
-  | "college-player"
-  | "field-staff"
-  | "office-staff";
+export type TCandidateRole = CandidateRole;
 export type THighlightsType = "single" | "multiple";
 export type TSingleHighlights = z.infer<typeof singleHighlightsSchema>;
 export type TMultipleHighlights = z.infer<typeof multipleHighlightsSchema>;
@@ -65,3 +59,4 @@ export enum EmployerRole {
   COLLEGE_UNIVERSITY = "College/University",
   AGENT = "Agent",
 }
+

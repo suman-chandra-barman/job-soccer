@@ -1,16 +1,6 @@
-import { TCandidateRole, THighlightsType } from "@/types/profile";
+import { CandidateRole, TCandidateRole, THighlightsType } from "@/types/profile";
 import { z } from "zod";
 
-// Personal Information Schema
-export const personalInfoSchema = z.object({
-  image: z.instanceof(File).optional(),
-  firstName: z.string().min(1, "First name is required"),
-  lastName: z.string().min(1, "Last name is required"),
-  dateOfBirth: z.string().min(1, "Date of birth is required"),
-  placeOfBirth: z.string().min(1, "Place of birth is required"),
-  nationality: z.string().min(1, "Nationality is required"),
-  phoneNumber: z.string().min(10, "Phone number must be at least 10 digits"),
-});
 
 // Amateur player Professional Information Schema
 export const amateurPlayerProfessionalInfoSchema = z.object({
@@ -25,6 +15,17 @@ export const amateurPlayerProfessionalInfoSchema = z.object({
   league: z.string().min(1, "League is required"),
   agent: z.string().min(1, "Agent is required"),
   socialMedia: z.string().min(1, "Social media is required"),
+});
+
+// Personal Information Schema
+export const personalInfoSchema = z.object({
+  image: z.instanceof(File).optional(),
+  firstName: z.string().min(1, "First name is required"),
+  lastName: z.string().min(1, "Last name is required"),
+  dateOfBirth: z.string().min(1, "Date of birth is required"),
+  placeOfBirth: z.string().min(1, "Place of birth is required"),
+  nationality: z.string().min(1, "Nationality is required"),
+  phoneNumber: z.string().min(10, "Phone number must be at least 10 digits"),
 });
 
 // Professional player Professional Information Schema
@@ -151,32 +152,32 @@ export const candidateRoleConfig: Record<
     highlightsSchema: z.ZodSchema;
   }
 > = {
-  "professional-player": {
+  [CandidateRole.PROFESSIONAL_PLAYER]: {
     professionalSchema: professionalPlayerProfessionalInfoSchema,
     highlightsType: "single",
     highlightsSchema: singleHighlightsSchema,
   },
-  "amateur-player": {
+  [CandidateRole.AMATEUR_PLAYER]: {
     professionalSchema: amateurPlayerProfessionalInfoSchema,
     highlightsType: "single",
     highlightsSchema: singleHighlightsSchema,
   },
-  "high-school-player": {
+  [CandidateRole.HIGH_SCHOOL]: {
     professionalSchema: highSchoolPlayerProfessionalInfoSchema,
     highlightsType: "single",
     highlightsSchema: singleHighlightsSchema,
   },
-  "college-player": {
+  [CandidateRole.COLLEGE_UNIVERSITY]: {
     professionalSchema: collegePlayerProfessionalInfoSchema,
     highlightsType: "single",
     highlightsSchema: singleHighlightsSchema,
   },
-  "field-staff": {
+  [CandidateRole.ON_FIELD_STAFF]: {
     professionalSchema: fieldStaffProfessionalInfoSchema,
     highlightsType: "single",
     highlightsSchema: singleHighlightsSchema,
   },
-  "office-staff": {
+  [CandidateRole.OFFICE_STAFF]: {
     professionalSchema: fieldStaffProfessionalInfoSchema,
     highlightsType: "single",
     highlightsSchema: singleHighlightsSchema,

@@ -13,7 +13,6 @@ import {
   type TCollegePlayerProfessionalInfo,
   type TOfficeStaffProfessionalInfo,
   type TFieldStaffProfessionalInfo,
-  type TCandidateRole,
   type TMultipleHighlights,
   CandidateRole,
 } from "@/types/profile";
@@ -26,14 +25,13 @@ import { HighSchoolPlayerProfessionalInfoForm } from "@/components/forms/HighSch
 import { CollegePlayerProfessionalInfoForm } from "@/components/forms/CollegePlayerProfessionalInfoForm";
 import { FieldStaffProfessionalInfoForm } from "@/components/forms/FieldStaffProfessionalInfoForm";
 import { OfficeStaffProfessionalInfoForm } from "@/components/forms/OfficeStaffProfessionalInfoForm";
+import { useAppSelector } from "@/redux/hooks";
+import { useGetMeQuery } from "@/redux/features/auth/authApi";
 
-interface CandidateProfileClientProps {
-  role: TCandidateRole;
-}
+export default function CandidateProfilePage() {
+  const token = useAppSelector((state) => state.auth.token);
+  const { data: user } = useGetMeQuery(undefined, { skip: !token });
 
-export default function CompleteProfilePage({
-  role,
-}: CandidateProfileClientProps) {
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState<{
     personalInfo?: TPersonalInfo;
@@ -48,11 +46,17 @@ export default function CompleteProfilePage({
   }>({});
 
   const router = useRouter();
+  const role = user?.data?.role as CandidateRole;
 
   const config = candidateRoleConfig[role];
 
   if (!config) {
-    return <div>Invalid role</div>;
+    return <div className="grid h-screen w-screen place-items-center">Loading...</div>;
+  }
+
+  // Redirect if no role is provided
+  if (!role) {
+    router.replace("/signin");
   }
 
   const steps = [

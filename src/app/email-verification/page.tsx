@@ -8,16 +8,20 @@ import { Input } from "@/components/ui/input";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
   useEmailVerifyMutation,
+  useGetMeQuery,
   useResendOtpMutation,
 } from "@/redux/features/auth/authApi";
 import { toast } from "sonner";
+import { useAppSelector } from "@/redux/hooks";
 
 export default function EmailVerificationPage() {
   const [otp, setOtp] = useState<string[]>(["", "", "", "", "", ""]);
-  const [resendTimer, setResendTimer] = useState(120);
+  const [resendTimer, setResendTimer] = useState(10);
 
   const [emailVerify, { isLoading }] = useEmailVerifyMutation();
   const [resendOtp, { isLoading: isResending }] = useResendOtpMutation();
+  const token = useAppSelector((state) => state.auth.token);
+  const { data: user } = useGetMeQuery(undefined, { skip: !token });
 
   const searchParams = useSearchParams();
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
@@ -34,6 +38,13 @@ export default function EmailVerificationPage() {
       router.replace("/signup");
     }
   }, [email, router, reason]);
+
+  useEffect(() => {
+    if (user?.data.userType) {
+      if (user.data.userType === "candidate") router.push(`/signup/candidate`);
+      else router.push(`/user/employer`);
+    }
+  }, [user, router]);
 
   useEffect(() => {
     if (resendTimer > 0) {
@@ -66,7 +77,7 @@ export default function EmailVerificationPage() {
 
     try {
       await resendOtp({ email, reason }).unwrap();
-      setResendTimer(120);
+      setResendTimer(10);
       toast.success("Verification code resent successfully!");
     } catch (error) {
       toast.error("Failed to resend verification code. Please try again.");
@@ -96,14 +107,6 @@ export default function EmailVerificationPage() {
 
       if (res.success) {
         toast.success("Email verified successfully!");
-        localStorage.setItem("accessToken", res.data.accessToken);
-
-        // Redirect based on the verification reason or default to success page
-        if (reason === "account_verification") {
-          router.push("/signin");
-        } else {
-          router.push("/success-message");
-        }
       }
     } catch (error) {
       toast.error("Failed to verify email. Please try again.");
@@ -114,6 +117,7 @@ export default function EmailVerificationPage() {
     }
   };
 
+  console.log("User", token, user?.data);
   return (
     <div className="min-h-screen flex">
       {/* Left Panel */}

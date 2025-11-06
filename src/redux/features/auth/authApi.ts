@@ -1,4 +1,5 @@
 import { baseApi } from "@/redux/api/baseApi";
+import { setCredentials } from "./authSlice";
 
 const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -25,8 +26,22 @@ const authApi = baseApi.injectEndpoints({
       query: (data) => ({
         url: "/auth/verify-email",
         method: "POST",
-        body: data, 
+        body: data,
       }),
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        try {
+          const { data } = await queryFulfilled;
+          if (data?.data.accessToken) {
+            const token = data.data.accessToken;
+            localStorage.setItem("accessToken", token);
+            dispatch(setCredentials({ user: null, token }));
+          } else {
+            console.warn("No token found in verification response:", data);
+          }
+        } catch (error) {
+          console.error("Email verification failed:", error);
+        }
+      },
     }),
 
     // RESEND OTP
@@ -43,7 +58,7 @@ const authApi = baseApi.injectEndpoints({
       query: (data) => ({
         url: "/auth/forgot-password",
         method: "POST",
-        body: data, 
+        body: data,
       }),
     }),
 
@@ -64,6 +79,28 @@ const authApi = baseApi.injectEndpoints({
         body: data,
       }),
     }),
+    //  GET CURRENT USER
+    getMe: builder.query({
+      query: () => ({
+        url: "/user/me",
+        method: "GET",
+      }),
+
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          const token = localStorage.getItem("accessToken");
+
+          console.log("User in getMe", token, data.data);
+          if (token) {
+            dispatch(setCredentials({ user: data.data, token }));
+          }
+        } catch (err) {
+          console.error("Get user info failed:", err);
+        }
+      },
+      providesTags: ["User"],
+    }),
   }),
 });
 
@@ -75,4 +112,5 @@ export const {
   useForgotPasswordMutation,
   useResetPasswordMutation,
   useChangePasswordMutation,
+  useGetMeQuery,
 } = authApi;
