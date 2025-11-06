@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useState } from "react";
@@ -59,8 +60,8 @@ export default function SignUpPage() {
         form.reset();
         router.push(`/email-verification?email=${encodeURIComponent(formData.email)}&reason=account_verification`);
       }
-    } catch {
-      toast.error("Something went wrong!", {
+    } catch (error: any) {
+      toast.error(error?.data?.errorSources[0]?.message || "Something went wrong!", {
         description: "Please try again later.",
       });
     }
