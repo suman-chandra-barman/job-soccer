@@ -90,8 +90,7 @@ const authApi = baseApi.injectEndpoints({
         try {
           const { data } = await queryFulfilled;
           const token = localStorage.getItem("accessToken");
-
-          console.log("User in getMe", token, data.data);
+          
           if (token) {
             dispatch(setCredentials({ user: data.data, token }));
           }

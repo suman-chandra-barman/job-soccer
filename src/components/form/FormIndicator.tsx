@@ -26,7 +26,7 @@ export function StepIndicator({ steps }: IStepIndicatorProps) {
                   step.completed
                     ? "bg-blue-500 border-blue-500 text-white"
                     : step.active
-                    ? "bg-blue-500 border-blue-500 text-white"
+                    ? "text-blue-500 border-blue-500 bg-white"
                     : "bg-white border-gray-300 text-gray-400"
                 }`}
               >
@@ -37,11 +37,7 @@ export function StepIndicator({ steps }: IStepIndicatorProps) {
                 )}
               </div>
               <span
-                className={`text-xs mt-2 font-medium ${
-                  step.active || step.completed
-                    ? "text-blue-600"
-                    : "text-gray-400"
-                }`}
+                className={`text-xs mt-2 font-medium`}
               >
                 {step.label}
               </span>

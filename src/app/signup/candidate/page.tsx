@@ -36,8 +36,8 @@ export default function CandidateProfilePage() {
   const [formData, setFormData] = useState<{
     personalInfo?: TPersonalInfo;
     professionalInfo?:
-      | TProfessionalPlayerProfessionalInfo
       | TAmateurPlayerProfessionalInfo
+      | TProfessionalPlayerProfessionalInfo
       | THighSchoolPlayerProfessionalInfo
       | TCollegePlayerProfessionalInfo
       | TOfficeStaffProfessionalInfo
@@ -51,12 +51,9 @@ export default function CandidateProfilePage() {
   const config = candidateRoleConfig[role];
 
   if (!config) {
-    return <div className="grid h-screen w-screen place-items-center">Loading...</div>;
-  }
-
-  // Redirect if no role is provided
-  if (!role) {
-    router.replace("/signin");
+    return (
+      <div className="grid h-screen w-full place-items-center">Loading...</div>
+    );
   }
 
   const steps = [
@@ -83,7 +80,6 @@ export default function CandidateProfilePage() {
   const handlePersonalInfoNext = (data: TPersonalInfo) => {
     setFormData((prev) => ({ ...prev, personalInfo: data }));
     setCurrentStep(2);
-    toast.success("Personal information saved successfully!");
   };
 
   const handleProfessionalInfoNext = (
@@ -97,7 +93,6 @@ export default function CandidateProfilePage() {
   ) => {
     setFormData((prev) => ({ ...prev, professionalInfo: data }));
     setCurrentStep(3);
-    toast.success("Professional information saved successfully!");
   };
 
   const handleHighlightsNext = (data: THighlights | TMultipleHighlights) => {

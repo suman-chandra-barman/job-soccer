@@ -14,7 +14,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { amateurPlayerProfessionalInfoSchema, TAmateurPlayerProfessionalInfo } from "@/shchemas/profileValidation";
+import { amateurPlayerProfessionalInfoSchema } from "@/shchemas/profileValidation";
+import type { TAmateurPlayerProfessionalInfo } from "@/types/profile";
 
 interface IAmateurPlayerProfessionalInfoFormProps {
   onNext: (data: TAmateurPlayerProfessionalInfo) => void;
@@ -38,15 +39,26 @@ export function AmateurPlayerProfessionalInfoForm({
     register,
     handleSubmit,
     setValue,
-    watch,
     formState: { errors, isValid },
   } = useForm<TAmateurPlayerProfessionalInfo>({
     resolver: zodResolver(amateurPlayerProfessionalInfoSchema),
-    defaultValues: initialData,
+    defaultValues: {
+      ...(initialData ?? {}),
+      height: {
+        size: initialData?.height?.size ?? "",
+        unit: initialData?.height?.unit ?? "ft",
+      },
+      weight: {
+        size: initialData?.weight?.size ?? "",
+        unit: initialData?.weight?.unit ?? "kg",
+      },
+    },
     mode: "onChange",
   });
 
   const onSubmit = (data: TAmateurPlayerProfessionalInfo) => {
+    console.log("Amateur Player Professional Info:", data);
+
     onNext(data);
   };
 
@@ -61,8 +73,16 @@ export function AmateurPlayerProfessionalInfoForm({
       <form className="space-y-8">
         <FormSection title="Professional Information">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Gender */}
             <FormField label="Gender" error={errors.gender?.message}>
-              <Select onValueChange={(value) => setValue("gender", value)}>
+              <Select
+                onValueChange={(value) =>
+                  setValue("gender", value, {
+                    shouldValidate: true,
+                    shouldDirty: true,
+                  })
+                }
+              >
                 <SelectTrigger className="bg-gray-50 border-0 w-full">
                   <SelectValue placeholder="Select your gender" />
                 </SelectTrigger>
@@ -74,67 +94,93 @@ export function AmateurPlayerProfessionalInfoForm({
               </Select>
             </FormField>
 
+            {/* Availability */}
             <FormField
               label="Availability"
               error={errors.availability?.message}
             >
               <Select
-                onValueChange={(value) => setValue("availability", value)}
+                onValueChange={(value) =>
+                  setValue(
+                    "availability",
+                    value as unknown as TAmateurPlayerProfessionalInfo["availability"],
+                    { shouldValidate: true, shouldDirty: true }
+                  )
+                }
               >
                 <SelectTrigger className="bg-gray-50 border-0 w-full">
                   <SelectValue placeholder="Availability" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="now">Now</SelectItem>
-                  <SelectItem value="later">Later</SelectItem>
-                  <SelectItem value="soon">Soon</SelectItem>
+                  <SelectItem value="Now">Now</SelectItem>
+                  <SelectItem value="Soon">Soon</SelectItem>
+                  <SelectItem value="Later">Later</SelectItem>
                 </SelectContent>
               </Select>
             </FormField>
 
-            <FormField label="Height" error={errors.height?.message}>
+            {/* Height */}
+            <FormField label="Height" error={errors.height?.size?.message}>
               <div className="flex space-x-2">
                 <Input
-                  {...register("height")}
+                  {...register("height.size")}
                   placeholder="Ex. 5.7"
                   className="bg-gray-50 border-0"
                 />
-                <Select defaultValue="ft">
+                <Select
+                  defaultValue={initialData?.height?.unit || "ft"}
+                  onValueChange={(value) =>
+                    setValue(
+                      "height.unit",
+                      value as unknown as TAmateurPlayerProfessionalInfo["height"]["unit"],
+                      { shouldValidate: true, shouldDirty: true }
+                    )
+                  }
+                >
                   <SelectTrigger className="w-20 bg-gray-50 border-0">
-                    <SelectValue />
+                    <SelectValue placeholder="Select" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="ft">ft</SelectItem>
                     <SelectItem value="cm">cm</SelectItem>
+                    <SelectItem value="in">in</SelectItem>
+                    <SelectItem value="m">m</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
             </FormField>
 
-            <FormField label="Weight" error={errors.weight?.message}>
+            {/* Weight */}
+            <FormField label="Weight" error={errors.weight?.size?.message}>
               <div className="flex space-x-2">
                 <Input
-                  {...register("weight")}
+                  {...register("weight.size")}
                   placeholder="Ex. 75"
                   className="bg-gray-50 border-0"
                 />
-                <Select defaultValue="kg">
+                <Select
+                  defaultValue={initialData?.weight?.unit || "kg"}
+                  onValueChange={(value) =>
+                    setValue(
+                      "weight.unit",
+                      value as unknown as TAmateurPlayerProfessionalInfo["weight"]["unit"],
+                      { shouldValidate: true, shouldDirty: true }
+                    )
+                  }
+                >
                   <SelectTrigger className="w-20 bg-gray-50 border-0">
-                    <SelectValue />
+                    <SelectValue placeholder="Select" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="kg">kg</SelectItem>
-                    <SelectItem value="lbs">lbs</SelectItem>
+                    <SelectItem value="lb">lb</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
             </FormField>
 
-            <FormField
-              label="Current club"
-              error={errors.currentClub?.message}
-              className="md:col-span-2"
-            >
+            {/* Current Club */}
+            <FormField label="Current club" error={errors.currentClub?.message}>
               <Input
                 {...register("currentClub")}
                 placeholder="Ex. Real Madrid"
@@ -142,88 +188,110 @@ export function AmateurPlayerProfessionalInfoForm({
               />
             </FormField>
 
-            <FormField label="Category" error={errors.category?.message}>
-              <Select onValueChange={(value) => setValue("category", value)}>
+            {/* National Team Category */}
+            <FormField
+              label="Category"
+              error={errors.nationalTeamCategory?.message}
+            >
+              <Select
+                onValueChange={(value) =>
+                  setValue(
+                    "nationalTeamCategory",
+                    value as unknown as TAmateurPlayerProfessionalInfo["nationalTeamCategory"],
+                    { shouldValidate: true, shouldDirty: true }
+                  )
+                }
+              >
                 <SelectTrigger className="bg-gray-50 border-0 w-full">
                   <SelectValue placeholder="Select your category" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="U10">U10</SelectItem>
-                  <SelectItem value="U11">U11</SelectItem>
-                  <SelectItem value="U12">U12</SelectItem>
-                  <SelectItem value="U13">U13</SelectItem>
                   <SelectItem value="U14">U14</SelectItem>
                   <SelectItem value="U15">U15</SelectItem>
                   <SelectItem value="U16">U16</SelectItem>
                   <SelectItem value="U17">U17</SelectItem>
                   <SelectItem value="U18">U18</SelectItem>
                   <SelectItem value="U19">U19</SelectItem>
+                  <SelectItem value="U20">U20</SelectItem>
+                  <SelectItem value="U21">U21</SelectItem>
                 </SelectContent>
               </Select>
             </FormField>
 
+            {/* Foot */}
             <FormField label="Foot" error={errors.foot?.message}>
-              <Select onValueChange={(value) => setValue("foot", value)}>
+              <Select
+                onValueChange={(value) =>
+                  setValue(
+                    "foot",
+                    value as unknown as TAmateurPlayerProfessionalInfo["foot"],
+                    { shouldValidate: true, shouldDirty: true }
+                  )
+                }
+              >
                 <SelectTrigger className="bg-gray-50 border-0 w-full">
                   <SelectValue placeholder="Foot" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="right">Right</SelectItem>
-                  <SelectItem value="left">Left</SelectItem>
-                  <SelectItem value="both">Both</SelectItem>
+                  <SelectItem value="Right">Right</SelectItem>
+                  <SelectItem value="Left">Left</SelectItem>
+                  <SelectItem value="Both">Both</SelectItem>
                 </SelectContent>
               </Select>
             </FormField>
 
+            {/* Position */}
             <FormField label="Position" error={errors.position?.message}>
-              <Select onValueChange={(value) => setValue("position", value)}>
+              <Select
+                onValueChange={(value) =>
+                  setValue(
+                    "position",
+                    value as unknown as TAmateurPlayerProfessionalInfo["position"],
+                    { shouldValidate: true, shouldDirty: true }
+                  )
+                }
+              >
                 <SelectTrigger className="bg-gray-50 border-0 w-full">
                   <SelectValue placeholder="Select your position" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="GK">GK</SelectItem>
-                  <SelectItem value="central back">Central back</SelectItem>
-                  <SelectItem value="left back">Left back</SelectItem>
-                  <SelectItem value="right back">Right back</SelectItem>
-                  <SelectItem value="defensive midfielder">Defensive midfielder</SelectItem>
-                  <SelectItem value="offensive midfielder">Offensive midfielder</SelectItem>
-                  <SelectItem value="right winger">Right winger</SelectItem>
-                  <SelectItem value="left winger">Left winger</SelectItem>
-                  <SelectItem value="forward">Forward</SelectItem>
-                  <SelectItem value="striker">Striker</SelectItem>
+                  <SelectItem value="Central back">Central back</SelectItem>
+                  <SelectItem value="Left back">Left back</SelectItem>
+                  <SelectItem value="Right back">Right back</SelectItem>
+                  <SelectItem value="Defensive midfielder">
+                    Defensive midfielder
+                  </SelectItem>
+                  <SelectItem value="Offensive midfielder">
+                    Offensive midfielder
+                  </SelectItem>
+                  <SelectItem value="Right winger">Right winger</SelectItem>
+                  <SelectItem value="Left winger">Left winger</SelectItem>
+                  <SelectItem value="Forward">Forward</SelectItem>
+                  <SelectItem value="Striker">Striker</SelectItem>
                 </SelectContent>
-              </Select> 
+              </Select>
             </FormField>
 
+            {/* League */}
             <FormField label="League" error={errors.league?.message}>
-              <Select onValueChange={(value) => setValue("league", value)}>
-                <SelectTrigger className="bg-gray-50 border-0 w-full">
-                  <SelectValue placeholder="Select League" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="premier">Premier League</SelectItem>
-                  <SelectItem value="championship">Championship</SelectItem>
-                  <SelectItem value="league-one">League One</SelectItem>
-                </SelectContent>
-              </Select>
+              <Input
+                {...register("league")}
+                placeholder="Ex. Premier League"
+                className="bg-gray-50 border-0"
+              />
             </FormField>
 
-            <FormField
-              label="Agent"
-              error={errors.agent?.message}
-              className="md:col-span-2"
-            >
-              <Select onValueChange={(value) => setValue("agent", value)}>
-                <SelectTrigger className="bg-gray-50 border-0 w-full">
-                  <SelectValue placeholder="Select your answer" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="yes">Yes</SelectItem>
-                  <SelectItem value="no">No</SelectItem>
-                </SelectContent>
-              </Select>
+            {/* Agent */}
+            <FormField label="Agent" error={errors.agent?.message}>
+              <Input
+                {...register("agent")}
+                placeholder="Agent"
+                className="bg-gray-50 border-0"
+              />
             </FormField>
 
+            {/* Social Media */}
             <FormField
               label="Social Media"
               error={errors.socialMedia?.message}

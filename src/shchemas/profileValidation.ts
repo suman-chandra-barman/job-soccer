@@ -1,31 +1,69 @@
-import { CandidateRole, TCandidateRole, THighlightsType } from "@/types/profile";
+import {
+  CandidateRole,
+  TCandidateRole,
+  THighlightsType,
+} from "@/types/profile";
 import { z } from "zod";
 
+// Personal Information Schema
+export const personalInfoSchema = z.object({
+  image: z.instanceof(File),
+  dateOfBirth: z
+    .string()
+    .refine(
+      (date) => {
+        const parsedDate = new Date(date);
+        return !isNaN(parsedDate.getTime()) && parsedDate < new Date();
+      },
+      {
+        message: "Date of birth must be a valid date in the past",
+      }
+    )
+    .transform((date) => new Date(date)),
+  placeOfBirth: z.string().trim().min(1, "Place of birth is required"),
+  nationality: z.string().trim().min(1, "Nationality is required"),
+  phoneNumber: z.string().trim().min(1, "Phone number is required"),
+});
 
 // Amateur player Professional Information Schema
 export const amateurPlayerProfessionalInfoSchema = z.object({
   gender: z.string().min(1, "Gender is required"),
-  availability: z.string().min(1, "Availability is required"),
-  height: z.string().min(1, "Height is required"),
-  weight: z.string().min(1, "Weight is required"),
+  availability: z.enum(["Now", "Soon", "Later"]),
+  height: z.object({
+    size: z.string().min(1, "Height is required"),
+    unit: z.enum(["cm", "m", "in", "ft"]),
+  }),
+  weight: z.object({
+    size: z.string().min(1, "Weight is required"),
+    unit: z.enum(["kg", "lb"]),
+  }),
   currentClub: z.string().min(1, "Current club is required"),
-  category: z.string().min(1, "Category is required"),
-  foot: z.string().min(1, "Foot is required"),
-  position: z.string().min(1, "Position is required"),
+  nationalTeamCategory: z.enum([
+    "U14",
+    "U15",
+    "U16",
+    "U17",
+    "U18",
+    "U19",
+    "U20",
+    "U21",
+  ]),
+  foot: z.enum(["Right", "Left", "Both"]),
+  position: z.enum([
+    "GK",
+    "Central back",
+    "Left back",
+    "Right back",
+    "Defensive midfielder",
+    "Offensive midfielder",
+    "Right winger",
+    "Left winger",
+    "Forward",
+    "Striker",
+  ]),
   league: z.string().min(1, "League is required"),
   agent: z.string().min(1, "Agent is required"),
   socialMedia: z.string().min(1, "Social media is required"),
-});
-
-// Personal Information Schema
-export const personalInfoSchema = z.object({
-  image: z.instanceof(File).optional(),
-  firstName: z.string().min(1, "First name is required"),
-  lastName: z.string().min(1, "Last name is required"),
-  dateOfBirth: z.string().min(1, "Date of birth is required"),
-  placeOfBirth: z.string().min(1, "Place of birth is required"),
-  nationality: z.string().min(1, "Nationality is required"),
-  phoneNumber: z.string().min(10, "Phone number must be at least 10 digits"),
 });
 
 // Professional player Professional Information Schema
@@ -159,8 +197,8 @@ export const candidateRoleConfig: Record<
   },
   [CandidateRole.AMATEUR_PLAYER]: {
     professionalSchema: amateurPlayerProfessionalInfoSchema,
-    highlightsType: "single",
-    highlightsSchema: singleHighlightsSchema,
+    highlightsType: "multiple",
+    highlightsSchema: multipleHighlightsSchema,
   },
   [CandidateRole.HIGH_SCHOOL]: {
     professionalSchema: highSchoolPlayerProfessionalInfoSchema,
@@ -183,4 +221,3 @@ export const candidateRoleConfig: Record<
     highlightsSchema: singleHighlightsSchema,
   },
 };
-
