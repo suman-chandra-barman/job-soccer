@@ -6,16 +6,44 @@ import React from "react";
 import CandidateCard from "@/components/cards/CandidateCard";
 import Link from "next/link";
 import { CandidateSearch } from "@/components/search/CandidateSearch";
-import {
-  useGetCandidateFeaturedQuery,
-} from "@/redux/features/candidate/candidateApi";
+import { useGetCandidateFeaturedQuery } from "@/redux/features/candidate/candidateApi";
 import { ICandidate } from "@/types/user";
-
+import { Skeleton } from "@/components/ui/skeleton";
+import { CardSkeletonGrid } from "@/components/skeleton/CardSkeleton";
 
 function CandidatesPage() {
-  const { data: featuredCandidatesData } = useGetCandidateFeaturedQuery(null);
+  const { data: featuredCandidatesData, isLoading } =
+    useGetCandidateFeaturedQuery(null);
 
-  console.log("featuredCandidatesData", featuredCandidatesData);
+  const LoadingSection = () => (
+    <div className="my-8">
+      <div className="flex items-center justify-between py-4">
+        <div className="w-48">
+          <Skeleton className="h-8" />
+        </div>
+        <div className="w-20">
+          <Skeleton className="h-8" />
+        </div>
+      </div>
+      <CardSkeletonGrid />
+    </div>
+  );
+
+  if (isLoading) {
+    return (
+      <div>
+        <div className="bg-[#F7F6F2]">
+          <CandidateSearch />
+        </div>
+        <div className="container mx-auto px-4 md:px-0">
+          <FindYourDreamTeam />
+          <LoadingSection />
+          <LoadingSection />
+          <LoadingSection />
+        </div>
+      </div>
+    );
+  }
   return (
     <div>
       <div className="bg-[#F7F6F2]">
