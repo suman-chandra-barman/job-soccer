@@ -14,7 +14,7 @@ import {
   UserPlus,
   UserSquare,
 } from "lucide-react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 import logo from "@/assets/logo.png";
 import Link from "next/link";
@@ -23,13 +23,15 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle } from "../ui/sheet";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import { AvatarImage } from "@radix-ui/react-avatar";
+import { useGetMeQuery } from "@/redux/features/auth/authApi";
+import { useAppDispatch } from "@/redux/hooks";
+import { logout } from "@/redux/features/auth/authSlice";
 
 // Types for notification data
 interface NotificationItem {
@@ -41,11 +43,16 @@ interface NotificationItem {
 }
 
 export function Navbar() {
-  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
-  const isLoggedIn = false;
 
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const { data: user } = useGetMeQuery(null);
+  const dispatch = useAppDispatch();
+
+  const isLoggedIn = !!user?.data;
   const iconLinks = isLoggedIn
     ? [
         { name: "Home", href: "/", icon: Home },
@@ -135,6 +142,12 @@ export function Navbar() {
     },
   ];
 
+  const handleLogout = () => {
+    dispatch(logout());
+    localStorage.removeItem("token");
+    router.push("/signin");
+  };
+
   return (
     <nav className="bg-[#FFF8CC] border-b sticky top-0 z-50 text-[#362F05]">
       <div className="container mx-auto px-4">
@@ -207,7 +220,9 @@ export function Navbar() {
                 <DropdownMenuContent className="w-56" align="start">
                   <DropdownMenuItem>Profile</DropdownMenuItem>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem>Log out</DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => handleLogout()}>
+                    Log out
+                  </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             )}
