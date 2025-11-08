@@ -54,3 +54,28 @@ export interface ICandidate {
   userType: string;
   profile: Profile;
 }
+
+export interface IEmployer {
+  _id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  role: string;
+  profileImage: string | null;
+  userType: "employer";
+  profile: {
+    _id: string;
+    highSchoolName: string;
+    country: string;
+    address: string;
+    founded: string;
+    clubName: string;
+    phoneNumber: string;
+    location: string;
+    level: string;
+    website: string;
+    clubContact: string;
+    clubDescription: string;
+    __v: number;
+  };
+}

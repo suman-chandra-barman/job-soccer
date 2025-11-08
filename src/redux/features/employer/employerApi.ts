@@ -4,7 +4,7 @@ const employerApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getEmployers: builder.query({
       query: (filters) => ({
-        url: "/employer",
+        url: "/employer/search",
         method: "GET",
         params: filters,
       }),

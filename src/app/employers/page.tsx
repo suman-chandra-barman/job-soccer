@@ -1,59 +1,49 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import React from "react";
 import FindYourDreamTeam from "@/components/employer/FindYourDreamTeam";
-import { TClub } from "../all-employer/page";
 import { EmployerCard } from "@/components/cards/EmployerCard";
 import { Link } from "lucide-react";
 import { EmployerSearch } from "@/components/search/EmploerSearch";
-
-const clubsData: TClub[] = [
-  {
-    id: 1,
-    name: "Barcelona FC",
-    location: "Barcelona, Spain",
-    logo: "🔵",
-    verified: true,
-    clubType: "Professional Club",
-    activeJobPosts: 8,
-    followers: 125430,
-    following: 45,
-  },
-  {
-    id: 2,
-    name: "Manchester United",
-    location: "Manchester, England",
-    logo: "🔴",
-    verified: true,
-    clubType: "Professional Club",
-    activeJobPosts: 12,
-    followers: 98750,
-    following: 67,
-  },
-  {
-    id: 3,
-    name: "Bayern Munich",
-    location: "Munich, Germany",
-    logo: "⚪",
-    verified: true,
-    clubType: "Professional Club",
-    activeJobPosts: 7,
-    followers: 87643,
-    following: 52,
-  },
-  {
-    id: 4,
-    name: "Ajax Amsterdam",
-    location: "Amsterdam, Netherlands",
-    logo: "🟡",
-    verified: true,
-    clubType: "Professional Club",
-    activeJobPosts: 5,
-    followers: 54320,
-    following: 89,
-  },
-];
+import { IEmployer } from "@/types/user";
+import { useGetEmployerFeaturedQuery } from "@/redux/features/employer/employerApi";
+import { Skeleton } from "@/components/ui/skeleton";
+import { CardSkeletonGrid } from "@/components/skeleton/CardSkeleton";
 
 function EmployersPage() {
+  const { data: featuredEmployersData, isLoading } =
+    useGetEmployerFeaturedQuery(null);
+
+  const LoadingSection = () => (
+    <div className="my-8">
+      <div className="flex items-center justify-between py-4">
+        <div className="w-48">
+          <Skeleton className="h-8" />
+        </div>
+        <div className="w-20">
+          <Skeleton className="h-8" />
+        </div>
+      </div>
+      <CardSkeletonGrid />
+    </div>
+  );
+
+  if (isLoading) {
+    return (
+      <div>
+        <div className="bg-[#F7F6F2]">
+          <EmployerSearch />
+        </div>
+        <div className="container mx-auto px-4 md:px-0">
+          <FindYourDreamTeam />
+          <LoadingSection />
+          <LoadingSection />
+          <LoadingSection />
+        </div>
+      </div>
+    );
+  }
   return (
     <div>
       <div className="bg-[#F7F6F2]">
@@ -63,32 +53,88 @@ function EmployersPage() {
       <div className="container mx-auto px-4 md:px-0">
         <FindYourDreamTeam />
 
-        {/* Employer */}
+        {/* Academy */}
         <div className="my-8">
           <div className="flex items-center justify-between py-4">
-            <span className="text-2xl font-bold">Consulting Company</span>
+            <span className="text-2xl font-bold">Academy</span>
             <Button variant="link" className="text-black">
               <Link href="/job-board">See All</Link>
             </Button>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
-            {clubsData.map((job) => (
-              <EmployerCard key={job.id} job={job} />
-            ))}
+            {featuredEmployersData?.data?.Academy?.map(
+              (employer: IEmployer) => (
+                <EmployerCard key={employer._id} employer={employer} />
+              )
+            )}
           </div>
         </div>
-        {/* Club */}
+
+        {/* High School */}
         <div className="my-8">
           <div className="flex items-center justify-between py-4">
-            <span className="text-2xl font-bold">Club</span>
+            <span className="text-2xl font-bold">High School</span>
             <Button variant="link" className="text-black">
-              See All
+              <Link href="/job-board">See All</Link>
             </Button>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
-            {clubsData.map((job) => (
-              <EmployerCard key={job.id} job={job} />
-            ))}
+            {featuredEmployersData?.data?.HighSchool?.map(
+              (employer: IEmployer) => (
+                <EmployerCard key={employer._id} employer={employer} />
+              )
+            )}
+          </div>
+        </div>
+
+        {/* College/University */}
+        <div className="my-8">
+          <div className="flex items-center justify-between py-4">
+            <span className="text-2xl font-bold">College/University</span>
+            <Button variant="link" className="text-black">
+              <Link href="/job-board">See All</Link>
+            </Button>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+            {featuredEmployersData?.data?.CollegeUniversity?.map(
+              (employer: IEmployer) => (
+                <EmployerCard key={employer._id} employer={employer} />
+              )
+            )}
+          </div>
+        </div>
+
+        {/* Professional Club */}
+        <div className="my-8">
+          <div className="flex items-center justify-between py-4">
+            <span className="text-2xl font-bold">Professional Club</span>
+            <Button variant="link" className="text-black">
+              <Link href="/job-board">See All</Link>
+            </Button>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+            {featuredEmployersData?.data?.ProfessionalClub?.map(
+              (employer: IEmployer) => (
+                <EmployerCard key={employer._id} employer={employer} />
+              )
+            )}
+          </div>
+        </div>
+
+        {/* Amateur Club */}
+        <div className="my-8">
+          <div className="flex items-center justify-between py-4">
+            <span className="text-2xl font-bold">Amateur Club</span>
+            <Button variant="link" className="text-black">
+              <Link href="/job-board">See All</Link>
+            </Button>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+            {featuredEmployersData?.data?.AmateurClub?.map(
+              (employer: IEmployer) => (
+                <EmployerCard key={employer._id} employer={employer} />
+              )
+            )}
           </div>
         </div>
 
@@ -97,28 +143,30 @@ function EmployersPage() {
           <div className="flex items-center justify-between py-4">
             <span className="text-2xl font-bold">Agent</span>
             <Button variant="link" className="text-black">
-              See All
+              <Link href="/job-board">See All</Link>
             </Button>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
-            {clubsData.map((job) => (
-              <EmployerCard key={job.id} job={job} />
+            {featuredEmployersData?.data?.Agent?.map((employer: IEmployer) => (
+              <EmployerCard key={employer._id} employer={employer} />
             ))}
           </div>
         </div>
 
-        {/* College & University */}
+        {/* Consulting Company */}
         <div className="my-8">
           <div className="flex items-center justify-between py-4">
-            <span className="text-2xl font-bold">College & University</span>
+            <span className="text-2xl font-bold">Consulting Company</span>
             <Button variant="link" className="text-black">
-              See All
+              <Link href="/job-board">See All</Link>
             </Button>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
-            {clubsData.map((job) => (
-              <EmployerCard key={job.id} job={job} />
-            ))}
+            {featuredEmployersData?.data?.ConsultingCompany?.map(
+              (employer: IEmployer) => (
+                <EmployerCard key={employer._id} employer={employer} />
+              )
+            )}
           </div>
         </div>
       </div>

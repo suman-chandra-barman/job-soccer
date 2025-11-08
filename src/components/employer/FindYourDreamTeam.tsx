@@ -1,48 +1,19 @@
 import React from "react";
 import { Button } from "../ui/button";
-import { TCandidate } from "../home/Canditates";
-import user1 from "@/assets/candidates/user1.png";
-import user2 from "@/assets/candidates/user2.png";
 import CandidateCard from "../cards/CandidateCard";
 import Link from "next/link";
 import Image from "next/image";
 import candidatesImg from "@/assets/candidates/candidates.png";
+import { useGetCandidatesQuery } from "@/redux/features/candidate/candidateApi";
+import { ICandidate } from "@/types/user";
 
 const FindYourDreamTeam = () => {
-  const candidates: TCandidate[] = [
-    {
-      id: 1,
-      name: "Jacob Jones",
-      role: "Head Coach",
-      location: "Rio, Brazil",
-      nationality: "Brazil",
-      avatar: user1,
-    },
-    {
-      id: 2,
-      name: "Courtney Henry",
-      role: "Marketing Manager",
-      location: "Dallas, USA",
-      nationality: "USA",
-      avatar: user2,
-    },
-    {
-      id: 3,
-      name: "Wade Warren",
-      role: "Technical Director",
-      location: "Glasgow, Scotland",
-      nationality: "Scottish",
-      avatar: user1,
-    },
-    {
-      id: 4,
-      name: "John Doe",
-      role: "Striker (Player)",
-      location: "Madrid, Spain",
-      nationality: "Bangladeshi",
-      avatar: user2,
-    },
-  ];
+  const { data: candidatesData, isLoading } = useGetCandidatesQuery(null);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className=" bg-white">
       <div className="container mx-auto px-4 py-8 lg:py-16">
@@ -70,8 +41,8 @@ const FindYourDreamTeam = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 mb-4">
-              {candidates.map((candidate: TCandidate) => (
-                <CandidateCard key={candidate.id} candidate={candidate} />
+              {candidatesData?.data?.slice(0, 4).map((candidate: ICandidate) => (
+                <CandidateCard key={candidate._id} candidate={candidate} />
               ))}
             </div>
 
