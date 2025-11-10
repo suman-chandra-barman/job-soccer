@@ -12,7 +12,7 @@ export default function EmployersPreview() {
     isError,
   } = useGetEmployersQuery(null);
 
-  if (isLoading) return <CardSkeletonGrid />;
+  if (isLoading) return <CardSkeletonGrid className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 "/>;
 
   if (isError || !employersData?.data?.length) {
     return <div className="text-sm text-gray-500">No employers available</div>;

@@ -48,7 +48,7 @@ const FindYourDreamTeam = () => {
               </h2>
             </div>
 
-            <Suspense fallback={<CardSkeletonGrid />}>
+            <Suspense fallback={<CardSkeletonGrid className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 " />}>
               <EmployersPreview />
             </Suspense>
 

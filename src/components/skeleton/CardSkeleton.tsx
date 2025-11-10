@@ -22,9 +22,9 @@ export function CardSkeleton() {
   );
 }
 
-export function CardSkeletonGrid() {
+export function CardSkeletonGrid({ className }: { className?: string }) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+    <div className={`${className}`}>
       {Array.from({ length: 4 }).map((_, index) => (
         <CardSkeleton key={index} />
       ))}
