@@ -14,10 +14,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  fieldStaffProfessionalInfoSchema
-} from "@/shchemas/profileValidation";
+import { fieldStaffProfessionalInfoSchema } from "@/shchemas/profileValidation";
 import { TFieldStaffProfessionalInfo } from "@/types/profile";
+import {
+  availabilityOptions,
+  countryList,
+  genderOptions,
+  positionOptions,
+} from "@/constants/selectOptions";
 
 interface IFieldStaffProfessionalInfoFormProps {
   onNext: (data: TFieldStaffProfessionalInfo) => void;
@@ -64,6 +68,7 @@ export function FieldStaffProfessionalInfoForm({
       <form className="space-y-8">
         <FormSection title="Professional Information">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Current Club */}
             <FormField label="Current Club" error={errors.currentClub?.message}>
               <Input
                 {...register("currentClub")}
@@ -72,6 +77,7 @@ export function FieldStaffProfessionalInfoForm({
               />
             </FormField>
 
+            {/* Availability */}
             <FormField
               label="Availability"
               error={errors.availability?.message}
@@ -83,119 +89,103 @@ export function FieldStaffProfessionalInfoForm({
                   <SelectValue placeholder="Availability" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="now">Now</SelectItem>
-                  <SelectItem value="later">Later</SelectItem>
-                  <SelectItem value="soon">Soon</SelectItem>
+                  {availabilityOptions.map((item) => (
+                    <SelectItem key={item} value={item}>
+                      {item}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </FormField>
 
-            <FormField label="Social Media" error={errors.socialMedia?.message}>
-              <Input
-                {...register("socialMedia")}
-                placeholder="Social Media"
-                className="bg-gray-50 border-0"
-              />
+            {/* Gender */}
+            <FormField label="Gender" error={errors.gender?.message}>
+              <Select onValueChange={(value) => setValue("gender", value)}>
+                <SelectTrigger className="bg-gray-50 border-0 w-full">
+                  <SelectValue placeholder="Gender" />
+                </SelectTrigger>
+                <SelectContent>
+                  {genderOptions.map((item) => (
+                    <SelectItem key={item} value={item}>
+                      {item}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </FormField>
 
-            <FormField label="Licenses" error={errors.licenses?.message}>
-              <Input
-                {...register("licenses")}
-                placeholder="Licenses"
-                className="bg-gray-50 border-0"
-              />
-            </FormField>
-
+            {/* Country */}
             <FormField label="Country" error={errors.country?.message}>
+              <Select onValueChange={(value) => setValue("country", value)}>
+                <SelectTrigger className="bg-gray-50 border-0 w-full">
+                  <SelectValue placeholder="Country" />
+                </SelectTrigger>
+                <SelectContent>
+                  {countryList.map((item) => (
+                    <SelectItem key={item} value={item}>
+                      {item}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </FormField>
+
+            {/* Agent */}
+            <FormField
+              label="Agent (if applicable)"
+              error={errors.agent?.message}
+            >
               <Input
-                {...register("country")}
-                placeholder="Write your country name"
+                {...register("agent")}
+                placeholder="Write your agent's name"
                 className="bg-gray-50 border-0"
               />
             </FormField>
 
-            <FormField label="Category" error={errors.category?.message}>
-              <Select onValueChange={(value) => setValue("category", value)}>
-                <SelectTrigger className="bg-gray-50 border-0 w-full">
-                  <SelectValue placeholder="Select your category" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="U10">U10</SelectItem>
-                  <SelectItem value="U11">U11</SelectItem>
-                  <SelectItem value="U12">U12</SelectItem>
-                  <SelectItem value="U13">U13</SelectItem>
-                  <SelectItem value="U14">U14</SelectItem>
-                  <SelectItem value="U15">U15</SelectItem>
-                  <SelectItem value="U16">U16</SelectItem>
-                  <SelectItem value="U17">U17</SelectItem>
-                  <SelectItem value="U18">U18</SelectItem>
-                  <SelectItem value="U19">U19</SelectItem>
-                </SelectContent>
-              </Select>
-            </FormField>
-
-
+            {/* League */}
             <FormField label="League" error={errors.league?.message}>
-              <Select onValueChange={(value) => setValue("league", value)}>
-                <SelectTrigger className="bg-gray-50 border-0 w-full">
-                  <SelectValue placeholder="Select League" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="premier">Premier League</SelectItem>
-                  <SelectItem value="championship">Championship</SelectItem>
-                  <SelectItem value="league-one">League One</SelectItem>
-                </SelectContent>
-              </Select>
+              <Input
+                {...register("league")}
+                placeholder="Ex. La Liga"
+                className="bg-gray-50 border-0"
+              />
             </FormField>
 
-            <FormField label="Agent" error={errors.agent?.message}>
-              <Select onValueChange={(value) => setValue("agent", value)}>
-                <SelectTrigger className="bg-gray-50 border-0 w-full">
-                  <SelectValue placeholder="Select your answer" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="yes">Yes</SelectItem>
-                  <SelectItem value="no">No</SelectItem>
-                </SelectContent>
-              </Select>
+            {/* Category */}
+            <FormField label="Category" error={errors.category?.message}>
+              <Input
+                {...register("category")}
+                placeholder="Ex. Forward"
+                className="bg-gray-50 border-0"
+              />
             </FormField>
 
+            {/* Position */}
             <FormField
               label="Select Your Position"
-              error={errors.category?.message}
+              error={errors.position?.message}
             >
               <Select onValueChange={(value) => setValue("position", value)}>
                 <SelectTrigger className="bg-gray-50 border-0 w-full">
                   <SelectValue placeholder="Select your position" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="Assistant Coach">
-                    Assistant Coach
-                  </SelectItem>
-                  <SelectItem value="GK Coach">GK Coach</SelectItem>
-                  <SelectItem value="Mental Coach">Mental Coach</SelectItem>
-                  <SelectItem value="Mental Coach">Mental Coach</SelectItem>
-                  <SelectItem value="Video Analyst Coach">
-                    Video Analyst Coach
-                  </SelectItem>
-                  <SelectItem value="Video Analyst Coach">
-                    Video Analyst Coach
-                  </SelectItem>
-                  <SelectItem value="Specific Forward Coach">
-                    Specific Forward Coach
-                  </SelectItem>
-                  <SelectItem value="Specific Defensive Coach">
-                    Specific Defensive Coach
-                  </SelectItem>
-                  <SelectItem value="Specific Technical Coach">
-                    Specific Technical Coach
-                  </SelectItem>
-                  <SelectItem value="Scout">Scout</SelectItem>
-                  <SelectItem value="Technical Director">
-                    Technical Director
-                  </SelectItem>
+                  {positionOptions.map((pos) => (
+                    <SelectItem key={pos} value={pos}>
+                      {pos}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
+            </FormField>
+
+            {/* Social Media */}
+            <FormField label="Social Media" error={errors.socialMedia?.message}>
+              <Input
+                {...register("socialMedia")}
+                placeholder="Social Media"
+                className="bg-gray-50 border-0"
+              />
             </FormField>
           </div>
         </FormSection>

@@ -121,7 +121,6 @@ export const highSchoolPlayerProfessionalInfoSchema = z.object({
   country: z.string().min(1, "Country is required"),
 });
 
-
 // Professional player Professional Information Schema
 export const professionalPlayerProfessionalInfoSchema = z.object({
   gender: z.string().min(1, "Gender is required"),
@@ -140,20 +139,17 @@ export const professionalPlayerProfessionalInfoSchema = z.object({
   contractExpires: z.string().min(1, "Contract expires is required"),
 });
 
-
-
-
 // Field staff Professional Information Schema
 export const fieldStaffProfessionalInfoSchema = z.object({
-  availability: z.string().min(1, "Availability is required"),
   currentClub: z.string().min(1, "Current club is required"),
-  socialMedia: z.string().min(1, "Social Media is required"),
-  category: z.string().min(1, "Category is required"),
-  licenses: z.string().min(1, "License is required"),
-  position: z.string().min(1, "Position is required"),
+  availability: z.string().min(1, "Availability is required"),
   league: z.string().min(1, "League is required"),
-  agent: z.string().min(1, "Agent is required"),
   country: z.string().min(1, "Country is required"),
+  gender: z.string().min(1, "Gender is required"),
+  category: z.string().optional(),
+  socialMedia: z.string().min(1, "Social Media is required"),
+  position: z.string().min(1, "Position is required"),
+  agent: z.string().optional(),
 });
 
 // Office staff Professional Information Schema

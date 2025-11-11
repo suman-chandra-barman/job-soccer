@@ -13,6 +13,7 @@ import {
 } from "@/redux/features/auth/authApi";
 import { toast } from "sonner";
 import { useAppSelector } from "@/redux/hooks";
+import { Spinner } from "@/components/ui/spinner";
 
 export default function EmailVerificationPage() {
   const [otp, setOtp] = useState<string[]>(["", "", "", "", "", ""]);
@@ -184,7 +185,7 @@ export default function EmailVerificationPage() {
               disabled={otp.some((digit) => !digit) || isLoading || !email}
               onClick={handleVerify}
             >
-              {isLoading ? "Verifying..." : "Verify"}
+              {isLoading ? <Spinner /> : "Verify"}
             </Button>
           </div>
         </div>
