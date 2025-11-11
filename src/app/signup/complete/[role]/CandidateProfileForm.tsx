@@ -25,6 +25,7 @@ import { ProfessionalPlayerProfessionalInfoForm } from "@/components/forms/Profe
 import { HighSchoolPlayerProfessionalInfoForm } from "@/components/forms/HighSchoolPlayerProfessionalInfoForm";
 import { FieldStaffProfessionalInfoForm } from "@/components/forms/FieldStaffProfessionalInfoForm";
 import { OfficeStaffProfessionalInfoForm } from "@/components/forms/OfficeStaffProfessionalInfoForm";
+import { CollegeOrUniversityPlayerProfessionalInfoForm } from "@/components/forms/CollegeOrUniversityPlayerProfessionalInfoForm";
 
 interface CandidateProfileClientProps {
   role: TCandidateRole;
@@ -126,7 +127,7 @@ export default function CompleteProfilePage({
       case CandidateRole.HIGH_SCHOOL:
         return <HighSchoolPlayerProfessionalInfoForm {...commonProps} />;
       case CandidateRole.COLLEGE_UNIVERSITY:
-        return <CollegePlayerProfessionalInfoForm {...commonProps} />;
+        return <CollegeOrUniversityPlayerProfessionalInfoForm {...commonProps} />;
       case CandidateRole.ON_FIELD_STAFF:
         return <FieldStaffProfessionalInfoForm {...commonProps} />;
       case CandidateRole.OFFICE_STAFF:
