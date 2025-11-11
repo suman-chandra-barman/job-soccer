@@ -1,8 +1,10 @@
+import { countryList } from "@/constants/selectOptions";
 import {
   CandidateRole,
   TCandidateRole,
   THighlightsType,
 } from "@/types/profile";
+import { count } from "console";
 import { z } from "zod";
 
 // Personal Information Schema
@@ -156,16 +158,12 @@ export const fieldStaffProfessionalInfoSchema = z.object({
 
 // Office staff Professional Information Schema
 export const officeStaffProfessionalInfoSchema = z.object({
-  availability: z.string().min(1, "Availability is required"),
-  currentClub: z.string().min(1, "Current club is required"),
-  socialMedia: z.string().min(1, "Social Media is required"),
-  category: z.string().min(1, "Category is required"),
-  licenses: z.string().min(1, "License is required"),
+  country: z.enum(countryList).describe("Please select a valid country"),
   position: z.string().min(1, "Position is required"),
-  league: z.string().min(1, "League is required"),
-  agent: z.string().min(1, "Agent is required"),
-  country: z.string().min(1, "Country is required"),
-  boysOrGirls: z.string().min(1, "Boys or Girls is required"),
+  languages: z.string().min(1, "Languages is required"),
+  availability: z.string().min(1, "Availability is required"),
+  socialMedia: z.string().min(1, "Social Media is required"),
+  agent: z.string().optional(),
 });
 
 // Highlights Schema
