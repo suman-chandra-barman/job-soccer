@@ -68,8 +68,8 @@ export function FieldStaffProfessionalInfoForm({
       <form className="space-y-8">
         <FormSection title="Professional Information">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* Current Club */}
-            <FormField label="Current Club" error={errors.currentClub?.message}>
+            {/* Current Employer */}
+            <FormField label="Current Employer" error={errors.currentClub?.message}>
               <Input
                 {...register("currentClub")}
                 placeholder="Ex. Real Madrid"
@@ -138,24 +138,6 @@ export function FieldStaffProfessionalInfoForm({
               <Input
                 {...register("agent")}
                 placeholder="Write your agent's name"
-                className="bg-gray-50 border-0"
-              />
-            </FormField>
-
-            {/* League */}
-            <FormField label="League" error={errors.league?.message}>
-              <Input
-                {...register("league")}
-                placeholder="Ex. La Liga"
-                className="bg-gray-50 border-0"
-              />
-            </FormField>
-
-            {/* Category */}
-            <FormField label="Category" error={errors.category?.message}>
-              <Input
-                {...register("category")}
-                placeholder="Ex. Forward"
                 className="bg-gray-50 border-0"
               />
             </FormField>

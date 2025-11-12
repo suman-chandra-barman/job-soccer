@@ -148,12 +148,10 @@ export const professionalPlayerProfessionalInfoSchema = z.object({
 
 // Field staff Professional Information Schema
 export const fieldStaffProfessionalInfoSchema = z.object({
-  currentClub: z.string().min(1, "Current club is required"),
+  currentClub: z.string().min(1, "Current employer is required"),
   availability: z.string().min(1, "Availability is required"),
-  league: z.string().min(1, "League is required"),
   country: z.string().min(1, "Country is required"),
   gender: z.string().min(1, "Gender is required"),
-  category: z.string().optional(),
   socialMedia: z.string().min(1, "Social Media is required"),
   position: z.string().min(1, "Position is required"),
   agent: z.string().optional(),
