@@ -1,5 +1,3 @@
-// Video constants and configuration
-
 // Video Type Enum
 export enum VideoType {
   PRE_RECORDED_INTERVIEW = "Pre-recorded Interview",
@@ -16,7 +14,7 @@ export enum VideoType {
   HIGHLIGHTS = "Highlights",
 }
 
-export enum TPosition {
+export enum FieldStaffPosition {
   HEAD_COACH = "Head Coach",
   ASSISTANT_COACH = "Assistant Coach",
   GK_COACH = "GK Coach",
@@ -71,8 +69,8 @@ export interface IVideo {
 // Video Requirements Configuration for each position
 export const VIDEO_REQUIREMENTS: Record<string, IPositionVideoConfig> = {
   // ON FIELD STAFF
-  [TPosition.HEAD_COACH]: {
-    position: TPosition.HEAD_COACH,
+  [FieldStaffPosition.HEAD_COACH]: {
+    position: FieldStaffPosition.HEAD_COACH,
     totalVideos: 4,
     maxDuration: 180,
     requiredVideoTypes: [
@@ -83,8 +81,8 @@ export const VIDEO_REQUIREMENTS: Record<string, IPositionVideoConfig> = {
     ],
   },
 
-  [TPosition.ASSISTANT_COACH]: {
-    position: TPosition.ASSISTANT_COACH,
+  [FieldStaffPosition.ASSISTANT_COACH]: {
+    position: FieldStaffPosition.ASSISTANT_COACH,
     totalVideos: 4,
     maxDuration: 180,
     requiredVideoTypes: [
@@ -95,8 +93,8 @@ export const VIDEO_REQUIREMENTS: Record<string, IPositionVideoConfig> = {
     ],
   },
 
-  [TPosition.GK_COACH]: {
-    position: TPosition.GK_COACH,
+  [FieldStaffPosition.GK_COACH]: {
+    position: FieldStaffPosition.GK_COACH,
     totalVideos: 2,
     maxDuration: 180,
     requiredVideoTypes: [
@@ -105,8 +103,8 @@ export const VIDEO_REQUIREMENTS: Record<string, IPositionVideoConfig> = {
     ],
   },
 
-  [TPosition.MENTAL_COACH]: {
-    position: TPosition.MENTAL_COACH,
+  [FieldStaffPosition.MENTAL_COACH]: {
+    position: FieldStaffPosition.MENTAL_COACH,
     totalVideos: 2,
     maxDuration: 180,
     requiredVideoTypes: [
@@ -115,8 +113,8 @@ export const VIDEO_REQUIREMENTS: Record<string, IPositionVideoConfig> = {
     ],
   },
 
-  [TPosition.VIDEO_ANALYST_COACH]: {
-    position: TPosition.VIDEO_ANALYST_COACH,
+  [FieldStaffPosition.VIDEO_ANALYST_COACH]: {
+    position: FieldStaffPosition.VIDEO_ANALYST_COACH,
     totalVideos: 2,
     maxDuration: 180,
     requiredVideoTypes: [
@@ -125,8 +123,8 @@ export const VIDEO_REQUIREMENTS: Record<string, IPositionVideoConfig> = {
     ],
   },
 
-  [TPosition.SPECIFIC_OFFENSIVE_COACH]: {
-    position: TPosition.SPECIFIC_OFFENSIVE_COACH,
+  [FieldStaffPosition.SPECIFIC_OFFENSIVE_COACH]: {
+    position: FieldStaffPosition.SPECIFIC_OFFENSIVE_COACH,
     totalVideos: 2,
     maxDuration: 180,
     requiredVideoTypes: [
@@ -135,8 +133,8 @@ export const VIDEO_REQUIREMENTS: Record<string, IPositionVideoConfig> = {
     ],
   },
 
-  [TPosition.SPECIFIC_DEFENSIVE_COACH]: {
-    position: TPosition.SPECIFIC_DEFENSIVE_COACH,
+  [FieldStaffPosition.SPECIFIC_DEFENSIVE_COACH]: {
+    position: FieldStaffPosition.SPECIFIC_DEFENSIVE_COACH,
     totalVideos: 2,
     maxDuration: 180,
     requiredVideoTypes: [
@@ -145,8 +143,8 @@ export const VIDEO_REQUIREMENTS: Record<string, IPositionVideoConfig> = {
     ],
   },
 
-  [TPosition.SPECIFIC_TECHNICAL_COACH]: {
-    position: TPosition.SPECIFIC_TECHNICAL_COACH,
+  [FieldStaffPosition.SPECIFIC_TECHNICAL_COACH]: {
+    position: FieldStaffPosition.SPECIFIC_TECHNICAL_COACH,
     totalVideos: 2,
     maxDuration: 180,
     requiredVideoTypes: [
@@ -155,8 +153,8 @@ export const VIDEO_REQUIREMENTS: Record<string, IPositionVideoConfig> = {
     ],
   },
 
-  [TPosition.SCOUT]: {
-    position: TPosition.SCOUT,
+  [FieldStaffPosition.SCOUT]: {
+    position: FieldStaffPosition.SCOUT,
     totalVideos: 2,
     maxDuration: 180,
     requiredVideoTypes: [
@@ -165,8 +163,8 @@ export const VIDEO_REQUIREMENTS: Record<string, IPositionVideoConfig> = {
     ],
   },
 
-  [TPosition.TECHNICAL_DIRECTOR]: {
-    position: TPosition.TECHNICAL_DIRECTOR,
+  [FieldStaffPosition.TECHNICAL_DIRECTOR]: {
+    position: FieldStaffPosition.TECHNICAL_DIRECTOR,
     totalVideos: 3,
     maxDuration: 180,
     requiredVideoTypes: [
@@ -176,8 +174,8 @@ export const VIDEO_REQUIREMENTS: Record<string, IPositionVideoConfig> = {
     ],
   },
 
-  [TPosition.ACADEMY_DIRECTOR]: {
-    position: TPosition.ACADEMY_DIRECTOR,
+  [FieldStaffPosition.ACADEMY_DIRECTOR]: {
+    position: FieldStaffPosition.ACADEMY_DIRECTOR,
     totalVideos: 2,
     maxDuration: 180,
     requiredVideoTypes: [
@@ -186,8 +184,8 @@ export const VIDEO_REQUIREMENTS: Record<string, IPositionVideoConfig> = {
     ],
   },
 
-  [TPosition.DIRECTOR_OF_COACHING]: {
-    position: TPosition.DIRECTOR_OF_COACHING,
+  [FieldStaffPosition.DIRECTOR_OF_COACHING]: {
+    position: FieldStaffPosition.DIRECTOR_OF_COACHING,
     totalVideos: 2,
     maxDuration: 180,
     requiredVideoTypes: [

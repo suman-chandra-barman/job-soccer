@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import { PersonalInfoForm } from "@/components/forms/PersonalInfoForm";
-import { HighlightsForm } from "@/components/forms/HighlightsForm";
 import { toast } from "sonner";
 import {
   type TPersonalInfo,
@@ -17,7 +16,6 @@ import {
   CandidateRole,
 } from "@/types/profile";
 import { candidateRoleConfig } from "@/shchemas/profileValidation";
-import { MultipleHighlightsForm } from "@/components/forms/MultipleHighlisghtsForm";
 import { AmateurPlayerProfessionalInfoForm } from "@/components/forms/AmateurPlayerProfessionalInfoForm";
 import { ProfessionalPlayerProfessionalInfoForm } from "@/components/forms/ProfessionalPlayerProfessionalInfoForm";
 import { HighSchoolPlayerProfessionalInfoForm } from "@/components/forms/HighSchoolPlayerProfessionalInfoForm";
@@ -26,6 +24,8 @@ import { FieldStaffProfessionalInfoForm } from "@/components/forms/FieldStaffPro
 import { OfficeStaffProfessionalInfoForm } from "@/components/forms/OfficeStaffProfessionalInfoForm";
 import { useAppSelector } from "@/redux/hooks";
 import { Spinner } from "@/components/ui/spinner";
+import { VideoForm } from "@/components/forms/VideoForm";
+import { VideoType } from "@/constants/video.constant";
 
 export default function CandidateProfilePage() {
   const [currentStep, setCurrentStep] = useState(1);
@@ -40,11 +40,11 @@ export default function CandidateProfilePage() {
       | TFieldStaffProfessionalInfo;
     highlights?: THighlights | TMultipleHighlights;
   }>({});
+  const [fieldStaffPosition, setFieldStaffPosition] = useState<string>("");
 
   const user = useAppSelector((state) => state.auth.user);
 
   const config = candidateRoleConfig[user?.role as CandidateRole];
-
   if (!config) {
     return (
       <div className="grid h-screen w-full place-items-center">
@@ -89,14 +89,30 @@ export default function CandidateProfilePage() {
       | TFieldStaffProfessionalInfo
   ) => {
     setFormData((prev) => ({ ...prev, professionalInfo: data }));
+    setFieldStaffPosition((data as TFieldStaffProfessionalInfo).position || "");
+    console.log("Professional Info Data:", data);
     setCurrentStep(3);
   };
 
-  const handleHighlightsNext = (data: THighlights | TMultipleHighlights) => {
+  const handleVideoNext = (data: THighlights | TMultipleHighlights) => {
     setFormData((prev) => ({ ...prev, highlights: data }));
 
+    // Format the complete form data for API submission
+    const videoData = data as THighlights & {
+      videoTitles?: VideoType[];
+      videos?: File[];
+    };
+    const completeFormData = {
+      data: {
+        ...formData.personalInfo,
+        ...formData.professionalInfo,
+      },
+      videoTitles: videoData.videoTitles || [],
+      videos: videoData.videos || [],
+    };
+
     // Here you would typically submit the complete form data to your API
-    console.log("Complete form data:", { ...formData, highlights: data });
+    console.log("Complete form data:", completeFormData);
     toast.success("Profile completed successfully!");
   };
 
@@ -185,22 +201,16 @@ export default function CandidateProfilePage() {
 
   // Render highlights form based on configuration
   const renderHighlightsForm = () => {
-    if (config.highlightsType === "multiple") {
-      const multipleProps = {
-        onNext: handleHighlightsNext as (data: TMultipleHighlights) => void,
-        onPrev: handlePrevStep,
-        initialData: formData.highlights as TMultipleHighlights | undefined,
-        steps,
-      };
-      return <MultipleHighlightsForm {...multipleProps} />;
-    } else {
-      const singleProps = {
-        onNext: handleHighlightsNext as (data: THighlights) => void,
-        onPrev: handlePrevStep,
-        initialData: formData.highlights as THighlights | undefined,
-        steps,
-      };
-      return <HighlightsForm {...singleProps} />;
+    const videoProps = {
+      onNext: handleVideoNext as (data: THighlights) => void,
+      onPrev: handlePrevStep,
+      initialData: formData.highlights as THighlights | undefined,
+      steps,
+    };
+
+    switch (fieldStaffPosition) {
+      case "Head Coach":
+        return <VideoForm {...videoProps} />;
     }
   };
 
