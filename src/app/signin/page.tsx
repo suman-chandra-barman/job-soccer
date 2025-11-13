@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { FaUser, FaEye, FaEyeSlash, FaFacebook } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
+import { IoMdArrowBack } from "react-icons/io";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -68,7 +69,16 @@ export default function SignInPage() {
   };
 
   return (
-    <div className="min-h-screen flex">
+    <div className="min-h-screen flex relative">
+      {/* Home navigation link */}
+      <Link
+        href="/"
+        className="absolute top-6 left-6 flex items-center gap-2 px-4 py-2 rounded-lg bg-white/80 backdrop-blur-sm shadow-md hover:shadow-lg border border-gray-200 hover:border-gray-300 text-gray-700 hover:text-black transition-all duration-300 z-10 group"
+      >
+        <IoMdArrowBack className="h-5 w-5 group-hover:-translate-x-1 transition-transform duration-300" />
+        <span className="font-semibold text-sm">Home</span>
+      </Link>
+
       {/* Left side - Dark background with text */}
       <div className="hidden flex-1 md:flex items-center justify-center p-2 md:px-5 lg:px-8 bg-primary">
         <div className="max-w-2xl">
