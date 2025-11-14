@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Mail } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { Spinner } from "@/components/ui/spinner";
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("mah....@gmail.com");
@@ -39,8 +40,7 @@ export default function ForgotPasswordPage() {
             Reset Your Password for the Football Career Hub
           </h2>
           <p className="text-[#837E5B] mt-1">
-            Log in to manage your smart assistant and stay in control of your AI
-            tools.
+            Don&#39;t worry! We&#39;re here to help you get back into your account.
           </p>
         </div>
       </div>
@@ -50,10 +50,10 @@ export default function ForgotPasswordPage() {
         <div className="w-full max-w-md bg-white rounded-lg p-8 shadow-sm">
           <div className="text-center mb-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-2">
-              Forget password
+              Forgot password
             </h2>
             <p className="text-gray-600">
-              We send a code to your email to verify account
+              Enter your registered email to reset your password.
             </p>
           </div>
 
@@ -80,7 +80,7 @@ export default function ForgotPasswordPage() {
             disabled={isLoading}
             className="w-full bg-primary hover:bg-amber-300 text-black font-medium py-3 rounded-md cursor-pointer"
           >
-            {isLoading ? "Sending Code..." : "Send Code"}
+            {isLoading ? <Spinner /> : "Send Code"}
           </Button>
         </div>
       </div>

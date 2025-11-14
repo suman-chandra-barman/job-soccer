@@ -74,9 +74,7 @@ export default function SignInPage() {
   };
 
   const handleForgotPassword = () => {
-    toast.info("Forgot password clicked", {
-      description: "Password reset functionality would be implemented here.",
-    });
+    router.push("/forgot-password");
   };
 
   return (
