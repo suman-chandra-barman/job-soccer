@@ -41,7 +41,7 @@ export default function SignInPage() {
     setIsLoading(true);
 
     try {
-      // Simulate API call
+      // API call
       await new Promise((resolve) => setTimeout(resolve, 2000));
 
       console.log("Sign in data:", data);
@@ -54,6 +54,7 @@ export default function SignInPage() {
         router.push("/");
       }, 1500);
     } catch (error) {
+      console.error("Sign in error:", error);
       toast.error("Sign in failed!", {
         description: "Please check your credentials and try again.",
       });

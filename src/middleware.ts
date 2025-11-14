@@ -1,56 +1,12 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
+// This function can be marked `async` if using `await` inside
 export function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl;
-  const validRoutes = [
-    "/",
-    "/candidates",
-    "/employers",
-    "/job-board",
-    "/job-board/category",
-    "/my-network",
-    "/signin",
-    "/signup",
-    "/register",
-    "/messages",
-    "/notifications",
-    "/upgrade",
-    "/profile",
-    "/my-profile",
-    "/jobs",
-    "/companies",
-    "/not-found",
-    "/email-verification",
-    "/success-message",
-    "/create-new-password",
-    "/forgate-password",
-  ];
-
-  // Dynamic route patterns
-  const dynamicPatterns = [
-    /^\/job\/(.+)$/,
-    /^\/job-board\/category\/(.+)$/,
-    /^\/profile\/(.+)$/,
-  ];
-
-  const isValid =
-    validRoutes.some((route) => {
-      // Allow exact, with trailing slash, or with query params
-      return (
-        pathname === route ||
-        pathname === `${route}/` ||
-        pathname.startsWith(`${route}/`) ||
-        pathname.startsWith(`${route}?`)
-      );
-    }) || dynamicPatterns.some((pattern) => pattern.test(pathname));
-
-  if (!isValid) {
-    return NextResponse.redirect(new URL("/not-found", request.url));
-  }
-
-  return NextResponse.next();
+  return NextResponse.redirect(new URL("/home", request.url));
 }
 
+// See "Matching Paths" below to learn more
 export const config = {
-  matcher: ["/((?!_next|api|static|favicon.ico).*)"],
+  matcher: "/about/:path*",
 };
