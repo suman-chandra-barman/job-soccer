@@ -16,6 +16,17 @@ import {
 } from "@/components/ui/select";
 import { amateurPlayerProfessionalInfoSchema } from "@/shchemas/profileValidation";
 import type { TAmateurPlayerProfessionalInfo } from "@/types/profile";
+import {
+  availabilityOptions,
+  countryList,
+  footOptions,
+  genderOptions,
+  heightUnitOptions,
+  nationalTeamCategoryOptions,
+  playerPositionOptions,
+  weightUnitOptions,
+} from "@/constants/selectOptions";
+import { he } from "zod/v4/locales";
 
 interface IAmateurPlayerProfessionalInfoFormProps {
   onNext: (data: TAmateurPlayerProfessionalInfo) => void;
@@ -43,13 +54,13 @@ export function AmateurPlayerProfessionalInfoForm({
   } = useForm<TAmateurPlayerProfessionalInfo>({
     resolver: zodResolver(amateurPlayerProfessionalInfoSchema),
     defaultValues: {
-      ...(initialData ?? {}),
+      ...initialData,
       height: {
-        size: initialData?.height?.size ?? "",
+        size: initialData?.height?.size,
         unit: initialData?.height?.unit ?? "ft",
       },
       weight: {
-        size: initialData?.weight?.size ?? "",
+        size: initialData?.weight?.size,
         unit: initialData?.weight?.unit ?? "kg",
       },
     },
@@ -91,9 +102,11 @@ export function AmateurPlayerProfessionalInfoForm({
                   <SelectValue placeholder="Select your gender" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="Male">Male</SelectItem>
-                  <SelectItem value="Female">Female</SelectItem>
-                  <SelectItem value="Other">Other</SelectItem>
+                  {genderOptions.map((item) => (
+                    <SelectItem key={item} value={item}>
+                      {item}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </FormField>
@@ -116,9 +129,11 @@ export function AmateurPlayerProfessionalInfoForm({
                   <SelectValue placeholder="Select availability" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="Now">Now</SelectItem>
-                  <SelectItem value="Soon">Soon</SelectItem>
-                  <SelectItem value="Later">Later</SelectItem>
+                  {availabilityOptions.map((item) => (
+                    <SelectItem key={item} value={item}>
+                      {item}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </FormField>
@@ -150,10 +165,11 @@ export function AmateurPlayerProfessionalInfoForm({
                     <SelectValue placeholder="Select" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="ft">ft</SelectItem>
-                    <SelectItem value="cm">cm</SelectItem>
-                    <SelectItem value="in">in</SelectItem>
-                    <SelectItem value="m">m</SelectItem>
+                    {heightUnitOptions.map((item) => (
+                      <SelectItem key={item} value={item}>
+                        {item}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>
@@ -186,8 +202,11 @@ export function AmateurPlayerProfessionalInfoForm({
                     <SelectValue placeholder="Select" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="kg">kg</SelectItem>
-                    <SelectItem value="lb">lb</SelectItem>
+                    {weightUnitOptions.map((item) => (
+                      <SelectItem key={item} value={item}>
+                        {item}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>
@@ -200,6 +219,33 @@ export function AmateurPlayerProfessionalInfoForm({
                 placeholder="Ex. Real Madrid"
                 className="bg-gray-50 border-0"
               />
+            </FormField>
+
+            {/* Country */}
+            <FormField
+              label="Country"
+              error={errors.country?.message}
+            >
+              <Select
+                onValueChange={(value) =>
+                  setValue(
+                    "country",
+                    value as unknown as TAmateurPlayerProfessionalInfo["country"],
+                    { shouldValidate: true, shouldDirty: true }
+                  )
+                }
+              >
+                <SelectTrigger className="bg-gray-50 border-0 w-full">
+                  <SelectValue placeholder="Select your country" />
+                </SelectTrigger>
+                <SelectContent>
+                  {countryList.map((item) => (
+                    <SelectItem key={item} value={item}>
+                      {item}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </FormField>
 
             {/* National Team Category */}
@@ -220,14 +266,11 @@ export function AmateurPlayerProfessionalInfoForm({
                   <SelectValue placeholder="Select your category" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="U14">U14</SelectItem>
-                  <SelectItem value="U15">U15</SelectItem>
-                  <SelectItem value="U16">U16</SelectItem>
-                  <SelectItem value="U17">U17</SelectItem>
-                  <SelectItem value="U18">U18</SelectItem>
-                  <SelectItem value="U19">U19</SelectItem>
-                  <SelectItem value="U20">U20</SelectItem>
-                  <SelectItem value="U21">U21</SelectItem>
+                  {nationalTeamCategoryOptions.map((item) => (
+                    <SelectItem key={item} value={item}>
+                      {item}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </FormField>
@@ -247,9 +290,11 @@ export function AmateurPlayerProfessionalInfoForm({
                   <SelectValue placeholder="Select foot" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="Right">Right</SelectItem>
-                  <SelectItem value="Left">Left</SelectItem>
-                  <SelectItem value="Both">Both</SelectItem>
+                  {footOptions.map((item) => (
+                    <SelectItem key={item} value={item}>
+                      {item}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </FormField>
@@ -269,20 +314,11 @@ export function AmateurPlayerProfessionalInfoForm({
                   <SelectValue placeholder="Select your position" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="GK">GK</SelectItem>
-                  <SelectItem value="Central back">Central back</SelectItem>
-                  <SelectItem value="Left back">Left back</SelectItem>
-                  <SelectItem value="Right back">Right back</SelectItem>
-                  <SelectItem value="Defensive midfielder">
-                    Defensive midfielder
-                  </SelectItem>
-                  <SelectItem value="Offensive midfielder">
-                    Offensive midfielder
-                  </SelectItem>
-                  <SelectItem value="Right winger">Right winger</SelectItem>
-                  <SelectItem value="Left winger">Left winger</SelectItem>
-                  <SelectItem value="Forward">Forward</SelectItem>
-                  <SelectItem value="Striker">Striker</SelectItem>
+                  {playerPositionOptions.map((item) => (
+                    <SelectItem key={item} value={item}>
+                      {item}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </FormField>
@@ -297,7 +333,7 @@ export function AmateurPlayerProfessionalInfoForm({
             </FormField>
 
             {/* Agent */}
-            <FormField label="Agent" error={errors.agent?.message}>
+            <FormField label="Agent (if applicable)" error={errors.agent?.message}>
               <Input
                 {...register("agent")}
                 placeholder="Ex. Suman Barman"
@@ -309,7 +345,6 @@ export function AmateurPlayerProfessionalInfoForm({
             <FormField
               label="Social Media"
               error={errors.socialMedia?.message}
-              className="md:col-span-2"
             >
               <Input
                 {...register("socialMedia")}

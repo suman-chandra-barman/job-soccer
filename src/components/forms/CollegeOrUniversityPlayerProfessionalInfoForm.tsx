@@ -16,6 +16,15 @@ import {
 } from "@/components/ui/select";
 import { collegeOrUniversityPlayerProfessionalInfoSchema } from "@/shchemas/profileValidation";
 import { TCollegeOrUniversityPlayerProfessionalInfo } from "@/types/profile";
+import {
+  availabilityOptions,
+  countryList,
+  footOptions,
+  genderOptions,
+  heightUnitOptions,
+  playerPositionOptions,
+  weightUnitOptions,
+} from "@/constants/selectOptions";
 
 interface ICollegeOrUniversityPlayerProfessionalInfoFormProps {
   onNext: (data: TCollegeOrUniversityPlayerProfessionalInfo) => void;
@@ -45,11 +54,11 @@ export function CollegeOrUniversityPlayerProfessionalInfoForm({
     defaultValues: {
       ...(initialData ?? {}),
       height: {
-        size: initialData?.height?.size ?? "",
+        size: initialData?.height?.size,
         unit: initialData?.height?.unit ?? "ft",
       },
       weight: {
-        size: initialData?.weight?.size ?? "",
+        size: initialData?.weight?.size,
         unit: initialData?.weight?.unit ?? "kg",
       },
     },
@@ -89,9 +98,11 @@ export function CollegeOrUniversityPlayerProfessionalInfoForm({
                   <SelectValue placeholder="Select your gender" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="Male">Male</SelectItem>
-                  <SelectItem value="Female">Female</SelectItem>
-                  <SelectItem value="Other">Other</SelectItem>
+                  {genderOptions.map((item) => (
+                    <SelectItem key={item} value={item}>
+                      {item}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </FormField>
@@ -114,9 +125,11 @@ export function CollegeOrUniversityPlayerProfessionalInfoForm({
                   <SelectValue placeholder="Select availability" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="Now">Now</SelectItem>
-                  <SelectItem value="Soon">Soon</SelectItem>
-                  <SelectItem value="Later">Later</SelectItem>
+                  {availabilityOptions.map((item) => (
+                    <SelectItem key={item} value={item}>
+                      {item}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </FormField>
@@ -148,10 +161,11 @@ export function CollegeOrUniversityPlayerProfessionalInfoForm({
                     <SelectValue placeholder="Select" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="ft">ft</SelectItem>
-                    <SelectItem value="cm">cm</SelectItem>
-                    <SelectItem value="in">in</SelectItem>
-                    <SelectItem value="m">m</SelectItem>
+                    {heightUnitOptions.map((item) => (
+                      <SelectItem key={item} value={item}>
+                        {item}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>
@@ -184,8 +198,11 @@ export function CollegeOrUniversityPlayerProfessionalInfoForm({
                     <SelectValue placeholder="Select" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="kg">kg</SelectItem>
-                    <SelectItem value="lb">lb</SelectItem>
+                    {weightUnitOptions.map((item) => (
+                      <SelectItem key={item} value={item}>
+                        {item}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>
@@ -215,9 +232,35 @@ export function CollegeOrUniversityPlayerProfessionalInfoForm({
                   <SelectValue placeholder="Select foot" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="Right">Right</SelectItem>
-                  <SelectItem value="Left">Left</SelectItem>
-                  <SelectItem value="Both">Both</SelectItem>
+                  {footOptions.map((item) => (
+                    <SelectItem key={item} value={item}>
+                      {item}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </FormField>
+
+            {/* Country */}
+            <FormField label="Country" error={errors.country?.message}>
+              <Select
+                onValueChange={(value) =>
+                  setValue(
+                    "country",
+                    value as unknown as TCollegeOrUniversityPlayerProfessionalInfo["country"],
+                    { shouldValidate: true, shouldDirty: true }
+                  )
+                }
+              >
+                <SelectTrigger className="bg-gray-50 border-0 w-full">
+                  <SelectValue placeholder="Select your country" />
+                </SelectTrigger>
+                <SelectContent>
+                  {countryList.map((item) => (
+                    <SelectItem key={item} value={item}>
+                      {item}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </FormField>
@@ -237,20 +280,11 @@ export function CollegeOrUniversityPlayerProfessionalInfoForm({
                   <SelectValue placeholder="Select your position" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="GK">GK</SelectItem>
-                  <SelectItem value="Central back">Central back</SelectItem>
-                  <SelectItem value="Left back">Left back</SelectItem>
-                  <SelectItem value="Right back">Right back</SelectItem>
-                  <SelectItem value="Defensive midfielder">
-                    Defensive midfielder
-                  </SelectItem>
-                  <SelectItem value="Offensive midfielder">
-                    Offensive midfielder
-                  </SelectItem>
-                  <SelectItem value="Right winger">Right winger</SelectItem>
-                  <SelectItem value="Left winger">Left winger</SelectItem>
-                  <SelectItem value="Forward">Forward</SelectItem>
-                  <SelectItem value="Striker">Striker</SelectItem>
+                  {playerPositionOptions.map((item) => (
+                    <SelectItem key={item} value={item}>
+                      {item}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </FormField>
@@ -338,20 +372,8 @@ export function CollegeOrUniversityPlayerProfessionalInfoForm({
               />
             </FormField>
 
-            <FormField label="Country" error={errors.country?.message}>
-              <Input
-                {...register("country")}
-                placeholder="Write your country"
-                className="bg-gray-50 border-0"
-              />
-            </FormField>
-
             {/* Social Media */}
-            <FormField
-              label="Social Media"
-              error={errors.socialMedia?.message}
-              className="md:col-span-2"
-            >
+            <FormField label="Social Media" error={errors.socialMedia?.message}>
               <Input
                 {...register("socialMedia")}
                 placeholder="Ex. https://twitter.com/yourprofile"

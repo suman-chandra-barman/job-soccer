@@ -44,13 +44,13 @@ export function HighSchoolPlayerProfessionalInfoForm({
   } = useForm<THighSchoolPlayerProfessionalInfo>({
     resolver: zodResolver(highSchoolPlayerProfessionalInfoSchema),
     defaultValues: {
-      ...(initialData ?? {}),
+      ...initialData,
       height: {
-        size: initialData?.height?.size ?? "",
+        size: initialData?.height?.size,
         unit: initialData?.height?.unit ?? "ft",
       },
       weight: {
-        size: initialData?.weight?.size ?? "",
+        size: initialData?.weight?.size,
         unit: initialData?.weight?.unit ?? "kg",
       },
     },

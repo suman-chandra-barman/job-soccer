@@ -58,8 +58,9 @@ export const amateurPlayerProfessionalInfoSchema = z.object({
     "Striker",
   ]),
   league: z.string().min(1, "League is required"),
-  agent: z.string().min(1, "Agent is required"),
+  agent: z.string().optional(),
   socialMedia: z.string().min(1, "Social media is required"),
+  country: z.string().min(1, "Country is required"),
 });
 
 // College or University player Professional Information Schema
