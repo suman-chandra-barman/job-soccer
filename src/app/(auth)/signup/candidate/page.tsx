@@ -93,12 +93,10 @@ export default function CandidateProfilePage() {
     setCurrentStep(2);
   };
 
-  // Remove empty optional fields from an object recursively.
-  // Keeps values that are: non-empty strings, numbers, booleans, non-empty arrays, non-empty objects.
+  // Recursively removes empty optional fields from an object
   const removeEmptyFields = (input: unknown): unknown => {
     if (input === null || input === undefined) return undefined;
 
-    // Preserve Date objects (they are valid values)
     if (input instanceof Date) return input;
 
     if (typeof input === "string")
@@ -113,7 +111,6 @@ export default function CandidateProfilePage() {
     }
 
     if (typeof input === "object") {
-      // If it's not a plain object (e.g. File, Map, Set), keep it as-is
       const tag = Object.prototype.toString.call(input);
       if (tag !== "[object Object]") return input;
 
@@ -144,7 +141,6 @@ export default function CandidateProfilePage() {
   };
 
   const handleVideoNext = async (data: TVideo) => {
-    // Format the complete form data for API submission
     const videoData = data as TVideo & {
       videoTitles?: string[];
       videos?: File[];
@@ -155,52 +151,38 @@ export default function CandidateProfilePage() {
       }>;
     };
 
-    // Prepare the data object combining personal and professional info
-    // Use the current formData before setState to ensure we have all data
     const combinedRaw = {
       ...(formData.personalInfo ?? {}),
       ...(formData.professionalInfo ?? {}),
     };
 
-    // Extract the image File if present (File objects can't be JSON stringified)
     const imageFile =
       (combinedRaw as any).image instanceof File
         ? (combinedRaw as any).image
         : null;
 
-    // Remove image from the data object since we'll append it separately
     const dataWithoutImage = { ...combinedRaw };
     delete (dataWithoutImage as any).image;
 
-    // Remove empty optional fields so backend only receives populated values
     const cleanedCombined = removeEmptyFields(dataWithoutImage) ?? {};
 
-    // Update state for future reference
     setFormData((prev) => ({ ...prev, videos: data }));
 
-    // Create FormData for multipart/form-data submission
     const formDataToSend = new FormData();
-
-    // Append the cleaned data object as JSON string
     formDataToSend.append("data", JSON.stringify(cleanedCombined));
 
-    // Append the image file separately if it exists
     if (imageFile) {
       formDataToSend.append("image", imageFile);
     }
 
-    // Check if this is a player role (has videoTitles instead of videoMeta)
+    // Player roles use videoTitles, staff roles use videoMeta
     if (videoData.videoTitles && Array.isArray(videoData.videoTitles)) {
-      // For players: append videoTitles as JSON array
       formDataToSend.append(
         "videoTitles",
         JSON.stringify(videoData.videoTitles)
       );
     } else {
-      // For staff roles: append videoMeta array as JSON string (type, title, description)
       const videoMeta = videoData.videoMeta;
-
-      // Strip empty title/description so optional values are not sent
       const cleanedVideoMeta =
         videoMeta
           ?.map((vm) => {
@@ -217,14 +199,12 @@ export default function CandidateProfilePage() {
       }
     }
 
-    // Append each video file
     if (videoData.videos) {
       videoData.videos.forEach((video: any) => {
         formDataToSend.append("videos", video);
       });
     }
 
-    // Submit the FormData to the API
     const { data: userProfile } = await createUserProfile(formDataToSend);
     if (userProfile?.data.profileId) {
       toast.success("Profile completed successfully!");
@@ -238,7 +218,6 @@ export default function CandidateProfilePage() {
     setCurrentStep((prev) => Math.max(1, prev - 1));
   };
 
-  // Render Professional Info form based on candidate role
   const renderProfessionalForm = () => {
     const baseProps = {
       onNext: handleProfessionalInfoNext,
@@ -246,7 +225,7 @@ export default function CandidateProfilePage() {
       steps,
     } as const;
 
-    switch (user?.role) {
+    switch (userRole) {
       case CandidateRole.PROFESSIONAL_PLAYER:
         return (
           <ProfessionalPlayerProfessionalInfoForm
@@ -258,6 +237,7 @@ export default function CandidateProfilePage() {
             }
           />
         );
+
       case CandidateRole.AMATEUR_PLAYER:
         return (
           <AmateurPlayerProfessionalInfoForm
@@ -269,6 +249,7 @@ export default function CandidateProfilePage() {
             }
           />
         );
+
       case CandidateRole.HIGH_SCHOOL:
         return (
           <HighSchoolPlayerProfessionalInfoForm
@@ -280,6 +261,7 @@ export default function CandidateProfilePage() {
             }
           />
         );
+
       case CandidateRole.COLLEGE_UNIVERSITY:
         return (
           <CollegeOrUniversityPlayerProfessionalInfoForm
@@ -291,6 +273,7 @@ export default function CandidateProfilePage() {
             }
           />
         );
+
       case CandidateRole.ON_FIELD_STAFF:
         return (
           <FieldStaffProfessionalInfoForm
@@ -302,6 +285,7 @@ export default function CandidateProfilePage() {
             }
           />
         );
+
       case CandidateRole.OFFICE_STAFF:
         return (
           <OfficeStaffProfessionalInfoForm
@@ -313,12 +297,12 @@ export default function CandidateProfilePage() {
             }
           />
         );
+
       default:
         return null;
     }
   };
 
-  // Render Video form based on configuration
   const renderVideoForm = () => {
     const videoProps = {
       onNext: handleVideoNext as (data: TVideo) => void,
@@ -327,79 +311,51 @@ export default function CandidateProfilePage() {
       steps,
     };
 
-    // For office staff, render their specific form
     switch (userRole) {
-      case CandidateRole.OFFICE_STAFF:
-        return <OfficeStaffVideoForm {...videoProps} />;
-
-      // For all player roles, render player video form
       case CandidateRole.PROFESSIONAL_PLAYER:
       case CandidateRole.AMATEUR_PLAYER:
       case CandidateRole.HIGH_SCHOOL:
       case CandidateRole.COLLEGE_UNIVERSITY:
         return <PlayerVideoForm {...videoProps} />;
+
+      case CandidateRole.OFFICE_STAFF:
+        return <OfficeStaffVideoForm {...videoProps} />;
     }
 
-    // For on-field staff, render based on specific position
     switch (fieldStaffPosition) {
-      // ------ On field staff positions ------
-      // Head Coach
       case FieldStaffPosition.HEAD_COACH:
-        return <HeadCoachVideoForm {...videoProps} />;
-
-      // Assistant Coach
       case FieldStaffPosition.ASSISTANT_COACH:
         return <HeadCoachVideoForm {...videoProps} />;
 
-      // GK Coach
       case FieldStaffPosition.GK_COACH:
-        return <GKCoachVideoForm {...videoProps} />;
-
-      // Mental Coach
       case FieldStaffPosition.MENTAL_COACH:
-        return <GKCoachVideoForm {...videoProps} />;
-
-      // Video Analyst Coach
       case FieldStaffPosition.VIDEO_ANALYST_COACH:
         return <GKCoachVideoForm {...videoProps} />;
 
-      // Specific Offensive Coach
       case FieldStaffPosition.SPECIFIC_OFFENSIVE_COACH:
-        return <SpecificCoachVideoForm {...videoProps} />;
-
-      // Specific Defensive Coach
       case FieldStaffPosition.SPECIFIC_DEFENSIVE_COACH:
-        return <SpecificCoachVideoForm {...videoProps} />;
-
-      // Specific Technical Coach
       case FieldStaffPosition.SPECIFIC_TECHNICAL_COACH:
         return <SpecificCoachVideoForm {...videoProps} />;
 
-      // Specific Technical Coach
-      case FieldStaffPosition.SPECIFIC_TECHNICAL_COACH:
-        return <SpecificCoachVideoForm {...videoProps} />;
-
-      // Scouting Technical Coach
       case FieldStaffPosition.SCOUT:
         return <ScoutVideoForm {...videoProps} />;
 
-      // Technical Director
       case FieldStaffPosition.TECHNICAL_DIRECTOR:
         return <TechnicalDirectorVideoForm {...videoProps} />;
 
-      // Academy Director
       case FieldStaffPosition.ACADEMY_DIRECTOR:
         return <AcademyDirectorVideoForm {...videoProps} />;
 
-      // Director of Coaching
       case FieldStaffPosition.DIRECTOR_OF_COACHING:
         return <DirectorOfCoachingVideoForm {...videoProps} />;
+
+      default:
+        return null;
     }
   };
 
   return (
     <div>
-      {/* Home navigation link */}
       <Link
         href="/"
         className="absolute top-6 left-6 flex items-center gap-2 px-4 py-2 rounded-md bg-black hover:bg-gray-800 text-white hover:text-white shadow-md hover:shadow-lg transition-all duration-300 z-10 group font-medium"
