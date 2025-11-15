@@ -16,6 +16,15 @@ import {
 } from "@/components/ui/select";
 import { highSchoolPlayerProfessionalInfoSchema } from "@/shchemas/profileValidation";
 import { THighSchoolPlayerProfessionalInfo } from "@/types/profile";
+import {
+  availabilityOptions,
+  countryList,
+  footOptions,
+  genderOptions,
+  heightUnitOptions,
+  playerPositionOptions,
+  weightUnitOptions,
+} from "@/constants/selectOptions";
 
 interface IHighSchoolPlayerProfessionalInfoFormProps {
   onNext: (data: THighSchoolPlayerProfessionalInfo) => void;
@@ -90,9 +99,11 @@ export function HighSchoolPlayerProfessionalInfoForm({
                   <SelectValue placeholder="Select your gender" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="Male">Male</SelectItem>
-                  <SelectItem value="Female">Female</SelectItem>
-                  <SelectItem value="Other">Other</SelectItem>
+                  {genderOptions.map((item) => (
+                    <SelectItem key={item} value={item}>
+                      {item}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </FormField>
@@ -115,9 +126,11 @@ export function HighSchoolPlayerProfessionalInfoForm({
                   <SelectValue placeholder="Select availability" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="Now">Now</SelectItem>
-                  <SelectItem value="Soon">Soon</SelectItem>
-                  <SelectItem value="Later">Later</SelectItem>
+                  {availabilityOptions.map((item) => (
+                    <SelectItem key={item} value={item}>
+                      {item}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </FormField>
@@ -149,10 +162,11 @@ export function HighSchoolPlayerProfessionalInfoForm({
                     <SelectValue placeholder="Select" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="ft">ft</SelectItem>
-                    <SelectItem value="cm">cm</SelectItem>
-                    <SelectItem value="in">in</SelectItem>
-                    <SelectItem value="m">m</SelectItem>
+                    {heightUnitOptions.map((item) => (
+                      <SelectItem key={item} value={item}>
+                        {item}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>
@@ -185,8 +199,11 @@ export function HighSchoolPlayerProfessionalInfoForm({
                     <SelectValue placeholder="Select" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="kg">kg</SelectItem>
-                    <SelectItem value="lb">lb</SelectItem>
+                    {weightUnitOptions.map((item) => (
+                      <SelectItem key={item} value={item}>
+                        {item}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>
@@ -216,9 +233,35 @@ export function HighSchoolPlayerProfessionalInfoForm({
                   <SelectValue placeholder="Select foot" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="Right">Right</SelectItem>
-                  <SelectItem value="Left">Left</SelectItem>
-                  <SelectItem value="Both">Both</SelectItem>
+                  {footOptions.map((item) => (
+                    <SelectItem key={item} value={item}>
+                      {item}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </FormField>
+
+            {/* Country */}
+            <FormField label="Country" error={errors.country?.message}>
+              <Select
+                onValueChange={(value) =>
+                  setValue(
+                    "country",
+                    value as unknown as THighSchoolPlayerProfessionalInfo["country"],
+                    { shouldValidate: true, shouldDirty: true }
+                  )
+                }
+              >
+                <SelectTrigger className="bg-gray-50 border-0 w-full">
+                  <SelectValue placeholder="Select your country" />
+                </SelectTrigger>
+                <SelectContent>
+                  {countryList.map((item) => (
+                    <SelectItem key={item} value={item}>
+                      {item}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </FormField>
@@ -238,20 +281,11 @@ export function HighSchoolPlayerProfessionalInfoForm({
                   <SelectValue placeholder="Select your position" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="GK">GK</SelectItem>
-                  <SelectItem value="Central back">Central back</SelectItem>
-                  <SelectItem value="Left back">Left back</SelectItem>
-                  <SelectItem value="Right back">Right back</SelectItem>
-                  <SelectItem value="Defensive midfielder">
-                    Defensive midfielder
-                  </SelectItem>
-                  <SelectItem value="Offensive midfielder">
-                    Offensive midfielder
-                  </SelectItem>
-                  <SelectItem value="Right winger">Right winger</SelectItem>
-                  <SelectItem value="Left winger">Left winger</SelectItem>
-                  <SelectItem value="Forward">Forward</SelectItem>
-                  <SelectItem value="Striker">Striker</SelectItem>
+                  {playerPositionOptions.map((item) => (
+                    <SelectItem key={item} value={item}>
+                      {item}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </FormField>
@@ -323,14 +357,6 @@ export function HighSchoolPlayerProfessionalInfoForm({
               <Input
                 {...register("gpa")}
                 placeholder="Write your gpa"
-                className="bg-gray-50 border-0"
-              />
-            </FormField>
-
-            <FormField label="Country" error={errors.country?.message}>
-              <Input
-                {...register("country")}
-                placeholder="Write your country"
                 className="bg-gray-50 border-0"
               />
             </FormField>
