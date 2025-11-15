@@ -91,8 +91,6 @@ export default function CandidateProfilePage() {
   const handlePersonalInfoNext = (data: TPersonalInfo) => {
     setFormData((prev) => ({ ...prev, personalInfo: data }));
     setCurrentStep(2);
-
-    console.log("Personal Info Data:", data);
   };
 
   // Remove empty optional fields from an object recursively.
@@ -142,7 +140,6 @@ export default function CandidateProfilePage() {
   ) => {
     setFormData((prev) => ({ ...prev, professionalInfo: data }));
     setFieldStaffPosition((data as TFieldStaffProfessionalInfo).position || "");
-    console.log("Professional Info Data:", data);
     setCurrentStep(3);
   };
 
@@ -157,10 +154,6 @@ export default function CandidateProfilePage() {
         description?: string;
       }>;
     };
-
-    // Debug logs: show current stored formData (userInfo) and incoming video payload
-    console.log("handleVideoNext called. current formData state:", formData);
-    console.log("incoming videos data:", videoData);
 
     // Prepare the data object combining personal and professional info
     // Use the current formData before setState to ensure we have all data
@@ -231,31 +224,9 @@ export default function CandidateProfilePage() {
       });
     }
 
-    console.log("Data:", cleanedCombined);
-    console.log("VideoTitles:", videoData.videoTitles);
-    console.log("VideoMeta:", videoData.videoMeta);
-    console.log("Videos:", videoData.videos);
-    // Log FormData contents in a readable way (files will show name/size)
-    for (const pair of formDataToSend.entries()) {
-      const [key, value] = pair as [string, unknown];
-      if (value instanceof File) {
-        console.log(key, "File ->", {
-          name: value.name,
-          size: value.size,
-          type: value.type,
-        });
-      } else if (Array.isArray(value)) {
-        console.log(key, value);
-      } else {
-        // could be stringified JSON or primitive
-        console.log(key, value);
-      }
-    }
-
-    // Here you would typically submit the FormData to your API
+    // Submit the FormData to the API
     const { data: userProfile } = await createUserProfile(formDataToSend);
     if (userProfile?.data.profileId) {
-      console.log("created userProfile", userProfile);
       toast.success("Profile completed successfully!");
       router.push("/");
     } else {
