@@ -1,5 +1,3 @@
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import bg from "@/assets/hero-bg.png";
 import Image from "next/image";
 import line from "@/assets/line.png";
@@ -28,7 +26,7 @@ export function HeroSection() {
               </h1>
             </div>
 
-            <div className="flex flex-row gap-2 justify-center lg:justify-start">
+            {/* <div className="flex flex-row gap-2 justify-center lg:justify-start">
               <Button
                 asChild
                 className=" md:w-[200px] bg-yellow-300 hover:bg-yellow-400 text-black font-medium px-8 py-3 text-lg rounded-lg"
@@ -41,7 +39,7 @@ export function HeroSection() {
               >
                 <Link href="/signup">Sign Up</Link>
               </Button>
-            </div>
+            </div> */}
           </div>
 
           {/* Right Image */}
