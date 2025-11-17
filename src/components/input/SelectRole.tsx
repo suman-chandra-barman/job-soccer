@@ -97,9 +97,15 @@ export default function RoleSelect({
             {/* Candidates Section */}
             <div>
               <h3 className="font-semibold text-gray-900 mb-3">Candidates</h3>
-              <RadioGroup value={selectedRole} onValueChange={handleCandidateRoleSelect}>
+              <RadioGroup
+                value={selectedRole}
+                onValueChange={handleCandidateRoleSelect}
+              >
                 {candidateRoles.map((role) => (
-                  <div key={`candidate-${role}`} className="flex items-center space-x-2">
+                  <div
+                    key={`candidate-${role}`}
+                    className="flex items-center space-x-2"
+                  >
                     <RadioGroupItem
                       value={role}
                       id={`candidate-${role}`}
@@ -119,9 +125,15 @@ export default function RoleSelect({
             {/* Employers Section */}
             <div>
               <h3 className="font-semibold text-gray-900 mb-3">Employers</h3>
-              <RadioGroup value={selectedRole} onValueChange={handleEmployerRoleSelect}>
+              <RadioGroup
+                value={selectedRole}
+                onValueChange={handleEmployerRoleSelect}
+              >
                 {employerRoles.map((role) => (
-                  <div key={`employer-${role}`} className="flex items-center space-x-2">
+                  <div
+                    key={`employer-${role}`}
+                    className="flex items-center space-x-2"
+                  >
                     <RadioGroupItem
                       value={role}
                       id={`employer-${role}`}
