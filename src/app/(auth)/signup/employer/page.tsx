@@ -13,6 +13,7 @@ import {
   TCollegeOrUniversityEmployerProfile,
   TConsultingCompanyEmployerProfile,
   THighSchoolEmployerProfile,
+  TProfessionalClubEmployerProfile,
 } from "@/types/profile";
 import { useCreateUserProfileMutation } from "@/redux/features/user/userApi";
 import { useRouter } from "next/navigation";
@@ -24,6 +25,7 @@ import { AmateurClubEmployerProfileForm } from "@/components/forms/AmateurClubEm
 import { CollegeOrUniversityEmployerProfileForm } from "@/components/forms/CollegeOrUniversityEmployerProfileForm";
 import { ConsultingCompanyEmployerProfileForm } from "@/components/forms/ConsultingCompanyEmployerProfileForm";
 import { HighSchoolEmployerProfileForm } from "@/components/forms/HighSchoolEmployerProfileForm";
+import { ProfessionalClubEmployerProfileForm } from "@/components/forms/ProfessionalClubEmployerProfileForm";
 
 export default function EmployerProfilePage() {
   const [formData, setFormData] = useState<{
@@ -33,7 +35,8 @@ export default function EmployerProfilePage() {
       | TAmateurClubEmployerProfile
       | TCollegeOrUniversityEmployerProfile
       | TConsultingCompanyEmployerProfile
-      | THighSchoolEmployerProfile;
+      | THighSchoolEmployerProfile
+      | TProfessionalClubEmployerProfile;
   }>({});
 
   const user = useAppSelector((state) => state.auth.user);
@@ -91,6 +94,7 @@ export default function EmployerProfilePage() {
       | TCollegeOrUniversityEmployerProfile
       | TConsultingCompanyEmployerProfile
       | THighSchoolEmployerProfile
+      | TProfessionalClubEmployerProfile
   ) => {
     const logoFile =
       "logo" in data && data.logo instanceof File ? data.logo : null;
@@ -122,6 +126,14 @@ export default function EmployerProfilePage() {
 
   const renderProfileForm = () => {
     switch (userRole) {
+      case EmployerRole.PROFESSIONAL_CLUB:
+        return (
+          <ProfessionalClubEmployerProfileForm
+            onNext={handleProfileNext}
+            initialData={formData.profileInfo as any}
+          />
+        );
+
       case EmployerRole.ACADEMY:
         return (
           <AcademyEmployerProfileForm
