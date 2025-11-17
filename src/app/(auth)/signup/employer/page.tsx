@@ -9,6 +9,7 @@ import {
   EmployerRole,
   TAcademyEmployerProfile,
   TAgentEmployerProfile,
+  TAmateurClubEmployerProfile,
 } from "@/types/profile";
 import { useCreateUserProfileMutation } from "@/redux/features/user/userApi";
 import { useRouter } from "next/navigation";
@@ -16,10 +17,14 @@ import Link from "next/link";
 import { IoMdArrowBack } from "react-icons/io";
 import { AcademyEmployerProfileForm } from "@/components/forms/AcademyEmployerProfileForm";
 import { AgentEmployerProfileForm } from "@/components/forms/AgentEmployerProfileForm";
+import { AmateurClubEmployerProfileForm } from "@/components/forms/AmateurClubEmployerProfileForm";
 
 export default function EmployerProfilePage() {
   const [formData, setFormData] = useState<{
-    profileInfo?: TAcademyEmployerProfile | TAgentEmployerProfile;
+    profileInfo?:
+      | TAcademyEmployerProfile
+      | TAgentEmployerProfile
+      | TAmateurClubEmployerProfile;
   }>({});
 
   const user = useAppSelector((state) => state.auth.user);
@@ -70,7 +75,10 @@ export default function EmployerProfilePage() {
   };
 
   const handleProfileNext = async (
-    data: TAcademyEmployerProfile | TAgentEmployerProfile
+    data:
+      | TAcademyEmployerProfile
+      | TAgentEmployerProfile
+      | TAmateurClubEmployerProfile
   ) => {
     const logoFile =
       "logo" in data && data.logo instanceof File ? data.logo : null;
@@ -113,6 +121,14 @@ export default function EmployerProfilePage() {
       case EmployerRole.AGENT:
         return (
           <AgentEmployerProfileForm
+            onNext={handleProfileNext}
+            initialData={formData.profileInfo as any}
+          />
+        );
+
+      case EmployerRole.AMATEUR_CLUB:
+        return (
+          <AmateurClubEmployerProfileForm
             onNext={handleProfileNext}
             initialData={formData.profileInfo as any}
           />

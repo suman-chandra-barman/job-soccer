@@ -134,7 +134,7 @@ export function AgentEmployerProfileForm({
                   }
                   defaultValue={initialData?.country}
                 >
-                  <SelectTrigger className="bg-gray-50 border-0">
+                  <SelectTrigger className="bg-gray-50 border-0 w-full">
                     <SelectValue placeholder="Select country" />
                   </SelectTrigger>
                   <SelectContent>
@@ -179,19 +179,19 @@ export function AgentEmployerProfileForm({
                   className="bg-gray-50 border-0"
                 />
               </FormField>
+              
+              {/* FIFA License Number */}
+              <FormField
+                label="FIFA license number"
+                error={errors.fifaLicenseNumber?.message}
+              >
+                <Input
+                  {...register("fifaLicenseNumber")}
+                  placeholder="Enter FIFA license number"
+                  className="bg-gray-50 border-0"
+                />
+              </FormField>
             </div>
-
-            {/* FIFA License Number */}
-            <FormField
-              label="FIFA license number"
-              error={errors.fifaLicenseNumber?.message}
-            >
-              <Input
-                {...register("fifaLicenseNumber")}
-                placeholder="Enter FIFA license number"
-                className="bg-gray-50 border-0"
-              />
-            </FormField>
           </div>
         </FormSection>
       </form>

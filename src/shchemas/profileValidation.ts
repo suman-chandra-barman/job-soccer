@@ -179,7 +179,9 @@ export const videoSchema = z.object({
 
 // Academy Employer Profile Schema
 export const academyEmployerProfileSchema = z.object({
-  logo: z.instanceof(File, { message: "Please upload a logo" }).refine((file) => file.size > 0, "Logo is required"),
+  logo: z
+    .instanceof(File, { message: "Please upload a logo" })
+    .refine((file) => file.size > 0, "Logo is required"),
   clubName: z.string().trim().min(1, "Club name is required"),
   country: z.string().min(1, "Country is required"),
   address: z.string().trim().min(1, "Address is required"),
@@ -207,7 +209,9 @@ export const academyEmployerProfileSchema = z.object({
 
 // Agent Employer Profile Schema
 export const agentEmployerProfileSchema = z.object({
-  logo: z.instanceof(File, { message: "Please upload a logo" }).refine((file) => file.size > 0, "Logo is required"),
+  logo: z
+    .instanceof(File, { message: "Please upload a logo" })
+    .refine((file) => file.size > 0, "Logo is required"),
   companyName: z.string().trim().min(1, "Company name is required"),
   phoneNumber: z.string().trim().min(1, "Phone number is required"),
   country: z.string().min(1, "Country is required"),
@@ -222,7 +226,9 @@ export const agentEmployerProfileSchema = z.object({
 
 // Amateur Club Employer Profile Schema
 export const amateurClubEmployerProfileSchema = z.object({
-  logo: z.instanceof(File, { message: "Please upload a logo" }).refine((file) => file.size > 0, "Logo is required"),
+  logo: z
+    .instanceof(File, { message: "Please upload a logo" })
+    .refine((file) => file.size > 0, "Logo is required"),
   clubName: z.string().trim().min(1, "Club name is required"),
   country: z.string().min(1, "Country is required"),
   address: z.string().trim().min(1, "Address is required"),
