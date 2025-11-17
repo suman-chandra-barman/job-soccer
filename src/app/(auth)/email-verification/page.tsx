@@ -43,7 +43,7 @@ export default function EmailVerificationPage() {
   useEffect(() => {
     if (user?.data.userType) {
       if (user.data.userType === "candidate") router.push(`/signup/candidate`);
-      else router.push(`/user/employer`);
+      else router.push(`/signup/employer`);
     }
   }, [user, router]);
 
