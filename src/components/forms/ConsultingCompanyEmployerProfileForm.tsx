@@ -106,36 +106,14 @@ export function ConsultingCompanyEmployerProfileForm({
               )}
             </div>
 
-            {/* Company Name and Country */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <FormField label="Company name" error={errors.clubName?.message}>
-                <Input
-                  {...register("clubName")}
-                  placeholder="Name of company"
-                  className="bg-gray-50 border-0"
-                />
-              </FormField>
-
-              <FormField label="Country" error={errors.country?.message}>
-                <Select
-                  onValueChange={(value) =>
-                    setValue("country", value, { shouldValidate: true })
-                  }
-                  defaultValue={initialData?.country}
-                >
-                  <SelectTrigger className="bg-gray-50 border-0 w-full">
-                    <SelectValue placeholder="Name of country" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {countryList.map((country) => (
-                      <SelectItem key={country} value={country}>
-                        {country}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </FormField>
-            </div>
+            {/* Club Name */}
+            <FormField label="Company name" error={errors.clubName?.message}>
+              <Input
+                {...register("clubName")}
+                placeholder="Name of company"
+                className="bg-gray-50 border-0"
+              />
+            </FormField>
 
             {/* Position and Location */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -155,6 +133,27 @@ export function ConsultingCompanyEmployerProfileForm({
                 />
               </FormField>
             </div>
+
+            {/* Country */}
+            <FormField label="Country" error={errors.country?.message}>
+              <Select
+                onValueChange={(value) =>
+                  setValue("country", value, { shouldValidate: true })
+                }
+                defaultValue={initialData?.country}
+              >
+                <SelectTrigger className="bg-gray-50 border-0 w-full">
+                  <SelectValue placeholder="Name of country" />
+                </SelectTrigger>
+                <SelectContent>
+                  {countryList.map((country) => (
+                    <SelectItem key={country} value={country}>
+                      {country}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </FormField>
 
             {/* Address and Level */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
