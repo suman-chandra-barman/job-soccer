@@ -9,17 +9,14 @@ import {
   useGetJobsWithFiltersMutation,
 } from "@/redux/features/job/jobApi";
 import { TJob } from "@/types/job";
+import { CardSkeleton } from "@/components/skeleton/CardSkeleton";
 
 function JobPage() {
-  const [
-    getNewFourJobs,
-    { data: newJobsData, isLoading: newJobsLoading, isError: newJobsError },
-  ] = useGetNewFourJobsMutation();
+  const [getNewFourJobs, { data: newJobsData, isLoading: newJobsLoading }] =
+    useGetNewFourJobsMutation();
 
-  const [
-    getJobsWithFilters,
-    { data: allJobsData, isLoading: allJobsLoading, isError: allJobsError },
-  ] = useGetJobsWithFiltersMutation();
+  const [getJobsWithFilters, { data: allJobsData, isLoading: allJobsLoading }] =
+    useGetJobsWithFiltersMutation();
 
   useEffect(() => {
     getNewFourJobs({});
@@ -47,15 +44,19 @@ function JobPage() {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-8">
             {newJobsLoading ? (
-              <p>Loading new jobs...</p>
-            ) : newJobsError ? (
-              <p>Error loading jobs</p>
+              <>
+                {Array.from({ length: 4 }).map((_, index) => (
+                  <CardSkeleton key={index} />
+                ))}
+              </>
             ) : newJobsData?.data && newJobsData.data.length > 0 ? (
               newJobsData.data.map((job: TJob) => (
                 <JobCard key={job._id} job={job} />
               ))
             ) : (
-              <p>No new jobs available</p>
+              <p className="col-span-full text-center text-gray-500">
+                No new jobs available
+              </p>
             )}
           </div>
         </div>
@@ -65,15 +66,19 @@ function JobPage() {
           <h2 className="text-2xl md:text-4xl font-semibold my-10">All Jobs</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-8">
             {allJobsLoading ? (
-              <p>Loading all jobs...</p>
-            ) : allJobsError ? (
-              <p>Error loading all jobs</p>
+              <>
+                {Array.from({ length: 8 }).map((_, index) => (
+                  <CardSkeleton key={index} />
+                ))}
+              </>
             ) : allJobsData?.data && allJobsData.data.length > 0 ? (
               allJobsData.data.map((job: TJob) => (
                 <JobCard key={job._id} job={job} />
               ))
             ) : (
-              <p>No jobs available</p>
+              <p className="col-span-full text-center text-gray-500">
+                No jobs available
+              </p>
             )}
           </div>
         </div>
