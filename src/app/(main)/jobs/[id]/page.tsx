@@ -1,128 +1,107 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { MapPin, SquareCheck } from "lucide-react";
-import { JobFilters } from "@/components/jobs/JobFilters";
-import { TCandidate } from "@/components/home/Canditates";
-import user1 from "@/assets/candidates/user1.png";
-import user2 from "@/assets/candidates/user2.png";
-import CandidateCard from "@/components/cards/CandidateCard";
-import { JobSearch } from "@/components/search/JobSearch";
+import {
+  useGetSingleJobMutation,
+  useGetJobsWithFiltersMutation,
+} from "@/redux/features/job/jobApi";
+import { TJob } from "@/types/job";
+import { Skeleton } from "@/components/ui/skeleton";
+import { JobCard } from "@/components/cards/JobCard";
 
-// TypeScript interfaces
-interface JobDetails {
-  id: number;
-  title: string;
-  club: string;
-  location: string;
-  workType: string;
-  applicationDeadline: string;
-  overview: string;
-  position: string;
-  salary: string;
-  duration: string;
-  experience: string;
-  requirements: string;
-  videoAssessment: string;
-  responsibilities: string[];
-  skillsQualifications: string[];
-  applicationRequirements: string[];
-  logo: string;
+interface PageProps {
+  params: Promise<{ id: string }>;
 }
 
-const JobDetailsPage = () => {
-  // Sample job data - this would come from props or API
-  const jobData: JobDetails = {
-    id: 1,
-    title: "Defence Player",
-    club: "Nebula City FC",
-    location: "Barcelona, Spain",
-    workType: "Part-time",
-    applicationDeadline: "July 30, 2025",
-    overview:
-      "Ajax Youth Academy is seeking a dedicated and highly skilled U21 Goalkeeper for a 3-month trial position. The role involves regular training sessions, competitive match participation, and performance evaluations. Ideal candidates should be physically fit, tactically aware, and confident in goal.",
-    position: "Goalkeeper",
-    salary: "$1,000/month + Performance Bonuses",
-    duration: "Trial – 3 Months",
-    experience: "2 years experience",
-    requirements: "Video Highlight, AI Assessment",
-    videoAssessment: "87% Compatible",
-    responsibilities: [
-      "Participate in daily training and match simulations",
-      "Follow coaching feedback and tactical strategies",
-      "Maintain peak physical and mental readiness",
-      "Record and submit performance sessions",
-      "Engage with team communication channels",
-    ],
-    skillsQualifications: [
-      "Strong shot-stopping and positioning skills",
-      "Confident in aerial duels and 1-on-1 situations",
-      "Previous club or school-level experience",
-      "Good communication with defenders",
-      "Willing to complete AI assessment & video submission",
-      "Basic English or local language understanding",
-    ],
-    applicationRequirements: [
-      "Updated CV / Football Resume (PDF)",
-      "Upload 3-5 Performance Highlight Videos",
-      "Complete AI Psychological & Skill Assessment",
-      "Optional: Reference Letter from Coach or Trainer",
-    ],
-    logo: "🏟️",
+const JobDetailsPage = ({ params }: PageProps) => {
+  const [getSingleJob, { data: jobResponse, isLoading }] =
+    useGetSingleJobMutation();
+
+  const [
+    getRelatedJobs,
+    { data: relatedJobsResponse, isLoading: relatedJobsLoading },
+  ] = useGetJobsWithFiltersMutation();
+
+  const jobData: TJob | undefined = jobResponse?.data;
+
+  useEffect(() => {
+    params.then((resolvedParams) => {
+      getSingleJob(resolvedParams.id);
+    });
+  }, [params, getSingleJob]);
+
+  useEffect(() => {
+    if (jobData?.jobCategory) {
+      getRelatedJobs({ jobCategory: jobData.jobCategory });
+    }
+  }, [jobData?.jobCategory, getRelatedJobs]);
+
+  const relatedJobs = relatedJobsResponse?.data?.slice(0, 4) || [];
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50">
+        <div className="container mx-auto px-4 md:px-0 py-16">
+          <div className="flex flex-col-reverse lg:flex-row justify-between gap-4">
+            <div className="flex-1 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-4">
+              {Array.from({ length: 4 }).map((_, i) => (
+                <Skeleton key={i} className="h-32 rounded-lg" />
+              ))}
+            </div>
+            <div className="flex-3">
+              <Skeleton className="h-[800px] rounded-2xl" />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!jobData) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <p className="text-gray-500">Job not found</p>
+      </div>
+    );
+  }
+
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
   };
-  const candidates: TCandidate[] = [
-    {
-      id: 1,
-      name: "Jacob Jones",
-      role: "Head Coach",
-      location: "Rio, Brazil",
-      nationality: "Brazil",
-      avatar: user1,
-    },
-    {
-      id: 2,
-      name: "Courtney Henry",
-      role: "Marketing Manager",
-      location: "Dallas, USA",
-      nationality: "USA",
-      avatar: user2,
-    },
-    {
-      id: 3,
-      name: "Wade Warren",
-      role: "Technical Director",
-      location: "Glasgow, Scotland",
-      nationality: "Scottish",
-      avatar: user1,
-    },
-    {
-      id: 4,
-      name: "John Doe",
-      role: "Striker (Player)",
-      location: "Madrid, Spain",
-      nationality: "Bangladeshi",
-      avatar: user2,
-    },
-  ];
+
+  const formatSalary = () => {
+    if (jobData.salary.min && jobData.salary.max) {
+      return `$${(jobData.salary.min / 1000).toFixed(0)}K - $${(
+        jobData.salary.max / 1000
+      ).toFixed(0)}K/month`;
+    }
+    return "Negotiable";
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="bg-[#F7F6F2]">
-        <h2 className="text-3xl md:text-4xl text-[#362F05] text-center pt-10 mb-24">
-          Find Your <span className="text-green-400">Ultimate Job</span>
-          <br />
-          Search Companion
-        </h2>
-        <JobSearch />
-        <JobFilters />
-      </div>
       <div className="container mx-auto px-4 md:px-0 py-16">
         <div className="flex flex-col-reverse lg:flex-row justify-between gap-4">
-          {/* left column */}
+          {/* left column - Related Jobs */}
           <div className="flex-1 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-4">
-            {candidates.map((candidate: TCandidate) => (
-              <CandidateCard key={candidate.id} candidate={candidate} />
-            ))}
+            <h2 className="text-xl font-semibold mb-4">Recommended Jobs</h2>
+            {relatedJobsLoading ? (
+              Array.from({ length: 4 }).map((_, i) => (
+                <Skeleton key={i} className="h-64 rounded-lg" />
+              ))
+            ) : relatedJobs.length > 0 ? (
+              relatedJobs.map((job: TJob) => (
+                <JobCard key={job._id} job={job} />
+              ))
+            ) : (
+              <p className="text-gray-500 text-center">No recommended jobs found</p>
+            )}
           </div>
 
           <div className="flex-3 ">
@@ -132,24 +111,27 @@ const JobDetailsPage = () => {
                 <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start mb-6">
                   <div className="mb-4 lg:mb-0">
                     <h1 className="text-2xl font-bold text-black mb-2">
-                      {jobData.title}
+                      {jobData.jobTitle}
                     </h1>
                     <div className="flex flex-wrap items-center gap-2 text-sm text-gray-600">
-                      <span>{jobData.club}</span>
+                      <span>
+                        {jobData.creator.creatorId.firstName}{" "}
+                        {jobData.creator.creatorId.lastName}
+                      </span>
                       <span>•</span>
                       <div className="flex items-center gap-1">
                         <MapPin className="w-4 h-4" />
                         <span>{jobData.location}</span>
                       </div>
                       <span>•</span>
-                      <span>{jobData.workType}</span>
+                      <span>{jobData.contractType}</span>
                     </div>
                   </div>
 
                   <div className="flex items-center gap-2 text-sm">
                     <span className="text-gray-600">Application Deadline:</span>
                     <span className="text-gray-900 font-medium">
-                      {jobData.applicationDeadline}
+                      {formatDate(jobData.deadline)}
                     </span>
                   </div>
                 </div>
@@ -163,7 +145,7 @@ const JobDetailsPage = () => {
                         Job Overview
                       </h2>
                       <p className="text-gray-700 leading-relaxed text-sm">
-                        {jobData.overview}
+                        {jobData.jobOverview}
                       </p>
                     </div>
 
@@ -189,16 +171,16 @@ const JobDetailsPage = () => {
                               Salary
                             </div>
                             <div className="text-sm font-medium text-black">
-                              {jobData.salary}
+                              {formatSalary()}
                             </div>
                           </div>
 
                           <div>
                             <div className="text-xs text-gray-500 mb-1">
-                              Duration
+                              Contract Type
                             </div>
                             <div className="text-sm font-medium text-black">
-                              {jobData.duration}
+                              {jobData.contractType}
                             </div>
                           </div>
 
@@ -212,21 +194,21 @@ const JobDetailsPage = () => {
                           </div>
                           <div>
                             <div className="text-xs text-gray-500 mb-1">
-                              Requirements
+                              Category
                             </div>
                             <div className="text-sm font-medium text-black">
-                              {jobData.requirements}
+                              {jobData.jobCategory}
                             </div>
                           </div>
 
                           <div>
                             <div className="text-xs text-gray-500 mb-1">
-                              AI Match Score
+                              AI Score Required
                             </div>
                             <div className="flex items-center gap-2">
                               <SquareCheck className="w-4 h-4 text-green-500 " />
                               <span className="text-sm font-medium text-black">
-                                {jobData.videoAssessment}
+                                {jobData.requiredAiScore}%
                               </span>
                             </div>
                           </div>
@@ -239,17 +221,9 @@ const JobDetailsPage = () => {
                       <h2 className="text-lg font-semibold text-black mb-3">
                         Responsibilities
                       </h2>
-                      <ul className="space-y-2">
-                        {jobData.responsibilities.map((item, index) => (
-                          <li
-                            key={index}
-                            className="flex items-start gap-3 text-sm text-gray-700"
-                          >
-                            <span className="w-1 h-1 bg-black rounded-full mt-2 flex-shrink-0"></span>
-                            <span>{item}</span>
-                          </li>
-                        ))}
-                      </ul>
+                      <p className="text-gray-700 leading-relaxed text-sm">
+                        {jobData.responsibilities}
+                      </p>
                     </div>
 
                     {/* Required Skills & Qualifications */}
@@ -257,17 +231,9 @@ const JobDetailsPage = () => {
                       <h2 className="text-lg font-semibold text-black mb-3">
                         Required Skills & Qualifications
                       </h2>
-                      <ul className="space-y-2">
-                        {jobData.skillsQualifications.map((item, index) => (
-                          <li
-                            key={index}
-                            className="flex items-start gap-3 text-sm text-gray-700"
-                          >
-                            <span className="w-1 h-1 bg-black rounded-full mt-2 flex-shrink-0"></span>
-                            <span>{item}</span>
-                          </li>
-                        ))}
-                      </ul>
+                      <p className="text-gray-700 leading-relaxed text-sm">
+                        {jobData.requiredSkills}
+                      </p>
                     </div>
 
                     {/* Application Requirements */}
@@ -275,17 +241,19 @@ const JobDetailsPage = () => {
                       <h2 className="text-lg font-semibold text-black mb-3">
                         Application Requirements
                       </h2>
-                      <ul className="space-y-2">
-                        {jobData.applicationRequirements.map((item, index) => (
-                          <li
-                            key={index}
-                            className="flex items-start gap-3 text-sm text-gray-700"
-                          >
-                            <span className="w-1 h-1 bg-black rounded-full mt-2 flex-shrink-0"></span>
-                            <span>{item}</span>
-                          </li>
-                        ))}
-                      </ul>
+                      <p className="text-gray-700 leading-relaxed text-sm">
+                        {jobData.requirements}
+                      </p>
+                      {jobData.additionalRequirements && (
+                        <div className="mt-3">
+                          <h3 className="text-sm font-semibold text-black mb-2">
+                            Additional Requirements
+                          </h3>
+                          <p className="text-gray-700 leading-relaxed text-sm">
+                            {jobData.additionalRequirements}
+                          </p>
+                        </div>
+                      )}
                     </div>
 
                     {/* Mobile Action Buttons */}
@@ -321,16 +289,16 @@ const JobDetailsPage = () => {
                             Salary
                           </div>
                           <div className="text-sm font-medium text-black">
-                            {jobData.salary}
+                            {formatSalary()}
                           </div>
                         </div>
 
                         <div>
                           <div className="text-xs text-gray-500 mb-1">
-                            Duration
+                            Contract Type
                           </div>
                           <div className="text-sm font-medium text-black">
-                            {jobData.duration}
+                            {jobData.contractType}
                           </div>
                         </div>
 
@@ -345,21 +313,21 @@ const JobDetailsPage = () => {
 
                         <div>
                           <div className="text-xs text-gray-500 mb-1">
-                            Requirements
+                            Category
                           </div>
                           <div className="text-sm font-medium text-black">
-                            {jobData.requirements}
+                            {jobData.jobCategory}
                           </div>
                         </div>
 
                         <div className="pt-2">
                           <div className="text-xs text-gray-500 mb-1">
-                            AI Match Score
+                            AI Score Required
                           </div>
                           <div className="flex items-center gap-2">
                             <SquareCheck className="w-4 h-4 text-green-500 " />
                             <span className="text-sm font-medium text-black">
-                              {jobData.videoAssessment}
+                              {jobData.requiredAiScore}%
                             </span>
                           </div>
                         </div>
