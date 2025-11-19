@@ -3,135 +3,28 @@
 import { JobSearch } from "@/components/search/JobSearch";
 import { JobFilters } from "@/components/jobs/JobFilters";
 import React, { useEffect } from "react";
-import user1 from "@/assets/candidates/user1.png";
-import user2 from "@/assets/candidates/user2.png";
-import user3 from "@/assets/candidates/user3.png";
-import user4 from "@/assets/candidates/user4.png";
-import { TNewJobPost } from "@/components/home/NewJobs";
 import { JobCard } from "@/components/cards/JobCard";
-import { useGetNewFourJobsMutation } from "@/redux/features/job/jobApi";
+import {
+  useGetNewFourJobsMutation,
+  useGetJobsWithFiltersMutation,
+} from "@/redux/features/job/jobApi";
 import { TJob } from "@/types/job";
 
-function JobBoardPage() {
-  const [getNewFourJobs, { data, isLoading, isError }] =
-    useGetNewFourJobsMutation();
+function JobPage() {
+  const [
+    getNewFourJobs,
+    { data: newJobsData, isLoading: newJobsLoading, isError: newJobsError },
+  ] = useGetNewFourJobsMutation();
 
-  
+  const [
+    getJobsWithFilters,
+    { data: allJobsData, isLoading: allJobsLoading, isError: allJobsError },
+  ] = useGetJobsWithFiltersMutation();
 
   useEffect(() => {
     getNewFourJobs({});
-  }, [getNewFourJobs]);
-
-  const jobPosts: TNewJobPost[] = [
-    {
-      id: "1",
-      company: "Trappes FC",
-      location: "Trappes, France",
-      applicantCount: 120,
-      salary: "$30K",
-      postedTime: "2 days ago",
-      applicantImages: [user1, user2, user3, user4],
-    },
-    {
-      id: "2",
-      company: "Bordeaux AC",
-      location: "Trappes, France",
-      applicantCount: 120,
-      salary: "$30K",
-      postedTime: "2 days ago",
-      applicantImages: [user1, user2, user3, user4],
-    },
-    {
-      id: "3",
-      company: "Greece FC",
-      location: "Trappes, France",
-      applicantCount: 120,
-      salary: "$30K",
-      postedTime: "2 days ago",
-      applicantImages: [user1, user2, user3, user4],
-    },
-    {
-      id: "4",
-      company: "Tunis FC",
-      location: "Trappes, France",
-      applicantCount: 120,
-      salary: "$30K",
-      postedTime: "2 days ago",
-      applicantImages: [user1, user2, user3, user4],
-    },
-    {
-      id: "5",
-      company: "Trappes FC",
-      location: "Trappes, France",
-      applicantCount: 120,
-      salary: "$30K",
-      postedTime: "2 days ago",
-      applicantImages: [user1, user2, user3, user4],
-    },
-    {
-      id: "6",
-      company: "Bordeaux AC",
-      location: "Trappes, France",
-      applicantCount: 120,
-      salary: "$30K",
-      postedTime: "2 days ago",
-      applicantImages: [user1, user2, user3, user4],
-    },
-    {
-      id: "7",
-      company: "Greece FC",
-      location: "Trappes, France",
-      applicantCount: 120,
-      salary: "$30K",
-      postedTime: "2 days ago",
-      applicantImages: [user1, user2, user3, user4],
-    },
-    {
-      id: "8",
-      company: "Tunis FC",
-      location: "Trappes, France",
-      applicantCount: 120,
-      salary: "$30K",
-      postedTime: "2 days ago",
-      applicantImages: [user1, user2, user3, user4],
-    },
-    {
-      id: "9",
-      company: "Trappes FC",
-      location: "Trappes, France",
-      applicantCount: 120,
-      salary: "$30K",
-      postedTime: "2 days ago",
-      applicantImages: [user1, user2, user3, user4],
-    },
-    {
-      id: "10",
-      company: "Bordeaux AC",
-      location: "Trappes, France",
-      applicantCount: 120,
-      salary: "$30K",
-      postedTime: "2 days ago",
-      applicantImages: [user1, user2, user3, user4],
-    },
-    {
-      id: "11",
-      company: "Greece FC",
-      location: "Trappes, France",
-      applicantCount: 120,
-      salary: "$30K",
-      postedTime: "2 days ago",
-      applicantImages: [user1, user2, user3, user4],
-    },
-    {
-      id: "12",
-      company: "Tunis FC",
-      location: "Trappes, France",
-      applicantCount: 120,
-      salary: "$30K",
-      postedTime: "2 days ago",
-      applicantImages: [user1, user2, user3, user4],
-    },
-  ];
+    getJobsWithFilters({});
+  }, [getNewFourJobs, getJobsWithFilters]);
 
   return (
     <div>
@@ -147,19 +40,18 @@ function JobBoardPage() {
 
       {/* Jobs */}
       <div className="container mx-auto px-4 md:px-0">
-
         {/* New Jobs */}
         <div>
           <h2 className="text-2xl md:text-4xl text-red-400 font-semibold my-10">
             New Jobs
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-8">
-            {isLoading ? (
+            {newJobsLoading ? (
               <p>Loading new jobs...</p>
-            ) : isError ? (
+            ) : newJobsError ? (
               <p>Error loading jobs</p>
-            ) : data?.data && data.data.length > 0 ? (
-              data.data.map((job: TJob) => (
+            ) : newJobsData?.data && newJobsData.data.length > 0 ? (
+              newJobsData.data.map((job: TJob) => (
                 <JobCard key={job._id} job={job} />
               ))
             ) : (
@@ -172,9 +64,17 @@ function JobBoardPage() {
         <div>
           <h2 className="text-2xl md:text-4xl font-semibold my-10">All Jobs</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-8">
-            {jobPosts.map((job) => (
-              <JobCard key={job.id} job={job} />
-            ))}
+            {allJobsLoading ? (
+              <p>Loading all jobs...</p>
+            ) : allJobsError ? (
+              <p>Error loading all jobs</p>
+            ) : allJobsData?.data && allJobsData.data.length > 0 ? (
+              allJobsData.data.map((job: TJob) => (
+                <JobCard key={job._id} job={job} />
+              ))
+            ) : (
+              <p>No jobs available</p>
+            )}
           </div>
         </div>
       </div>
@@ -182,4 +82,4 @@ function JobBoardPage() {
   );
 }
 
-export default JobBoardPage;
+export default JobPage;
