@@ -82,13 +82,15 @@ function JobPage() {
           Search Companion
         </h2>
         <JobSearch />
-        <JobFilters
-          onFiltersChange={handleFiltersChange}
-          onReset={handleReset}
-          dateFilter={filters.dateFilter}
-          aiScoreLevel={filters.aiScoreLevel}
-          experience={filters.experience}
-        />
+        {/* <div className="absolute buttom-0 "> */}
+          <JobFilters
+            onFiltersChange={handleFiltersChange}
+            onReset={handleReset}
+            dateFilter={filters.dateFilter}
+            aiScoreLevel={filters.aiScoreLevel}
+            experience={filters.experience}
+          />
+        {/* </div> */}
       </div>
 
       {/* Jobs */}

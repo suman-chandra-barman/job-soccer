@@ -23,6 +23,12 @@ const jobApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
+    getPopularSearch: builder.mutation({
+      query: () => ({
+        url: "/search-history/top",
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -30,4 +36,5 @@ export const {
   useGetJobsWithFiltersMutation,
   useGetNewFourJobsMutation,
   useGetSingleJobMutation,
+  useGetPopularSearchMutation,
 } = jobApi;

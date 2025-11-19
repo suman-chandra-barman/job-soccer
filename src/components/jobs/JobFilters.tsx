@@ -36,15 +36,17 @@ function FilterDropdown({
       <DropdownMenuTrigger asChild>
         <button
           className={cn(
-            "flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors",
-            isActive
-              ? "bg-[#6B5B3A] text-white"
-              : "bg-white text-gray-700 border border-gray-200 hover:bg-gray-50"
+            "flex items-center justify-between gap-3 px-5 py-2.5 rounded-lg text-sm font-medium transition-colors min-w-[140px]",
+            isActive || value
+              ? "bg-[#5D4E37] text-white hover:bg-[#6B5B3A]"
+              : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-50"
           )}
         >
-          {value
-            ? options.find((opt) => opt.value === value)?.label || label
-            : label}
+          <span>
+            {value
+              ? options.find((opt) => opt.value === value)?.label || label
+              : label}
+          </span>
           <ChevronDown className="w-4 h-4" />
         </button>
       </DropdownMenuTrigger>
@@ -145,37 +147,42 @@ export function JobFilters({
   const hasActiveFilters = timeFilter || aiScoreFilter || experienceFilter;
 
   return (
-    <div className="flex flex-wrap items-center justify-center gap-3 p-4 rounded-lg">
-      <FilterDropdown
-        label="Date Filter"
-        options={timeOptions}
-        value={timeFilter}
-        onValueChange={handleTimeFilterChange}
-      />
+    <div className="container mx-auto px-4 md:px-0 py-8">
+      <div className="flex flex-wrap items-center justify-center gap-3">
+        <FilterDropdown
+          label="Posted Date"
+          options={timeOptions}
+          value={timeFilter}
+          onValueChange={handleTimeFilterChange}
+          isActive={!!timeFilter}
+        />
 
-      <FilterDropdown
-        label="AI Score"
-        options={aiScoreOptions}
-        value={aiScoreFilter}
-        onValueChange={handleAiScoreChange}
-      />
+        <FilterDropdown
+          label="AI Score"
+          options={aiScoreOptions}
+          value={aiScoreFilter}
+          onValueChange={handleAiScoreChange}
+          isActive={!!aiScoreFilter}
+        />
 
-      <FilterDropdown
-        label="Experience level"
-        options={experienceOptions}
-        value={experienceFilter}
-        onValueChange={handleExperienceChange}
-      />
+        <FilterDropdown
+          label="Experience level"
+          options={experienceOptions}
+          value={experienceFilter}
+          onValueChange={handleExperienceChange}
+          isActive={!!experienceFilter}
+        />
 
-      {hasActiveFilters && (
-        <button
-          onClick={handleReset}
-          className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium bg-red-500 hover:bg-red-600 text-white transition-colors"
-        >
-          <RotateCcw className="w-4 h-4" />
-          Reset Filters
-        </button>
-      )}
+        {hasActiveFilters && (
+          <button
+            onClick={handleReset}
+            className="flex items-center gap-2 px-6 py-2.5 rounded-lg text-sm font-medium bg-red-500 hover:bg-red-600 text-white transition-colors"
+          >
+            <RotateCcw className="w-4 h-4" />
+            Reset
+          </button>
+        )}
+      </div>
     </div>
   );
 }

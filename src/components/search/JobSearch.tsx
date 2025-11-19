@@ -1,7 +1,7 @@
 "use client";
 
 import type React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Search, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -15,20 +15,27 @@ import {
   SelectValue,
 } from "../ui/select";
 import { candidateRoles } from "@/shchemas/signupValidation";
-
-const popularSearches = [
-  "Goal Kipper",
-  "Defence Player",
-  "Midfielder",
-  "Forward",
-  "Goalkeeper",
-];
+import { useGetPopularSearchMutation } from "@/redux/features/job/jobApi";
 
 export function JobSearch() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("");
+  const [popularSearches, setPopularSearches] = useState<string[]>([]);
+  const [selectedPopular, setSelectedPopular] = useState<string>("");
   const router = useRouter();
+  const [getPopularSearch, { data: popularSearchData }] =
+    useGetPopularSearchMutation();
+
+  useEffect(() => {
+    getPopularSearch({});
+  }, [getPopularSearch]);
+
+  useEffect(() => {
+    if (popularSearchData?.data?.jobs) {
+      setPopularSearches(popularSearchData.data.jobs);
+    }
+  }, [popularSearchData]);
 
   const handleSearch = () => {
     const params = new URLSearchParams();
@@ -46,6 +53,8 @@ export function JobSearch() {
   };
 
   const handlePopularSearch = (search: string) => {
+    setSelectedPopular(search);
+    setSearchTerm(search);
     const params = new URLSearchParams();
     params.set("searchTerm", search);
     router.push(`/jobs?${params.toString()}`);
@@ -107,20 +116,26 @@ export function JobSearch() {
       </div>
 
       {/* Popular Searches */}
-      <div className="flex flex-wrap items-center justify-center gap-4 w-full">
-        <span className="text-gray-600 font-medium">Popular Searches:</span>
-        <div className="flex flex-wrap gap-2">
-          {popularSearches.map((search) => (
-            <button
-              key={search}
-              onClick={() => handlePopularSearch(search)}
-              className="px-4 py-1 border bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-full text-sm transition-colors"
-            >
-              {search}
-            </button>
-          ))}
+      {popularSearches.length > 0 && (
+        <div className="flex flex-wrap items-center justify-center gap-4 w-full">
+          <span className="text-gray-600 font-medium">Popular Searches:</span>
+          <div className="flex flex-wrap gap-2">
+            {popularSearches.map((search, index) => (
+              <button
+                key={index}
+                onClick={() => handlePopularSearch(search)}
+                className={`px-4 py-1 border rounded-full text-sm transition-colors capitalize ${
+                  selectedPopular === search
+                    ? "bg-[#5D4E37] text-white hover:bg-[#6B5B3A]"
+                    : "bg-gray-100 hover:bg-gray-200 text-gray-700"
+                }`}
+              >
+                {search}
+              </button>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
