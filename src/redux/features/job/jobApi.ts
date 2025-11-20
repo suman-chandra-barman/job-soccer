@@ -30,6 +30,12 @@ const jobApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
+    getJobCountsByRole: builder.query({
+      query: () => ({
+        url: "/job/counts-by-role",
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -38,4 +44,5 @@ export const {
   useGetNewFourJobsQuery,
   useGetSingleJobMutation,
   useGetPopularSearchMutation,
+  useGetJobCountsByRoleQuery,
 } = jobApi;

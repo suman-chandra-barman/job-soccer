@@ -37,3 +37,8 @@ export interface TJob {
   updatedAt: string;
   __v?: number;
 }
+
+export interface TJobCountByRole {
+  jobCount: number;
+  role: string;
+}
