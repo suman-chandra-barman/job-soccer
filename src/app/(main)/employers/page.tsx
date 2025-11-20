@@ -4,173 +4,106 @@ import { Button } from "@/components/ui/button";
 import React from "react";
 import FindYourDreamTeam from "@/components/employer/FindYourDreamTeam";
 import { EmployerCard } from "@/components/cards/EmployerCard";
-import { Link } from "lucide-react";
 import { EmployerSearch } from "@/components/search/EmploerSearch";
 import { IEmployer } from "@/types/user";
 import { useGetEmployerFeaturedQuery } from "@/redux/features/employer/employerApi";
-import { Skeleton } from "@/components/ui/skeleton";
-import { CardSkeletonGrid } from "@/components/skeleton/CardSkeleton";
+import { EmployerCardSkeletonGrid } from "@/components/skeleton";
+import Link from "next/link";
+
+// Employer category configuration
+const EMPLOYER_CATEGORIES = [
+  { key: "Academy", label: "Academy", href: "/all-employer?category=academy" },
+  {
+    key: "HighSchool",
+    label: "High School",
+    href: "/all-employer?category=high-school",
+  },
+  {
+    key: "CollegeUniversity",
+    label: "College/University",
+    href: "/all-employer?category=college-university",
+  },
+  {
+    key: "ProfessionalClub",
+    label: "Professional Club",
+    href: "/all-employer?category=professional-club",
+  },
+  {
+    key: "AmateurClub",
+    label: "Amateur Club",
+    href: "/all-employer?category=amateur-club",
+  },
+  { key: "Agent", label: "Agent", href: "/all-employer?category=agent" },
+  {
+    key: "ConsultingCompany",
+    label: "Consulting Company",
+    href: "/all-employer?category=consulting-company",
+  },
+] as const;
+
+/**
+ * Reusable section component for employer categories
+ */
+interface EmployerSectionProps {
+  title: string;
+  employers?: IEmployer[];
+  isLoading?: boolean;
+  href: string;
+}
+
+const EmployerSection = ({
+  title,
+  employers,
+  isLoading,
+  href,
+}: EmployerSectionProps) => (
+  <section className="my-8">
+    <div className="flex items-center justify-between py-4">
+      <h2 className="text-2xl font-bold text-gray-900">{title}</h2>
+      <Button variant="link" className="text-black hover:text-gray-700">
+        <Link href={href}>See All</Link>
+      </Button>
+    </div>
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+      {isLoading ? (
+        <EmployerCardSkeletonGrid count={4} className="contents" />
+      ) : (
+        employers?.map((employer) => (
+          <EmployerCard key={employer._id} employer={employer} />
+        ))
+      )}
+    </div>
+  </section>
+);
 
 function EmployersPage() {
   const { data: featuredEmployersData, isLoading } =
     useGetEmployerFeaturedQuery(null);
 
-  const LoadingSection = () => (
-    <div className="my-8">
-      <div className="flex items-center justify-between py-4">
-        <div className="w-48">
-          <Skeleton className="h-8" />
-        </div>
-        <div className="w-20">
-          <Skeleton className="h-8" />
-        </div>
-      </div>
-      <CardSkeletonGrid className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 " />
-    </div>
-  );
-
-  if (isLoading) {
-    return (
-      <div>
-        <div className="bg-[#F7F6F2]">
-          <EmployerSearch />
-        </div>
-        <div className="container mx-auto px-4 md:px-0">
-          <FindYourDreamTeam />
-          <LoadingSection />
-          <LoadingSection />
-          <LoadingSection />
-        </div>
-      </div>
-    );
-  }
   return (
-    <div>
+    <section>
+      {/* Search Section */}
       <div className="bg-[#F7F6F2]">
         <EmployerSearch />
       </div>
-      {/* Jobs */}
+
+      {/* Main Content */}
       <div className="container mx-auto px-4 md:px-0">
+        {/* Dream Team Section */}
         <FindYourDreamTeam />
 
-        {/* Academy */}
-        <div className="my-8">
-          <div className="flex items-center justify-between py-4">
-            <span className="text-2xl font-bold">Academy</span>
-            <Button variant="link" className="text-black">
-              <Link href="jobs">See All</Link>
-            </Button>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
-            {featuredEmployersData?.data?.Academy?.map(
-              (employer: IEmployer) => (
-                <EmployerCard key={employer._id} employer={employer} />
-              )
-            )}
-          </div>
-        </div>
-
-        {/* High School */}
-        <div className="my-8">
-          <div className="flex items-center justify-between py-4">
-            <span className="text-2xl font-bold">High School</span>
-            <Button variant="link" className="text-black">
-              <Link href="jobs">See All</Link>
-            </Button>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
-            {featuredEmployersData?.data?.HighSchool?.map(
-              (employer: IEmployer) => (
-                <EmployerCard key={employer._id} employer={employer} />
-              )
-            )}
-          </div>
-        </div>
-
-        {/* College/University */}
-        <div className="my-8">
-          <div className="flex items-center justify-between py-4">
-            <span className="text-2xl font-bold">College/University</span>
-            <Button variant="link" className="text-black">
-              <Link href="jobs">See All</Link>
-            </Button>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
-            {featuredEmployersData?.data?.CollegeUniversity?.map(
-              (employer: IEmployer) => (
-                <EmployerCard key={employer._id} employer={employer} />
-              )
-            )}
-          </div>
-        </div>
-
-        {/* Professional Club */}
-        <div className="my-8">
-          <div className="flex items-center justify-between py-4">
-            <span className="text-2xl font-bold">Professional Club</span>
-            <Button variant="link" className="text-black">
-              <Link href="jobs">See All</Link>
-            </Button>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
-            {featuredEmployersData?.data?.ProfessionalClub?.map(
-              (employer: IEmployer) => (
-                <EmployerCard key={employer._id} employer={employer} />
-              )
-            )}
-          </div>
-        </div>
-
-        {/* Amateur Club */}
-        <div className="my-8">
-          <div className="flex items-center justify-between py-4">
-            <span className="text-2xl font-bold">Amateur Club</span>
-            <Button variant="link" className="text-black">
-              <Link href="jobs">See All</Link>
-            </Button>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
-            {featuredEmployersData?.data?.AmateurClub?.map(
-              (employer: IEmployer) => (
-                <EmployerCard key={employer._id} employer={employer} />
-              )
-            )}
-          </div>
-        </div>
-
-        {/* Agent */}
-        <div className="my-8">
-          <div className="flex items-center justify-between py-4">
-            <span className="text-2xl font-bold">Agent</span>
-            <Button variant="link" className="text-black">
-              <Link href="jobs">See All</Link>
-            </Button>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
-            {featuredEmployersData?.data?.Agent?.map((employer: IEmployer) => (
-              <EmployerCard key={employer._id} employer={employer} />
-            ))}
-          </div>
-        </div>
-
-        {/* Consulting Company */}
-        <div className="my-8">
-          <div className="flex items-center justify-between py-4">
-            <span className="text-2xl font-bold">Consulting Company</span>
-            <Button variant="link" className="text-black">
-              <Link href="jobs">See All</Link>
-            </Button>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
-            {featuredEmployersData?.data?.ConsultingCompany?.map(
-              (employer: IEmployer) => (
-                <EmployerCard key={employer._id} employer={employer} />
-              )
-            )}
-          </div>
-        </div>
+        {/* Employer Categories */}
+        {EMPLOYER_CATEGORIES.map((category) => (
+          <EmployerSection
+            key={category.key}
+            title={category.label}
+            employers={featuredEmployersData?.data?.[category.key]}
+            isLoading={isLoading}
+            href={category.href}
+          />
+        ))}
       </div>
-    </div>
+    </section>
   );
 }
 

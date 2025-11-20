@@ -6,13 +6,10 @@ import Image from "next/image";
 import candidatesImg from "@/assets/candidates/candidates.png";
 import { useGetCandidatesQuery } from "@/redux/features/candidate/candidateApi";
 import { ICandidate } from "@/types/user";
+import { CandidateCardSkeleton } from "../skeleton/CandidateCardSkeleton";
 
 const FindYourDreamTeam = () => {
   const { data: candidatesData, isLoading } = useGetCandidatesQuery(null);
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <div className=" bg-white">
@@ -23,7 +20,7 @@ const FindYourDreamTeam = () => {
           </h2>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 lg:gap-6">
-          {/* Left Column - Opportunities */}
+          {/* Left Column - Image */}
           <div className={``}>
             <Image
               src={candidatesImg}
@@ -32,7 +29,7 @@ const FindYourDreamTeam = () => {
             />
           </div>
 
-          {/* Right Column - Jobs */}
+          {/* Right Column - Candidates */}
           <div className="bg-[#F7F6F2] rounded-3xl p-4 md:p-6 w-full">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
@@ -41,9 +38,18 @@ const FindYourDreamTeam = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 mb-4">
-              {candidatesData?.data?.slice(0, 4).map((candidate: ICandidate) => (
-                <CandidateCard key={candidate._id} candidate={candidate} />
-              ))}
+              {isLoading
+                ? Array.from({ length: 4 }).map((_, index) => (
+                    <CandidateCardSkeleton key={index} />
+                  ))
+                : candidatesData?.data
+                    ?.slice(0, 4)
+                    .map((candidate: ICandidate) => (
+                      <CandidateCard
+                        key={candidate._id}
+                        candidate={candidate}
+                      />
+                    ))}
             </div>
 
             <div className="flex justify-end">
