@@ -6,7 +6,7 @@ import React, { useEffect, useState } from "react";
 import { JobCard } from "@/components/cards/JobCard";
 import {
   useGetNewFourJobsQuery,
-  useGetJobsWithFiltersMutation,
+  useGetJobsWithFiltersQuery,
 } from "@/redux/features/job/jobApi";
 import { TJob } from "@/types/job";
 import { CardSkeleton } from "@/components/skeleton/CardSkeleton";
@@ -19,8 +19,8 @@ function JobPage() {
   const { data: newJobsData, isLoading: newJobsLoading } =
     useGetNewFourJobsQuery(undefined);
 
-  const [getJobsWithFilters, { data: allJobsData, isLoading: allJobsLoading }] =
-    useGetJobsWithFiltersMutation();
+  const { data: allJobsData, isLoading: allJobsLoading } =
+    useGetJobsWithFiltersQuery(filters);
 
   // Initialize filters from URL params
   useEffect(() => {
@@ -42,11 +42,6 @@ function JobPage() {
 
     setFilters(urlFilters);
   }, [searchParams]);
-
-  // Fetch jobs when filters change
-  useEffect(() => {
-    getJobsWithFilters(filters);
-  }, [filters, getJobsWithFilters]);
 
   const handleFiltersChange = (newFilters: {
     dateFilter?: string;

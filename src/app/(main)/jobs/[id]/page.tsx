@@ -3,39 +3,29 @@
 import React, { useEffect } from "react";
 import { MapPin, SquareCheck } from "lucide-react";
 import {
-  useGetSingleJobMutation,
-  useGetJobsWithFiltersMutation,
+  useGetSingleJobQuery,
+  useGetJobsWithFiltersQuery,
 } from "@/redux/features/job/jobApi";
 import { TJob } from "@/types/job";
 import { Skeleton } from "@/components/ui/skeleton";
 import { JobCard } from "@/components/cards/JobCard";
+import { use } from "react";
 
 interface PageProps {
   params: Promise<{ id: string }>;
 }
 
 const JobDetailsPage = ({ params }: PageProps) => {
-  const [getSingleJob, { data: jobResponse, isLoading }] =
-    useGetSingleJobMutation();
+  const { id } = use(params);
 
-  const [
-    getRelatedJobs,
-    { data: relatedJobsResponse, isLoading: relatedJobsLoading },
-  ] = useGetJobsWithFiltersMutation();
-
+  const { data: jobResponse, isLoading } = useGetSingleJobQuery(id);
   const jobData: TJob | undefined = jobResponse?.data;
 
-  useEffect(() => {
-    params.then((resolvedParams) => {
-      getSingleJob(resolvedParams.id);
-    });
-  }, [params, getSingleJob]);
-
-  useEffect(() => {
-    if (jobData?.jobCategory) {
-      getRelatedJobs({ jobCategory: jobData.jobCategory });
-    }
-  }, [jobData?.jobCategory, getRelatedJobs]);
+  const { data: relatedJobsResponse, isLoading: relatedJobsLoading } =
+    useGetJobsWithFiltersQuery(
+      { jobCategory: jobData?.jobCategory || "" },
+      { skip: !jobData?.jobCategory }
+    );
 
   const relatedJobs = relatedJobsResponse?.data?.slice(0, 4) || [];
 
@@ -100,7 +90,9 @@ const JobDetailsPage = ({ params }: PageProps) => {
                 <JobCard key={job._id} job={job} />
               ))
             ) : (
-              <p className="text-gray-500 text-center">No recommended jobs found</p>
+              <p className="text-gray-500 text-center">
+                No recommended jobs found
+              </p>
             )}
           </div>
 

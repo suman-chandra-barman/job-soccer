@@ -15,27 +15,17 @@ import {
   SelectValue,
 } from "../ui/select";
 import { candidateRoles } from "@/shchemas/signupValidation";
-import { useGetPopularSearchMutation } from "@/redux/features/job/jobApi";
+import { useGetPopularSearchQuery } from "@/redux/features/job/jobApi";
 
 export function JobSearch() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("");
-  const [popularSearches, setPopularSearches] = useState<string[]>([]);
   const [selectedPopular, setSelectedPopular] = useState<string>("");
   const router = useRouter();
-  const [getPopularSearch, { data: popularSearchData }] =
-    useGetPopularSearchMutation();
 
-  useEffect(() => {
-    getPopularSearch({});
-  }, [getPopularSearch]);
-
-  useEffect(() => {
-    if (popularSearchData?.data?.jobs) {
-      setPopularSearches(popularSearchData.data.jobs);
-    }
-  }, [popularSearchData]);
+  const { data: popularSearchData } = useGetPopularSearchQuery(undefined);
+  const popularSearches: string[] = popularSearchData?.data?.jobs || [];
 
   const handleSearch = () => {
     const params = new URLSearchParams();
