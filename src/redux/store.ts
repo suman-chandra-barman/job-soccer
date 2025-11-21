@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "@/redux/features/auth/authSlice";
+import savedJobsReducer from "@/redux/features/savedJobs/savedJobsSlice";
 import { baseApi } from "./api/baseApi";
 
 // Create a single store instance for the app
@@ -7,6 +8,7 @@ export const store = configureStore({
   reducer: {
     [baseApi.reducerPath]: baseApi.reducer,
     auth: authReducer,
+    savedJobs: savedJobsReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(baseApi.middleware),

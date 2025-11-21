@@ -1,5 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Bookmark, Clock, MapPin, MessageCircle } from "lucide-react";
-import { TNewJobPost } from "../home/NewJobs";
 import { TJob } from "@/types/job";
 import Image from "next/image";
 import employerLogo from "@/assets/employers/compony logo.png";
@@ -9,57 +9,69 @@ import user1 from "@/assets/candidates/user1.png";
 import user2 from "@/assets/candidates/user2.png";
 import user3 from "@/assets/candidates/user3.png";
 import user4 from "@/assets/candidates/user4.png";
+import { formatTimeAgo } from "@/lib/utils";
+import { useSaveJobMutation } from "@/redux/features/savedJobs/savedJobsApi";
+import { toast } from "sonner";
+import { useState } from "react";
 
 type JobCardProps = {
-  job: TNewJobPost | TJob;
+  job: TJob;
 };
 
-function isApiJob(job: TNewJobPost | TJob): job is TJob {
-  return "_id" in job;
-}
-
-function formatTimeAgo(dateString: string): string {
-  const date = new Date(dateString);
-  const now = new Date();
-  const diffInMs = now.getTime() - date.getTime();
-  const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
-
-  if (diffInDays === 0) return "Today";
-  if (diffInDays === 1) return "1 day ago";
-  if (diffInDays < 30) return `${diffInDays} days ago`;
-
-  const diffInMonths = Math.floor(diffInDays / 30);
-  if (diffInMonths === 1) return "1 month ago";
-  return `${diffInMonths} months ago`;
-}
-
 export function JobCard({ job }: JobCardProps) {
-  const isApi = isApiJob(job);
+  const [saveJob] = useSaveJobMutation();
+  const [isShortlistLoading, setIsShortlistLoading] = useState(false);
 
-  const jobData = isApi
-    ? {
-        id: job._id,
-        company: `${job.creator.creatorId.firstName} ${job.creator.creatorId.lastName}`,
-        location: job.location,
-        image: job.creator.creatorId.profileImage,
-        applicantCount: job.applicationCount,
-        salary: `$${(job.salary.min / 1000).toFixed(0)}K-${(
-          job.salary.max / 1000
-        ).toFixed(0)}K`,
-        postedTime: formatTimeAgo(job.createdAt),
-        applicantImages: [user1, user2, user3, user4],
+  const jobData = {
+    id: job._id,
+    company: `${job.creator.creatorId.firstName} ${job.creator.creatorId.lastName}`,
+    location: job.location,
+    image: job.creator.creatorId.profileImage,
+    applicantCount: job.applicationCount,
+    salary: `$${(job.salary.min / 1000).toFixed(0)}K-${(
+      job.salary.max / 1000
+    ).toFixed(0)}K`,
+    postedTime: formatTimeAgo(job.createdAt),
+    applicantImages: [user1, user2, user3, user4],
+  };
+
+  const handleBookmarkClick = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    try {
+      const result = await saveJob(jobData.id).unwrap();
+      if (result.success) {
+        toast.success("Job saved successfully!");
       }
-    : {
-        id: job.id,
-        company: job.company,
-        location: job.location,
-        applicantCount: job.applicantCount,
-        salary: job.salary,
-        postedTime: job.postedTime,
-        applicantImages: job.applicantImages,
-      };
+    } catch (error: any) {
+      toast.error(
+        error.data?.message || "Failed to save job. Please try again."
+      );
+      console.error("Failed to save job:", error);
+    }
+  };
 
-  console.log("JobData --->", job);
+  const handleShortlistClick = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsShortlistLoading(true);
+
+    try {
+      const result = await saveJob(jobData.id).unwrap();
+      if (result.success) {
+        toast.success("Job saved successfully!");
+      }
+    } catch (error: any) {
+      toast.error(
+        error.data?.message || "Failed to save job. Please try again."
+      );
+      console.error("Failed to save job:", error);
+    } finally {
+      setIsShortlistLoading(false);
+    }
+  };
+
   return (
     <Link href={`jobs/${jobData.id}`} className="block">
       <div className="bg-gradient-to-br from-white to-[#FDF9E3] rounded-xl p-4 shadow-sm border border-gray-100">
@@ -68,7 +80,7 @@ export function JobCard({ job }: JobCardProps) {
             className={`w-12 h-12 rounded-xl flex items-center justify-center border border-gray-200 bg-white`}
           >
             <Image
-              src={isApi && jobData.image ? jobData.image : employerLogo}
+              src={jobData.image || employerLogo}
               alt="Logo"
               className="object-contain rounded-xl"
             />
@@ -82,7 +94,7 @@ export function JobCard({ job }: JobCardProps) {
               <span>{jobData.location}</span>
             </div>
           </div>
-          <div>
+          <div onClick={handleBookmarkClick} className="cursor-pointer">
             <Bookmark className="w-7 h-7" />
           </div>
         </div>
@@ -124,9 +136,14 @@ export function JobCard({ job }: JobCardProps) {
           </div>
         </div>
         <div className="border-t border-gray-200 pt-4 flex gap-4 items-center">
-          <Button variant="outline" className="flex-1 bg-transparent">
+          <Button
+            variant="outline"
+            className="flex-1 bg-transparent"
+            onClick={handleShortlistClick}
+            disabled={isShortlistLoading}
+          >
             <Bookmark className="w-6 h-6" />
-            Shortlist
+            {isShortlistLoading ? "Saving..." : "Shortlist"}
           </Button>
           <Button className="flex-1">
             <MessageCircle className="w-6 h-6" />

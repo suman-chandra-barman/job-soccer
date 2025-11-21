@@ -1,27 +1,17 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { StaticImageData } from "next/image";
 import Link from "next/link";
 import { useGetNewFourJobsQuery } from "@/redux/features/job/jobApi";
 import { TJob } from "@/types/job";
 import { CardSkeleton } from "../skeleton/CardSkeleton";
 import { JobCard } from "../cards/JobCard";
 
-export interface TNewJobPost {
-  id: string;
-  company: string;
-  location: string;
-  applicantCount: number;
-  salary: string;
-  postedTime: string;
-  applicantImages: StaticImageData[];
-}
-
 export function NewJobs() {
   const { data: jobsData, isLoading } = useGetNewFourJobsQuery(undefined);
   const jobs: TJob[] = jobsData?.data || [];
 
+  console.log("New job data ---> ", jobsData);
   return (
     <div className="bg-[#F7F6F2] rounded-3xl p-4 md:p-6">
       <div className="flex items-center justify-between mb-4">
