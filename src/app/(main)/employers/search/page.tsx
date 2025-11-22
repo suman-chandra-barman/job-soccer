@@ -52,7 +52,7 @@ function EmployerSearchPage() {
           </div>
           {!isLoading && (
             <div className="text-sm text-gray-600">
-              <span className="font-semibold text-[#5D4E37]">
+              <span className="font-semibold text-green-500">
                 {totalEmployers}
               </span>{" "}
               {totalEmployers === 1 ? "employer" : "employers"} found
