@@ -27,7 +27,7 @@ export function JobCategories() {
           </h2>
           <Button
             asChild
-            className="bg-yellow-300 hover:bg-yellow-400 text-black font-semibold px-6 py-3 rounded-lg"
+            className="bg-yellow-300  hover:scale-105 transition-transform duration-200 font-semibold px-6 py-3"
           >
             <Link href="/jobs">See All</Link>
           </Button>

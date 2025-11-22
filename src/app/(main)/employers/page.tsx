@@ -60,7 +60,7 @@ const EmployerSection = ({
   <section className="my-8">
     <div className="flex items-center justify-between py-4">
       <h2 className="text-2xl font-bold text-gray-900">{title}</h2>
-      <Button variant="link" className="text-black hover:text-gray-700">
+      <Button variant="link" className="text-black hover:text-green-500">
         <Link href={href}>See All</Link>
       </Button>
     </div>

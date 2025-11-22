@@ -78,6 +78,8 @@ export interface IEmployer {
     clubDescription: string;
     __v: number;
   };
+  activeJobCount: number;
+  followerCount: number;
 }
 
 export interface IFriend {

@@ -38,7 +38,7 @@ export function Candidates() {
             <h3 className="text-2xl font-bold text-gray-900">Candidates</h3>
             <Button
               asChild
-              className="bg-yellow-300 hover:bg-yellow-400 text-black font-medium px-6"
+              className="bg-yellow-300  hover:scale-105 transition-transform duration-200 font-semibold px-6 py-3"
             >
               <Link href="/candidates">See All</Link>
             </Button>

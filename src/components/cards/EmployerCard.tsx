@@ -8,46 +8,66 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import { Button } from "../ui/button";
-import employerLogo from "@/assets/employers/compony logo.png";
 import { IEmployer } from "@/types/user";
+import { Avatar, AvatarFallback } from "../ui/avatar";
 
 export function EmployerCard({ employer }: { employer: IEmployer }) {
+  // Get profile image URL
+  const getEmployerLogoUrl = () => {
+    if (employer?.profileImage) {
+      return `${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}${employer.profileImage}`;
+    }
+    return null;
+  };
 
-  console.log("employer in card", employer);
+  const logoUrl = getEmployerLogoUrl();
+  const employerName = `${employer?.firstName || ""} ${
+    employer?.lastName || ""
+  }`.trim();
+  const firstNameInitial = employer?.firstName?.charAt(0)?.toUpperCase() || "";
+  const lastNameInitial = employer?.lastName?.charAt(0)?.toUpperCase() || "";
+
   return (
     <div className="bg-gradient-to-br from-white to-[#FDF9E3] rounded-xl p-4 shadow-sm border border-gray-100">
       <div className="border-b border-gray-200 pb-4">
         <div className="flex items-center gap-3 mb-4 ">
-          <div
-            className={`w-12 h-12 rounded-xl flex items-center justify-center border border-gray-200 bg-white`}
-          >
-            <Image
-              src={employerLogo}
-              alt="Logo"
-              width={40}
-              height={40}
-              className="object-contain rounded-xl"
-            />
-          </div>
+          {logoUrl ? (
+            <div className="w-12 h-12 rounded-xl overflow-hidden border border-gray-200 bg-white">
+              <Image
+                src={logoUrl}
+                alt={`${employerName} Logo`}
+                width={48}
+                height={48}
+                className="w-full h-full object-cover"
+              />
+            </div>
+          ) : (
+            <Avatar className="w-12 h-12 rounded-xl">
+              <AvatarFallback className="text-base font-semibold bg-black text-white rounded-xl">
+                {firstNameInitial}
+                {lastNameInitial}
+              </AvatarFallback>
+            </Avatar>
+          )}
           <div className="flex-1 min-w-0">
-            <h3 className="font-semibold text-gray-900 text-lg">{employer?.firstName} {employer?.lastName}</h3>
+            <h3 className="font-semibold text-gray-900 text-lg truncate">
+              {employerName || "Unknown Employer"}
+            </h3>
             <div className="flex items-center gap-1 text-gray-500 text-sm mt-1">
-              <MapPin className="w-4 h-4" />
-              <span>{employer?.profile?.location}</span>
+              <MapPin className="w-4 h-4 flex-shrink-0" />
+              <span className="truncate">
+                {employer?.profile?.location || "Location not specified"}
+              </span>
             </div>
           </div>
         </div>
 
         <div className="flex gap-2 items-center flex-wrap">
-          <span
-            className="rounded-full text-green-500 border border-green-500 px-2 py-1 text-xs flex items-center gap-1"
-          >
+          <span className="rounded-full text-green-500 border border-green-500 px-2 py-1 text-xs flex items-center gap-1">
             <ShieldCheck className="w-4 h-4" />
             Verified
           </span>
-          <span
-            className="rounded-full border border-black  px-2 py-1 text-xs"
-          >
+          <span className="rounded-full border border-black  px-2 py-1 text-xs">
             {employer?.profile?.clubName}
           </span>
         </div>
@@ -59,21 +79,21 @@ export function EmployerCard({ employer }: { employer: IEmployer }) {
           <div className="text-gray-600 text-sm">
             <Star className="w-4 h-4 inline-block text-yellow-500 mr-2" />
             <span className="font-bold">Active Job Posts:</span>{" "}
-            {5}
+            {employer?.activeJobCount || 0}
           </div>
           <div className="text-gray-600 text-sm">
             <Users className="w-4 h-4 inline-block text-gray-500 mr-2" />
             <span className="font-bold">Followers:</span>{" "}
-            {10}
+            {employer?.followerCount || 0}
           </div>
         </div>
       </div>
       <div className="border-t border-gray-200 pt-4 flex flex-wrap gap-2 items-center">
-        <Button variant="outline" className="flex-1 bg-transparent">
+        <Button variant="outline" className="flex-1 hover:scale-105 transition-transform duration-200 font-semibold px-6 py-3">
           <UserRoundPlus className="w-6 h-6" />
           Follow
         </Button>
-        <Button className="flex-1">
+        <Button className="flex-1 hover:scale-105 transition-transform duration-200 font-semibold px-6 py-3">
           <MessageCircle className="w-6 h-6" />
           Message
         </Button>
