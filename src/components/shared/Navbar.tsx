@@ -281,7 +281,10 @@ export function Navbar() {
   );
 
   const isActiveLink = useCallback(
-    (href: string) => pathname === href,
+    (href: string) => {
+      if (href === "/") return pathname === href;
+      return pathname.startsWith(href);
+    },
     [pathname]
   );
 
