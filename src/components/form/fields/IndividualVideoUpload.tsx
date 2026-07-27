@@ -76,31 +76,34 @@ export function IndividualVideoUpload({
     setIsDragOver(false);
   }, []);
 
-  const validateAndSetFile = async (file: File) => {
-    // Check file type
-    if (!file.type.startsWith("video/")) {
-      setValidationError("Please upload a video file");
-      return;
-    }
+  const validateAndSetFile = useCallback(
+    async (file: File) => {
+      // Check file type
+      if (!file.type.startsWith("video/")) {
+        setValidationError("Please upload a video file");
+        return;
+      }
 
-    setIsValidating(true);
-    setValidationError(null);
+      setIsValidating(true);
+      setValidationError(null);
 
-    // Check video duration
-    const { valid, duration } = await checkVideoDuration(file, maxDuration);
-    
-    setIsValidating(false);
+      // Check video duration
+      const { valid, duration } = await checkVideoDuration(file, maxDuration);
 
-    if (!valid) {
-      setValidationError(
-        `Video is too long (${formatDuration(duration)}). Maximum allowed: ${formatDuration(maxDuration)}`
-      );
-      return;
-    }
+      setIsValidating(false);
 
-    // File is valid
-    onChange(file);
-  };
+      if (!valid) {
+        setValidationError(
+          `Video is too long (${formatDuration(duration)}). Maximum allowed: ${formatDuration(maxDuration)}`
+        );
+        return;
+      }
+
+      // File is valid
+      onChange(file);
+    },
+    [maxDuration, onChange]
+  );
 
   const handleDrop = useCallback(
     async (e: React.DragEvent) => {
@@ -112,7 +115,7 @@ export function IndividualVideoUpload({
         await validateAndSetFile(droppedFile);
       }
     },
-    [maxDuration, onChange]
+    [validateAndSetFile]
   );
 
   const handleFileInput = useCallback(
@@ -123,7 +126,7 @@ export function IndividualVideoUpload({
       }
       e.target.value = ""; // Reset input
     },
-    [maxDuration, onChange]
+    [validateAndSetFile]
   );
 
   const removeFile = () => {

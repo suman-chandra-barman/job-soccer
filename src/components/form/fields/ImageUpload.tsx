@@ -44,6 +44,7 @@ export function ImageUpload({
         onClick={handleClick}
       >
         {value ? (
+          // eslint-disable-next-line @next/next/no-img-element
           <img
             src={getImageSrc()}
             alt="Uploaded"

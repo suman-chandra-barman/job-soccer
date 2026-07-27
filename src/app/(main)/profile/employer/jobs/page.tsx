@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { MoreVertical, Download, MessageCircle, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import CreateJobPostModal from "@/components/modals/CreateJobPostModal";
@@ -38,7 +38,10 @@ const JobsPage: React.FC = () => {
   // Close job mutation
   const [closeJob] = useCloseJobMutation();
 
-  const jobs = employerJobsData?.data || [];
+  const jobs = useMemo(
+    () => employerJobsData?.data || [],
+    [employerJobsData?.data]
+  );
   const applications = applicationsData?.data || [];
 
   // Set initial selected job when jobs are loaded

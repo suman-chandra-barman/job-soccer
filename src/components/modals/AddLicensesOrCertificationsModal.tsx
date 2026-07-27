@@ -178,7 +178,7 @@ export default function AddExperienceOrCertificationsModal({
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          {months.map((month, index) => (
+                          {months.map((month) => (
                             <SelectItem key={month} value={month}>
                               {month}
                             </SelectItem>
@@ -239,7 +239,7 @@ export default function AddExperienceOrCertificationsModal({
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          {months.map((month, index) => (
+                          {months.map((month) => (
                             <SelectItem key={month} value={month}>
                               {month}
                             </SelectItem>

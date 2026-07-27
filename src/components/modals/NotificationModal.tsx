@@ -96,7 +96,7 @@ const NotificationModal = ({
   const handleMarkAsRead = async (id: string) => {
     try {
       await markAsRead(id).unwrap();
-    } catch (error) {
+    } catch {
       // Error handled silently
     }
   };
@@ -104,7 +104,7 @@ const NotificationModal = ({
   const handleMarkAllAsRead = async () => {
     try {
       await markAllAsRead().unwrap();
-    } catch (error) {
+    } catch {
       // Error handled silently
     }
   };
@@ -112,7 +112,7 @@ const NotificationModal = ({
   const handleDelete = async (id: string) => {
     try {
       await deleteNotification(id).unwrap();
-    } catch (error) {
+    } catch {
       // Error handled silently
     }
   };

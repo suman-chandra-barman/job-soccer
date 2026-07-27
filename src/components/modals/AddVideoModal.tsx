@@ -38,7 +38,6 @@ export default function AddVideoModal({
   isOpen,
   onClose,
   initialData,
-  userId,
 }: AddVideoModalProps) {
   const [uploadedVideos, setUploadedVideos] = useState<UploadedVideo[]>([]);
   const [isDragOver, setIsDragOver] = useState(false);

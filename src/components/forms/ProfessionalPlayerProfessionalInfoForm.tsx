@@ -50,7 +50,6 @@ export function ProfessionalPlayerProfessionalInfoForm({
     register,
     handleSubmit,
     setValue,
-    watch,
     formState: { errors, isValid },
   } = useForm<TProfessionalPlayerProfessionalInfo>({
     resolver: zodResolver(professionalPlayerProfessionalInfoSchema),

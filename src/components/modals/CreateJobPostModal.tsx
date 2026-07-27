@@ -118,7 +118,7 @@ export default function CreateJobPostModal({
         status: "active",
       };
 
-      const result = await createJob(payload).unwrap();
+      await createJob(payload).unwrap();
 
       toast.success("Job posted successfully!");
       form.reset();

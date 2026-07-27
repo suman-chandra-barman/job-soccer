@@ -21,7 +21,6 @@ interface StartChatButtonProps {
 
 export function StartChatButton({
   userId,
-  userName,
   className,
 }: StartChatButtonProps) {
   const [loading, setLoading] = useState(false);

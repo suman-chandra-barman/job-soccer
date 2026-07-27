@@ -813,6 +813,7 @@ export default function MessagesPage() {
                         ) : msg.type === "image" ? (
                           <div>
                             <div className="relative w-48 h-48 mb-2">
+                              {/* eslint-disable-next-line @next/next/no-img-element */}
                               <img
                                 src={`${process.env.NEXT_PUBLIC_BASE_URL}${msg.fileUrl}`}
                                 alt="Image"

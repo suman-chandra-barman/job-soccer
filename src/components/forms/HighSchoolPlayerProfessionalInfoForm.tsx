@@ -48,7 +48,6 @@ export function HighSchoolPlayerProfessionalInfoForm({
     register,
     handleSubmit,
     setValue,
-    watch,
     formState: { errors, isValid },
   } = useForm<THighSchoolPlayerProfessionalInfo>({
     resolver: zodResolver(highSchoolPlayerProfessionalInfoSchema),

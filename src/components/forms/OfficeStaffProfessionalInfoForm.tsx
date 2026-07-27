@@ -45,7 +45,6 @@ export function OfficeStaffProfessionalInfoForm({
     register,
     handleSubmit,
     setValue,
-    watch,
     formState: { errors, isValid },
   } = useForm<TOfficeStaffProfessionalInfo>({
     resolver: zodResolver(officeStaffProfessionalInfoSchema),

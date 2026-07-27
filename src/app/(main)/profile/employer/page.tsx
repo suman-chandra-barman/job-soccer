@@ -10,9 +10,6 @@ import {
   Clock,
   XCircle,
   Mail,
-  MessageCircle,
-  UserPlus,
-  UserMinus,
 } from "lucide-react";
 import { toast } from "sonner";
 import {
@@ -33,7 +30,6 @@ export default function EmployerProfilePage() {
 
   const [isEditProfileModalOpen, setIsEditProfileModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [isFollowing, setIsFollowing] = useState(false);
 
   // API mutations
   const [updateProfileImage, { isLoading: isUpdatingProfile }] =
@@ -93,18 +89,9 @@ export default function EmployerProfilePage() {
     }
   };
 
-  // Handler for follow/unfollow
-  const handleFollowToggle = () => {
-    setIsFollowing(!isFollowing);
-    toast.success(
-      isFollowing ? "Unfollowed successfully" : "Followed successfully"
-    );
-  };
 
-  // Handler for message
-  const handleMessage = () => {
-    toast.info("Message feature coming soon");
-  };
+
+
 
   // Get verification status
   const verificationStatus = currentUser?.adminVerificationStatus;
@@ -245,34 +232,7 @@ export default function EmployerProfilePage() {
             {renderVerificationBadge()}
           </div>
 
-          {/* Action Buttons */}
-          {/* <div className="flex gap-2 flex-wrap mt-4">
-            <Button
-              variant="outline"
-              onClick={handleMessage}
-              className="flex items-center gap-2"
-            >
-              <MessageCircle className="h-4 w-4" />
-              Message
-            </Button>
-            <Button
-              variant="outline"
-              onClick={handleFollowToggle}
-              className="flex items-center gap-2"
-            >
-              {isFollowing ? (
-                <>
-                  <UserMinus className="h-4 w-4" />
-                  Unfollow
-                </>
-              ) : (
-                <>
-                  <UserPlus className="h-4 w-4" />
-                  Follow
-                </>
-              )}
-            </Button>
-          </div> */}
+
         </div>
       </div>
 

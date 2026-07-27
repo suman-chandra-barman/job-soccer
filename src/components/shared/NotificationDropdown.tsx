@@ -85,7 +85,7 @@ export default function NotificationDropdown({
   const handleMarkAsRead = async (id: string) => {
     try {
       await markAsRead(id).unwrap();
-    } catch (error) {
+    } catch {
       // Error handled silently
     }
   };
@@ -93,7 +93,7 @@ export default function NotificationDropdown({
   const handleMarkAllAsRead = async () => {
     try {
       await markAllAsRead().unwrap();
-    } catch (error) {
+    } catch {
       // Error handled silently
     }
   };
@@ -101,7 +101,7 @@ export default function NotificationDropdown({
   const handleDelete = async (id: string) => {
     try {
       await deleteNotification(id).unwrap();
-    } catch (error) {
+    } catch {
       // Error handled silently
     }
   };

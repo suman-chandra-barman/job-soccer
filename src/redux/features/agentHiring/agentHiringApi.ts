@@ -1,6 +1,5 @@
 import { baseApi } from "@/redux/api/baseApi";
 import {
-  AgentHiring,
   AgentHiringResponse,
   AgentHiringsListResponse,
   CheckActiveHiringResponse,

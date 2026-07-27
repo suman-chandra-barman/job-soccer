@@ -14,7 +14,7 @@ import AcceptedRequestCard from "@/components/cards/AcceptedRequestCard";
 // Main Component
 const AcceptRequestInterface: React.FC = () => {
   const [activeTab, setActiveTab] = useState<"Request" | "Accepted">("Request");
-  const [page, setPage] = useState(1);
+  const [page] = useState(1);
   const limit = 10;
 
   // Fetch received friend requests

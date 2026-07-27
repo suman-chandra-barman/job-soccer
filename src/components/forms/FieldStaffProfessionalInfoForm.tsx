@@ -45,7 +45,6 @@ export function FieldStaffProfessionalInfoForm({
     register,
     handleSubmit,
     setValue,
-    watch,
     formState: { errors, isValid },
   } = useForm<TFieldStaffProfessionalInfo>({
     resolver: zodResolver(fieldStaffProfessionalInfoSchema),
