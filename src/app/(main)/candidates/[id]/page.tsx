@@ -507,6 +507,7 @@ export default function UserProfilePage() {
               videos={user?.profile?.videos || []}
               userId={user?._id || ""}
               readOnly={!isOwnProfile}
+              role={user.role}
             />
           </div>
         ) : (
