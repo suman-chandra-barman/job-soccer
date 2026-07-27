@@ -17,11 +17,13 @@ interface VideoSectionProps {
   videos?: Video[];
   userId?: string;
   readOnly?: boolean;
+  role: string;
 }
 
 export default function VideoSection({
   videos = [],
   readOnly = false,
+  role
 }: VideoSectionProps) {
   const getVideoUrl = useCallback((video: Video): string => {
     if (!video?.url) return "";
@@ -35,7 +37,9 @@ export default function VideoSection({
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-lg lg:text-xl">Videos</CardTitle>
+        <CardTitle className="text-lg lg:text-xl">
+          {role === "On field staff" || role === "Office Staff" ? "Methodology Video" : "Highlights Video"}
+        </CardTitle>
       </CardHeader>
       <CardContent>
         {videos.length === 0 ? (

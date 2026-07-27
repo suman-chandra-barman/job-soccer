@@ -603,6 +603,7 @@ export default function MyProfilePage() {
         <VideoSection
           videos={currentUser?.profile?.videos || []}
           userId={currentUser?._id || ""}
+          role={currentUser?.role || ""}
         />
       </div>
 
