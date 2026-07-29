@@ -252,7 +252,7 @@ The following files were updated to support the rating feature:
 
 ### On Agent Cards/Listings
 
-```typescript
+```typescriptj
 // Display average rating on agent cards
 <useGetAgentAverageRatingQuery agentId={agent._id} />
 ```

@@ -37,7 +37,7 @@ export default function VideoSection({
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-lg lg:text-xl">
+        <CardTitle className="text-md md:text-xl">
           {role === "On field staff" || role === "Office Staff" ? "Methodology Video" : "Highlights Video"}
         </CardTitle>
       </CardHeader>
@@ -88,7 +88,7 @@ export default function VideoSection({
 
                   {/* Video Title and Info */}
                   <div className="mt-2">
-                    <p className="text-sm font-medium text-gray-900 line-clamp-2">
+                    <p className="font-medium text-gray-900 line-clamp-2">
                       {video?.videoType ? video.videoType : "Highlights Video"}
                     </p>
                   </div>

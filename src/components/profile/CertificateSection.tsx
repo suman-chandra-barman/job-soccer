@@ -87,7 +87,7 @@ export default function CertificateSection({
       <Card className="mb-6">
         <CardHeader>
           <div className="flex items-center justify-between">
-            <CardTitle className="text-lg lg:text-xl">
+            <CardTitle className="text-md md:text-xl">
               Licenses and Certifications
             </CardTitle>
             {!readOnly && (

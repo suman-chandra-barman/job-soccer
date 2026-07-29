@@ -19,7 +19,7 @@ function AnalyticsSection() {
       <Card>
         <CardHeader>
           <div className="flex items-center justify-between">
-            <CardTitle>Analytics</CardTitle>
+            <CardTitle className="text-md md:text-xl">Analytics</CardTitle>
           </div>
         </CardHeader>
         <CardContent className="p-6">

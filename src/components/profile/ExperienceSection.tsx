@@ -86,7 +86,7 @@ export default function ExperienceSection({
       <Card className="mb-6">
         <CardHeader>
           <div className="flex items-center justify-between">
-            <CardTitle>Experience</CardTitle>
+            <CardTitle className="text-md md:text-xl">Experience</CardTitle>
             {!readOnly && (
               <Button
                 variant="ghost"

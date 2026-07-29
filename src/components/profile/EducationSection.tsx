@@ -86,7 +86,7 @@ export default function EducationSection({
       <Card className="mb-6">
         <CardHeader>
           <div className="flex items-center justify-between">
-            <CardTitle>Education</CardTitle>
+            <CardTitle className="text-md md:text-xl">Education</CardTitle>
             {!readOnly && (
               <Button
                 variant="ghost"
