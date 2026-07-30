@@ -235,7 +235,7 @@ export function JobCard({ job }: JobCardProps) {
         title="View Job Details"
       >
         <div className="flex flex-wrap items-center gap-2 mb-4">
-          <span className="inline-flex items-center rounded-full bg-yellow-100 px-3 py-1 text-xs font-medium text-yellow-800">
+          <span className="inline-flex items-center rounded-full bg-yellow-300 px-3 py-1 text-xs font-medium">
             {jobData.position}
           </span>
           <span className="inline-flex items-center rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-700">

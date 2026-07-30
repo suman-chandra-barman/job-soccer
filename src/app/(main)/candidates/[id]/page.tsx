@@ -236,7 +236,7 @@ export default function UserProfilePage() {
 
           <div className="flex gap-2 flex-wrap mt-3 sm:mt-4">
                 {displayRole && (
-                <Badge className="bg-yellow-100 text-yellow-800 border-yellow-200 px-3 sm:px-4 py-1 rounded-full text-xs sm:text-sm">
+                <Badge className="bg-yellow-300 border-yellow-200 px-3 sm:px-4 py-1 rounded-full text-xs sm:text-sm">
                   {displayRole}
                 </Badge>
               )}

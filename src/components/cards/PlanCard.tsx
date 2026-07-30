@@ -48,7 +48,7 @@ const PlanCard = ({
       <div
         className={`-mt-2 mb-3 inline-flex w-full justify-center rounded-md px-3 py-1 text-xs font-semibold uppercase tracking-wide ${
           badge === "Free"
-            ? "bg-yellow-100"
+            ? "bg-yellow-300 text-gray-500"
             : "bg-yellow-300 text-gray-900"
         }`}
       >

@@ -168,8 +168,8 @@ const NavLinkItem: React.FC<NavLinkItemProps> = ({
 
   const baseClasses = "transition-colors duration-200";
   const activeClasses = isActive
-    ? "text-green-500"
-    : "text-gray-700 hover:text-green-500";
+    ? "text-green-500 font-bold"
+    : "text-black hover:text-green-500 font-medium";
 
   const showBadge = typeof badge === "number" && badge > 0;
 
@@ -345,7 +345,7 @@ export function Navbar() {
   }, []);
 
   return (
-    <nav className="bg-[#FFF8CC] sticky top-0 z-50 text-[#362F05]">
+    <nav className="bg-yellow-300 sticky top-0 z-50 text-black">
       <div className="container mx-auto px-4">
         <div className="flex items-center gap-4 justify-between py-2">
           {/* Logo */}
@@ -392,7 +392,7 @@ export function Navbar() {
             {!mounted ? (
               // Neutral loading placeholder before hydration matching server render
               <Link href="/signin">
-                <Button className="bg-yellow-300 font-semibold cursor-pointer">
+                <Button className="bg-black hover:bg-gray-800 text-white font-semibold cursor-pointer">
                   Sign In
                 </Button>
               </Link>
@@ -409,7 +409,7 @@ export function Navbar() {
               />
             ) : (
               <Link href="/signin">
-                <Button className="bg-yellow-300 hover:scale-105 transition-transform duration-200 font-semibold cursor-pointer">
+                <Button className="bg-black hover:bg-gray-800 hover:scale-105 transition-transform duration-200 text-white font-semibold cursor-pointer">
                   Sign In
                 </Button>
               </Link>

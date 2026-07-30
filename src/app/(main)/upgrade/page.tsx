@@ -242,9 +242,9 @@ export default function UpgradePage() {
                     <span className="font-medium text-gray-700">{et.basicPrice}/mo</span>
                   </p>
                 </div>
-                <div className="rounded-lg bg-amber-100 px-4 py-2 text-right">
-                  <p className="text-xs font-semibold text-amber-700">Gold</p>
-                  <p className="text-sm font-bold text-amber-800">{et.goldPrice}/mo</p>
+                <div className="rounded-lg bg-yellow-300 px-4 py-2 text-right">
+                  <p className="text-xs font-semibold ">Gold</p>
+                  <p className="text-sm font-bold">{et.goldPrice}/mo</p>
                 </div>
               </div>
             ))}
