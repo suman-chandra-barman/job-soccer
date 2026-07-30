@@ -1,6 +1,6 @@
 "use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { Play } from "lucide-react";
 import { useCallback } from "react";
 
@@ -17,13 +17,11 @@ interface VideoSectionProps {
   videos?: Video[];
   userId?: string;
   readOnly?: boolean;
-  role: string;
 }
 
 export default function VideoSection({
   videos = [],
   readOnly = false,
-  role
 }: VideoSectionProps) {
   const getVideoUrl = useCallback((video: Video): string => {
     if (!video?.url) return "";
@@ -36,11 +34,6 @@ export default function VideoSection({
 
   return (
     <Card>
-      <CardHeader>
-        <CardTitle className="text-md md:text-xl">
-          {role === "On field staff" || role === "Office Staff" ? "Methodology Video" : "Highlights Video"}
-        </CardTitle>
-      </CardHeader>
       <CardContent>
         {videos.length === 0 ? (
           <div className="text-center py-12">
@@ -63,6 +56,9 @@ export default function VideoSection({
 
               return (
                 <div key={video._id} className="relative group">
+                  <CardTitle className="my-2">
+                    {video?.videoType ? video.videoType + " Video" : "Video"}
+                  </CardTitle>
                   <div className="relative aspect-video bg-gray-900 rounded-lg overflow-hidden">
                     {/* Video Player */}
                     <video
@@ -84,13 +80,6 @@ export default function VideoSection({
                     >
                       Your browser does not support the video tag.
                     </video>
-                  </div>
-
-                  {/* Video Title and Info */}
-                  <div className="mt-2">
-                    <p className="font-medium text-gray-900 line-clamp-2">
-                      {video?.videoType ? video.videoType : "Highlights Video"}
-                    </p>
                   </div>
                 </div>
               );
