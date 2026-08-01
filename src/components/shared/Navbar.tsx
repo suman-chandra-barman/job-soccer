@@ -20,7 +20,7 @@ import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 
-import logo from "@/assets/logo.svg";
+import logo from "@/assets/logo.png";
 import NotificationModal from "../modals/NotificationModal";
 import LogoutModal from "../modals/LogoutModal";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "../ui/sheet";
