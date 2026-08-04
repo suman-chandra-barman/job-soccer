@@ -43,7 +43,6 @@ export const config = {
     "/notification/:path*",
     "/my-network/:path*",
     "/profile/:path*",
-    // "/signin",
     "/signup/:path*",
     "/forgot-password",
     "/create-new-password/:path*",
