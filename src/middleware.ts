@@ -13,7 +13,7 @@ export function middleware(request: NextRequest) {
     pathname.startsWith("/messages") ||
     pathname.startsWith("/notification") ||
     pathname.startsWith("/my-network") ||
-    pathname.startsWith("/profile") ;
+    pathname.startsWith("/profile");
 
   // Define auth routes (should not be accessible when authenticated)
   const isAuthRoute =
@@ -43,7 +43,7 @@ export const config = {
     "/notification/:path*",
     "/my-network/:path*",
     "/profile/:path*",
-    "/signin",
+    // "/signin",
     "/signup/:path*",
     "/forgot-password",
     "/create-new-password/:path*",
