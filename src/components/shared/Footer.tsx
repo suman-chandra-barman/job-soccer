@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import Image from "next/image";
-import logo from "@/assets/logo_with_domain.svg";
+import logo from "@/assets/logo.png";
 import { Mail } from "lucide-react";
 import { FaFacebook, FaInstagram, FaLinkedin } from "react-icons/fa";
 
@@ -15,13 +15,13 @@ export function Footer() {
             {/* Logo */}
             <Link
               href="/"
-              className="flex items-center md:text-left justify-center md:justify-start mb-4"
+              className="flex items-center"
+              aria-label="Job Soccer Logo"
             >
               <Image
                 src={logo}
-                alt="Logo"
-                width={200}
-                className="object-cover"
+                alt="Job Soccer Logo"
+                className="w-16"
               />
             </Link>
           </div>
@@ -118,7 +118,11 @@ export function Footer() {
         <div className="pt-16">
           {/* Social Media Icons */}
           <div className="flex space-x-4 items-center justify-center gap-4">
-            <Link href="https://www.facebook.com/share/1DkGxofpte/?mibextid=wwXIfr" target="_blank" className="text-blue-700 hover:text-blue-800 transition-colors">
+            <Link
+              href="https://www.facebook.com/share/1DkGxofpte/?mibextid=wwXIfr"
+              target="_blank"
+              className="text-blue-700 hover:text-blue-800 transition-colors"
+            >
               <FaFacebook className="h-6 w-6" />
             </Link>
             <Link
@@ -129,7 +133,11 @@ export function Footer() {
               <FaInstagram className="h-4 w-4 text-white" />
             </Link>
 
-            <Link target="_blank" href="https://www.linkedin.com/company/108544034/admin/dashboard" className="text-blue-700 hover:text-blue-800 transition-colors">
+            <Link
+              target="_blank"
+              href="https://www.linkedin.com/company/108544034/admin/dashboard"
+              className="text-blue-700 hover:text-blue-800 transition-colors"
+            >
               <FaLinkedin className="h-6 w-6" />
             </Link>
           </div>

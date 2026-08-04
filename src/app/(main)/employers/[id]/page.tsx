@@ -216,7 +216,7 @@ export default function EmployerDetailsPage() {
               {employer?.email && (
                 <div className="flex items-center gap-2">
                   <Mail className="h-4 w-4 shrink-0" />
-                  <span className="truncate">{employer.email}</span>
+                  <Link href={`mailto:${employer.email}`} className="text-sm truncate hover:underline cursor-pointer">{employer.email}</Link>
                 </div>
               )}
               {employer?.profile?.location && (

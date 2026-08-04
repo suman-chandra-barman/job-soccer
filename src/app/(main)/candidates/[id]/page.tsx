@@ -27,6 +27,7 @@ import { useAppSelector } from "@/redux/hooks";
 import { StartChatButton } from "@/components/messaging/StartChatButton";
 import { useGetCandidateByIdQuery } from "@/redux/features/candidate/candidateApi";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function UserProfilePage() {
   const params = useParams();
@@ -229,7 +230,7 @@ export default function UserProfilePage() {
             <div className="flex flex-wrap gap-3 sm:gap-4 mt-2 mb-3 sm:mb-4 text-gray-600 text-sm">
               <div className="flex items-center gap-2">
                 <Mail className="h-4 w-4 shrink-0" />
-                <span className="text-sm truncate">{user.email}</span>
+                <Link href={`mailto:${user.email}`} className="text-sm truncate hover:underline cursor-pointer">{user.email}</Link>
               </div>
             </div>
           )}
