@@ -12,7 +12,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Job Soccer",
   description:
-    "Explore global football jobs for coaches, scouts, analysts & more. Your soccer career starts here!",
+    "Explore global soccer jobs for coaches, scouts, analysts & more. Your soccer career starts here!",
 };
 
 export default function RootLayout({

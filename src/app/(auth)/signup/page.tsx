@@ -116,7 +116,7 @@ export default function SignUpPage() {
         </Link>
         <div className="max-w-2xl">
           <h2 className="text-4xl font-bold text-[#010A18] leading-tight">
-            Join the Team: Sign Up to Access Our Football Career Portal
+            Join the Team: Sign Up to Access Our Soccer Career Portal
           </h2>
           <p className="text-[#837E5B] mt-1">
             Join us to access personalized AI solutions built for productivity

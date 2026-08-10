@@ -35,7 +35,7 @@ export default function SuccessMessage({
           </h2>
           <p className="text-gray-600 text-sm leading-relaxed">
             Your information has been successfully saved. We&apos;re currently
-            upgrading our football job platform. Please bear with us as we work
+            upgrading our Soccer job platform. Please bear with us as we work
             to ensure it delivers precise opportunities for our users.
           </p>
         </div>

@@ -251,7 +251,7 @@ export function AcademyEmployerProfileForm({
             >
               <Input
                 {...register("clubContact")}
-                placeholder="Ex. John Doe, Director of Football"
+                placeholder="Ex. John Doe, Director of Soccer"
                 className="bg-gray-50 border-0"
               />
             </FormField>

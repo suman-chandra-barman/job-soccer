@@ -141,7 +141,7 @@ function EmailVerificationPageContent() {
       <div className="hidden flex-1 md:flex items-center justify-center px-2 md:px-5 lg:px-8 bg-primary">
         <div className="max-w-2xl">
           <h2 className="text-4xl font-bold text-[#010A18] leading-tight">
-            Confirm Your Email to Activate Your Football Job Profile.
+            Confirm Your Email to Activate Your Soccer Job Profile.
           </h2>
           <p className="text-[#837E5B] mt-1">
             We’ve sent a verification code to your email — enter it below to

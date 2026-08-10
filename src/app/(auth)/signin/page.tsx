@@ -108,7 +108,7 @@ export default function SignInPage() {
         </Link>
         <div className="max-w-2xl">
           <h2 className="text-4xl font-bold text-[#010A18] leading-tight">
-            Welcome Back to Your Football Career Hub
+            Welcome Back to Your Soccer Career Hub
           </h2>
         </div>
       </div>

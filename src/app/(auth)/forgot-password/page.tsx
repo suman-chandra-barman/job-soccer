@@ -72,7 +72,7 @@ export default function ForgotPasswordPage() {
       <div className="hidden md:flex flex-1 items-center justify-center px-2 md:px-5 lg:px-8 bg-primary">
         <div className="max-w-2xl">
           <h2 className="text-4xl font-bold text-[#010A18] leading-tight mb-4">
-            Reset Your Password for the Football Career Hub
+            Reset Your Password for the Soccer Career Hub
           </h2>
           <p className="text-[#837E5B] mt-1">
             Don&#39;t worry! We&#39;re here to help you get back into your

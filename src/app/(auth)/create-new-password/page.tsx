@@ -98,7 +98,7 @@ function CreateNewPasswordPageContent() {
             Create a New Password
           </h2>
           <p className="text-[#837E5B] mt-1">
-            Set a new password for your Football Job Profile to complete the
+            Set a new password for your Soccer Job Profile to complete the
             setup. Enter your new password below to continue.
           </p>
         </div>
