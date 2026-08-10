@@ -55,7 +55,7 @@ export default function VideoSection({
               const videoUrl = getVideoUrl(video);
 
               return (
-                <div key={video._id} className="relative group">
+                <div key={video._id} className="relative group flex flex-col justify-between">
                   <CardTitle className="my-2">
                     {video?.videoType ? video.videoType + " Video" : "Video"}
                   </CardTitle>
