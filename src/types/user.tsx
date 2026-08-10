@@ -28,7 +28,7 @@ export interface Profile {
   category: string;
   position: string;
   agent: string;
-  socialMedia: string;
+  socialMedia?: string;
   satOrAct: string;
   availability: string;
   weight: Weight;

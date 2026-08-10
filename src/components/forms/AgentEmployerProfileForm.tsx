@@ -165,12 +165,12 @@ export function AgentEmployerProfileForm({
             {/* Social Media and Website */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <FormField
-                label="Social media"
+                label="Social media (optional)"
                 error={errors.socialMedia?.message}
               >
                 <Input
                   {...register("socialMedia")}
-                  placeholder="Social media link"
+                  placeholder="https://www.example.com"
                   className="bg-gray-50 border-0"
                 />
               </FormField>

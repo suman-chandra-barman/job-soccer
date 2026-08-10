@@ -109,7 +109,7 @@ export function CollegeOrUniversityPlayerProfessionalInfoForm({
 
             {/* Availability */}
             <FormField
-              label="Applicable (optional)"
+              label="Availability (optional)"
               error={errors.availability?.message}
             >
               <Select
@@ -122,7 +122,7 @@ export function CollegeOrUniversityPlayerProfessionalInfoForm({
                 }
               >
                 <SelectTrigger className="bg-gray-50 border-0 w-full">
-                  <SelectValue placeholder="Select applicable" />
+                  <SelectValue placeholder="Select your availability" />
                 </SelectTrigger>
                 <SelectContent>
                   {availabilityOptions.map((item) => (
@@ -373,10 +373,13 @@ export function CollegeOrUniversityPlayerProfessionalInfoForm({
             </FormField>
 
             {/* Social Media */}
-            <FormField label="Social Media" error={errors.socialMedia?.message}>
+            <FormField
+              label="Social Media (optional)"
+              error={errors.socialMedia?.message}
+            >
               <Input
                 {...register("socialMedia")}
-                placeholder="Ex. https://twitter.com/yourprofile"
+                placeholder="https://www.example.com"
                 className="bg-gray-50 border-0"
               />
             </FormField>

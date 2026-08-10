@@ -211,7 +211,7 @@ export function AcademyEmployerProfileForm({
               <FormField label="Website" error={errors.website?.message}>
                 <Input
                   {...register("website")}
-                  placeholder="Social Media"
+                  placeholder="Write your website"
                   className="bg-gray-50 border-0"
                 />
               </FormField>

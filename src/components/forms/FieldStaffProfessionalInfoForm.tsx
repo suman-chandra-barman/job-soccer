@@ -81,14 +81,14 @@ export function FieldStaffProfessionalInfoForm({
 
             {/* Availability */}
             <FormField
-              label="Applicable (optional)"
+              label="Availability (optional)"
               error={errors.availability?.message}
             >
               <Select
                 onValueChange={(value) => setValue("availability", value)}
               >
                 <SelectTrigger className="bg-gray-50 border-0 w-full">
-                  <SelectValue placeholder="Select applicable" />
+                  <SelectValue placeholder="Select your availability" />
                 </SelectTrigger>
                 <SelectContent>
                   {availabilityOptions.map((item) => (
@@ -184,28 +184,30 @@ export function FieldStaffProfessionalInfoForm({
               </Select>
             </FormField>
 
-            {/* Boy or Girl */}
-            <FormField label="Boy or Girl" error={errors.boyOrGirl?.message}>
+            {/* Gender */}
+            <FormField label="Gender" error={errors.boyOrGirl?.message}>
               <Select onValueChange={(value) => setValue("boyOrGirl", value)}>
                 <SelectTrigger className="bg-gray-50 border-0 w-full">
-                  <SelectValue placeholder="Boy or Girl" />
+                  <SelectValue placeholder="Select gender" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem key="Boy" value="Boy">
-                    Boy
-                  </SelectItem>
-                  <SelectItem key="Girl" value="Girl">
-                    Girl
-                  </SelectItem>
+                  {genderOptions.map((gender) => (
+                    <SelectItem key={gender} value={gender}>
+                      {gender}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </FormField>
 
             {/* Social Media */}
-            <FormField label="Social Media" error={errors.socialMedia?.message}>
+            <FormField
+              label="Social Media (optional)"
+              error={errors.socialMedia?.message}
+            >
               <Input
                 {...register("socialMedia")}
-                placeholder="Social Media"
+                placeholder="https://www.example.com"
                 className="bg-gray-50 border-0"
               />
             </FormField>
