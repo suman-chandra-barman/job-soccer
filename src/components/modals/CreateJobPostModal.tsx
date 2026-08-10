@@ -224,7 +224,7 @@ export default function CreateJobPostModal({
                       >
                         <FormControl className="w-full">
                           <SelectTrigger className="mt-1">
-                            <SelectValue placeholder="Select Country" />
+                            <SelectValue placeholder="Select country" />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent className="max-h-[300px]">
@@ -272,7 +272,7 @@ export default function CreateJobPostModal({
                       >
                         <FormControl className="w-full">
                           <SelectTrigger className="mt-1">
-                            <SelectValue placeholder="Select Category" />
+                            <SelectValue placeholder="Select category" />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
@@ -306,7 +306,7 @@ export default function CreateJobPostModal({
                       >
                         <FormControl className="w-full">
                           <SelectTrigger className="mt-1">
-                            <SelectValue placeholder="Select Position" />
+                            <SelectValue placeholder="Select position" />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
@@ -337,7 +337,7 @@ export default function CreateJobPostModal({
                       >
                         <FormControl className="w-full">
                           <SelectTrigger className="mt-1">
-                            <SelectValue placeholder="Select Contract Type" />
+                            <SelectValue placeholder="Select contract type" />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
@@ -368,7 +368,7 @@ export default function CreateJobPostModal({
                       >
                         <FormControl className="w-full">
                           <SelectTrigger className="mt-1">
-                            <SelectValue placeholder="Select Experience Level" />
+                            <SelectValue placeholder="Select experience level" />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>

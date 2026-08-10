@@ -83,7 +83,7 @@ export default function RoleSelect({
         className="w-full justify-between text-left font-normal bg-gray-100 border-gray-200"
         onClick={() => setOpen(!open)}
       >
-        {selectedRole || "Select your role"}
+        {selectedRole || "Select role"}
         <ChevronDown
           className={`h-4 w-4 opacity-50 transition-transform ${
             open ? "rotate-180" : ""

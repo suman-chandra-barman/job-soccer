@@ -98,7 +98,7 @@ export function AmateurPlayerProfessionalInfoForm({
                 }
               >
                 <SelectTrigger className="bg-gray-50 border-0 w-full">
-                  <SelectValue placeholder="Select your gender" />
+                  <SelectValue placeholder="Select gender" />
                 </SelectTrigger>
                 <SelectContent>
                   {genderOptions.map((item) => (
@@ -125,7 +125,7 @@ export function AmateurPlayerProfessionalInfoForm({
                 }
               >
                 <SelectTrigger className="bg-gray-50 border-0 w-full">
-                  <SelectValue placeholder="Select your availability" />
+                  <SelectValue placeholder="Select availability" />
                 </SelectTrigger>
                 <SelectContent>
                   {availabilityOptions.map((item) => (
@@ -161,7 +161,7 @@ export function AmateurPlayerProfessionalInfoForm({
                   }
                 >
                   <SelectTrigger className="w-20 bg-gray-50 border-0">
-                    <SelectValue placeholder="Select" />
+                    <SelectValue placeholder="Select unit" />
                   </SelectTrigger>
                   <SelectContent>
                     {heightUnitOptions.map((item) => (
@@ -198,7 +198,7 @@ export function AmateurPlayerProfessionalInfoForm({
                   }
                 >
                   <SelectTrigger className="w-20 bg-gray-50 border-0">
-                    <SelectValue placeholder="Select" />
+                    <SelectValue placeholder="Select unit" />
                   </SelectTrigger>
                   <SelectContent>
                     {weightUnitOptions.map((item) => (
@@ -235,7 +235,7 @@ export function AmateurPlayerProfessionalInfoForm({
                 }
               >
                 <SelectTrigger className="bg-gray-50 border-0 w-full">
-                  <SelectValue placeholder="Select your country" />
+                  <SelectValue placeholder="Select country" />
                 </SelectTrigger>
                 <SelectContent>
                   {countryList.map((item) => (
@@ -262,7 +262,7 @@ export function AmateurPlayerProfessionalInfoForm({
                 }
               >
                 <SelectTrigger className="bg-gray-50 border-0 w-full">
-                  <SelectValue placeholder="Select your category" />
+                  <SelectValue placeholder="Select category" />
                 </SelectTrigger>
                 <SelectContent>
                   {amaturePlayerNationalTeamCategoryOptions.map((item) => (
@@ -310,7 +310,7 @@ export function AmateurPlayerProfessionalInfoForm({
                 }
               >
                 <SelectTrigger className="bg-gray-50 border-0 w-full">
-                  <SelectValue placeholder="Select your position" />
+                  <SelectValue placeholder="Select position" />
                 </SelectTrigger>
                 <SelectContent>
                   {playerPositionOptions.map((item) => (

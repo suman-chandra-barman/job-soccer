@@ -146,7 +146,7 @@ export function ConsultingCompanyEmployerProfileForm({
                 defaultValue={initialData?.country}
               >
                 <SelectTrigger className="bg-gray-50 border-0 w-full">
-                  <SelectValue placeholder="Name of country" />
+                  <SelectValue placeholder="Select country" />
                 </SelectTrigger>
                 <SelectContent>
                   {countryList.map((country) => (

@@ -314,7 +314,7 @@ export default function EditProfileModal({
                     }
                   >
                     <SelectTrigger className="bg-gray-50 border-0 w-full">
-                      <SelectValue placeholder="Select your gender" />
+                      <SelectValue placeholder="Select gender" />
                     </SelectTrigger>
                     <SelectContent>
                       {genderOptions.map((item) => (
@@ -336,7 +336,7 @@ export default function EditProfileModal({
                       }
                     >
                       <SelectTrigger className="bg-gray-50 border-0 w-full">
-                        <SelectValue placeholder="Select your position" />
+                        <SelectValue placeholder="Select position" />
                       </SelectTrigger>
                       <SelectContent>
                         {playerPositionOptions.map((item) => (
@@ -354,7 +354,7 @@ export default function EditProfileModal({
                       }
                     >
                       <SelectTrigger className="bg-gray-50 border-0 w-full">
-                        <SelectValue placeholder="Select your position" />
+                        <SelectValue placeholder="Select position" />
                       </SelectTrigger>
                       <SelectContent>
                         {fieldStaffPositionOptions.map((item) => (
@@ -372,7 +372,7 @@ export default function EditProfileModal({
                       }
                     >
                       <SelectTrigger className="bg-gray-50 border-0 w-full">
-                        <SelectValue placeholder="Select your position" />
+                        <SelectValue placeholder="Select position" />
                       </SelectTrigger>
                       <SelectContent>
                         {officeStaffPositionOptions.map((item) => (
@@ -411,7 +411,7 @@ export default function EditProfileModal({
                         }
                       >
                         <SelectTrigger className="w-20 bg-gray-50 border-0">
-                          <SelectValue placeholder="Unit" />
+                          <SelectValue placeholder="Select unit" />
                         </SelectTrigger>
                         <SelectContent>
                           {heightUnitOptions.map((item) => (
@@ -445,7 +445,7 @@ export default function EditProfileModal({
                         }
                       >
                         <SelectTrigger className="w-20 bg-gray-50 border-0">
-                          <SelectValue placeholder="Unit" />
+                          <SelectValue placeholder="Select unit" />
                         </SelectTrigger>
                         <SelectContent>
                           {weightUnitOptions.map((item) => (
@@ -485,7 +485,7 @@ export default function EditProfileModal({
                     }
                   >
                     <SelectTrigger className="bg-gray-50 border-0 w-full">
-                      <SelectValue placeholder="Select your availability" />
+                      <SelectValue placeholder="Select availability" />
                     </SelectTrigger>
                     <SelectContent>
                       {availabilityOptions.map((item) => (

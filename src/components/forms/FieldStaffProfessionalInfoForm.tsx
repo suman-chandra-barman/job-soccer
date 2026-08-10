@@ -88,7 +88,7 @@ export function FieldStaffProfessionalInfoForm({
                 onValueChange={(value) => setValue("availability", value)}
               >
                 <SelectTrigger className="bg-gray-50 border-0 w-full">
-                  <SelectValue placeholder="Select your availability" />
+                  <SelectValue placeholder="Select availability" />
                 </SelectTrigger>
                 <SelectContent>
                   {availabilityOptions.map((item) => (
@@ -104,7 +104,7 @@ export function FieldStaffProfessionalInfoForm({
             <FormField label="Gender" error={errors.gender?.message}>
               <Select onValueChange={(value) => setValue("gender", value)}>
                 <SelectTrigger className="bg-gray-50 border-0 w-full">
-                  <SelectValue placeholder="Gender" />
+                  <SelectValue placeholder="Select gender" />
                 </SelectTrigger>
                 <SelectContent>
                   {genderOptions.map((item) => (
@@ -120,7 +120,7 @@ export function FieldStaffProfessionalInfoForm({
             <FormField label="Country" error={errors.country?.message}>
               <Select onValueChange={(value) => setValue("country", value)}>
                 <SelectTrigger className="bg-gray-50 border-0 w-full">
-                  <SelectValue placeholder="Country" />
+                  <SelectValue placeholder="Select country" />
                 </SelectTrigger>
                 <SelectContent>
                   {countryList.map((item) => (
@@ -172,7 +172,7 @@ export function FieldStaffProfessionalInfoForm({
             >
               <Select onValueChange={(value) => setValue("position", value)}>
                 <SelectTrigger className="bg-gray-50 border-0 w-full">
-                  <SelectValue placeholder="Select your position" />
+                  <SelectValue placeholder="Select position" />
                 </SelectTrigger>
                 <SelectContent>
                   {fieldStaffPositionOptions.map((pos) => (
