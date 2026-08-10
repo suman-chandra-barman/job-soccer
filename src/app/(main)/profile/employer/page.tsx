@@ -225,7 +225,7 @@ export default function EmployerProfilePage() {
 
           <div className="flex gap-2 flex-wrap mt-4">
             {displayRole && (
-              <Badge className="bg-yellow-100 border-yellow-200 px-4 rounded-full">
+              <Badge className="bg-yellow-300 border-yellow-200 px-4 rounded-full">
                 {displayRole}
               </Badge>
             )}

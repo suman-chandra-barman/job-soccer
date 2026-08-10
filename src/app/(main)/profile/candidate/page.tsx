@@ -223,7 +223,7 @@ export default function MyProfilePage() {
 
           <div className="flex gap-2 flex-wrap mt-4">
             {displayRole && (
-              <Badge className="bg-yellow-100 border-yellow-200 px-4 rounded-full">
+              <Badge className="bg-yellow-300 border-yellow-200 px-4 rounded-full">
                 {displayRole}
               </Badge>
             )}
@@ -429,7 +429,7 @@ export default function MyProfilePage() {
                 <label className="text-sm text-gray-500 mb-1 block">
                   Social Media
                 </label>
-                <p className="text-blue-600 font-medium cursor-pointer hover:underline">
+                <p className="text-blue-600 font-medium cursor-pointer hover:underline break-all">
                   {currentUser.profile.socialMedia}
                 </p>
               </div>
@@ -575,7 +575,7 @@ export default function MyProfilePage() {
                  Profile AI Score
                 </label>
                 <p className="text-gray-900 font-medium">
-                  {currentUser.aiProfileScore}
+                  {currentUser.aiProfileScore}/100
                 </p>
               </div>
             )}
@@ -586,7 +586,7 @@ export default function MyProfilePage() {
                   Video AI Score
                 </label>
                 <p className="text-gray-900 font-medium">
-                  {currentUser.profile.AiVideoVideoScore}
+                  {currentUser.profile.AiVideoVideoScore}/100
                 </p>
               </div>
             )}
