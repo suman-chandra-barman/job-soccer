@@ -473,7 +473,18 @@ export default function UserProfilePage() {
                       Profile AI Score
                     </label>
                     <p className="text-gray-900 font-medium text-sm sm:text-base">
-                      {user.aiProfileScore}
+                      {user.aiProfileScore}/100
+                    </p>
+                  </div>
+                )}
+
+                {user?.profile?.AiVideoVideoScore >= 0 && (
+                  <div>
+                    <label className="text-xs sm:text-sm text-gray-500 mb-1 block">
+                      Video AI Score
+                    </label>
+                    <p className="text-gray-900 font-medium text-sm sm:text-base">
+                      {user.profile.AiVideoVideoScore}/100
                     </p>
                   </div>
                 )}
