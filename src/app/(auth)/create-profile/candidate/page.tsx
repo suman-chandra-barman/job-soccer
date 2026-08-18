@@ -208,6 +208,7 @@ export default function CandidateProfilePage() {
     } as const;
 
     switch (userRole) {
+      // Professional Player
       case CandidateRole.PROFESSIONAL_PLAYER:
         return (
           <ProfessionalPlayerProfessionalInfoForm
@@ -220,6 +221,7 @@ export default function CandidateProfilePage() {
           />
         );
 
+      // Amateur Player
       case CandidateRole.AMATEUR_PLAYER:
         return (
           <AmateurPlayerProfessionalInfoForm
@@ -232,6 +234,7 @@ export default function CandidateProfilePage() {
           />
         );
 
+      // High School Player
       case CandidateRole.HIGH_SCHOOL:
         return (
           <HighSchoolPlayerProfessionalInfoForm
@@ -244,6 +247,7 @@ export default function CandidateProfilePage() {
           />
         );
 
+      // College/University Player
       case CandidateRole.COLLEGE_UNIVERSITY:
         return (
           <CollegeOrUniversityPlayerProfessionalInfoForm
@@ -256,6 +260,7 @@ export default function CandidateProfilePage() {
           />
         );
 
+      // On Field Staff
       case CandidateRole.ON_FIELD_STAFF:
         return (
           <FieldStaffProfessionalInfoForm
@@ -268,6 +273,7 @@ export default function CandidateProfilePage() {
           />
         );
 
+      // Office Staff
       case CandidateRole.OFFICE_STAFF:
         return (
           <OfficeStaffProfessionalInfoForm
@@ -304,7 +310,7 @@ export default function CandidateProfilePage() {
       return <OfficeStaffVideoForm {...baseVideoProps} />;
     }
 
-    // Field staff positions
+    // On Field staff positions
     switch (fieldStaffPosition) {
       case FieldStaffPosition.HEAD_COACH:
       case FieldStaffPosition.ASSISTANT_COACH:
