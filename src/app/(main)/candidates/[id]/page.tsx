@@ -470,7 +470,7 @@ export default function UserProfilePage() {
                 {user?.aiProfileScore >= 0 && (
                   <div>
                     <label className="text-xs sm:text-sm text-gray-500 mb-1 block">
-                      Profile AI Score
+                      Profile Quality Score
                     </label>
                     <p className="text-gray-900 font-medium text-sm sm:text-base">
                       {user.aiProfileScore}/100

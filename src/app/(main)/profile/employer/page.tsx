@@ -397,11 +397,11 @@ export default function EmployerProfilePage() {
               </div>
             )}
 
-            {/* Profile AI Score */}
+            {/* Profile Score */}
             {currentUser?.aiProfileScore && (
               <div>
                 <label className="text-sm text-gray-500 mb-1 block">
-                  Profile AI Score
+                  Profile Quality Score
                 </label>
                 <p className="text-gray-900 font-medium">
                   {currentUser.aiProfileScore}
