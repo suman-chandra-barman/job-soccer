@@ -140,7 +140,6 @@ export const fieldStaffProfessionalInfoSchema = z.object({
   availability: z.string().optional(),
   country: z.string().min(1, "Country is required"),
   gender: z.string().min(1, "Gender is required"),
-  boyOrGirl: z.string().min(1, "Gender is required"),
   socialMedia: z.string().optional(),
   position: z.string().min(1, "Position is required"),
   league: z.string().min(1, "League is required"),

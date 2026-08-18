@@ -183,23 +183,7 @@ export function FieldStaffProfessionalInfoForm({
                 </SelectContent>
               </Select>
             </FormField>
-
-            {/* Gender */}
-            <FormField label="Gender" error={errors.boyOrGirl?.message}>
-              <Select onValueChange={(value) => setValue("boyOrGirl", value)}>
-                <SelectTrigger className="bg-gray-50 border-0 w-full">
-                  <SelectValue placeholder="Select gender" />
-                </SelectTrigger>
-                <SelectContent>
-                  {genderOptions.map((gender) => (
-                    <SelectItem key={gender} value={gender}>
-                      {gender}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </FormField>
-
+            
             {/* Social Media */}
             <FormField
               label="Social Media (optional)"

@@ -208,7 +208,7 @@ export function IndividualVideoUpload({
             </label>
           </div>
           <p className="text-xs text-gray-500 mt-2">
-            Max duration: {formatDuration(maxDuration)} • Max size: 100MB
+            Max duration: {formatDuration(maxDuration)}
           </p>
         </div>
       ) : (
