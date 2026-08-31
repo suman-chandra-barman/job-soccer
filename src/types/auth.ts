@@ -29,5 +29,10 @@ export type TUser = {
   updatedAt: string;
   profile: any | null;
   adminVerificationStatus?: AdminVerificationStatus;
+  isAdminVerified?: boolean;
   aiProfileScore?: number | null;
+  resume?: {
+    fileName?: string;
+    url: string;
+  } | null;
 };

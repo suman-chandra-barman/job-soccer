@@ -11,6 +11,7 @@ import {
   Lock,
   UserPlus,
   UserMinus,
+  Download,
 } from "lucide-react";
 import Image from "next/image";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -156,9 +157,6 @@ export default function UserProfilePage() {
 
   const displayRole = user?.role;
 
-  // Get verification status
-  const verificationStatus = user?.adminVerificationStatus;
-
   // Loading state
   if (isLoadingUser || isLoadingFriendship) {
     return <ProfileSkeleton />;
@@ -229,7 +227,7 @@ export default function UserProfilePage() {
         <div className="mb-4 sm:mb-6">
           <h2 className="text-2xl sm:text-2xl md:text-3xl font-bold text-gray-900 flex flex-wrap items-center gap-2">
             {displayName}
-            {verificationStatus?.status && (
+            {user?.isAdminVerified && (
               <BadgeCheck className="h-5 w-5 sm:h-6 sm:w-6 text-blue-500 shrink-0" />
             )}
           </h2>
@@ -255,11 +253,22 @@ export default function UserProfilePage() {
                 {displayRole}
               </Badge>
             )}
-            {!hasAccess && verificationStatus?.status === "approved" && (
-              <Badge className="bg-blue-50 text-blue-700 border-blue-200 px-2 sm:px-3 py-1 rounded-full flex items-center gap-1 text-xs sm:text-sm">
-                <BadgeCheck className="h-3 w-3 sm:h-4 sm:w-4 shrink-0" />
-                Verified
-              </Badge>
+
+            {hasAccess && user?.resume?.url && (
+              <Button
+                variant="outline"
+                asChild
+                className="flex items-center gap-1.5 rounded-full hover:bg-gray-100"
+              >
+                <a
+                  href={user.resume.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Download size={18} />
+                  Resume
+                </a>
+              </Button>
             )}
           </div>
         </div>
@@ -493,10 +502,10 @@ export default function UserProfilePage() {
 
                 {user?.profile?.AiVideoVideoScore !== undefined && (
                   <div>
-                    <label className="text-xs sm:text-sm text-gray-500 mb-1 block">
-                      Video Interview AI Score
+                    <label className="text-xs sm:text-sm  bg-yellow-300 rounded-lg p-2">
+                      Video Interview Score
                     </label>
-                    <p className="text-gray-900 font-medium text-sm sm:text-base">
+                    <p className="text-gray-900 font-medium text-sm sm:text-base mt-2">
                       {user?.profile?.AiVideoVideoScore ?? 0}/100
                     </p>
                   </div>
