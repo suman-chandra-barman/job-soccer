@@ -4,7 +4,14 @@ import React, { useState } from "react";
 import { useParams } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { BadgeCheck, Mail, XCircle, Lock, UserPlus, UserMinus } from "lucide-react";
+import {
+  BadgeCheck,
+  Mail,
+  XCircle,
+  Lock,
+  UserPlus,
+  UserMinus,
+} from "lucide-react";
 import Image from "next/image";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { toast } from "sonner";
@@ -65,12 +72,12 @@ export default function UserProfilePage() {
     useUnfollowUserMutation();
 
   // Local state for optimistic updates
-  const [localIsFollowing, setLocalIsFollowing] = useState<
-    boolean | null
-  >(null);
-  const [localFollowerCount, setLocalFollowerCount] = useState<
-    number | null
-  >(null);
+  const [localIsFollowing, setLocalIsFollowing] = useState<boolean | null>(
+    null,
+  );
+  const [localFollowerCount, setLocalFollowerCount] = useState<number | null>(
+    null,
+  );
 
   const user = userData?.data;
 
@@ -93,7 +100,7 @@ export default function UserProfilePage() {
       // Optimistic update
       setLocalIsFollowing(!isFollowing);
       setLocalFollowerCount(
-        isFollowing ? followerCount - 1 : followerCount + 1
+        isFollowing ? followerCount - 1 : followerCount + 1,
       );
 
       if (isFollowing) {
@@ -112,12 +119,14 @@ export default function UserProfilePage() {
       const err = error as { data?: { message?: string } };
       toast.error(
         err?.data?.message ||
-        `Failed to ${isFollowing ? "unfollow" : "follow"} candidate`
+          `Failed to ${isFollowing ? "unfollow" : "follow"} candidate`,
       );
     }
   };
   const areFriends = friendshipData?.data?.areFriends || false;
-  const isAdmin = (currentUser?.userType as string) === "admin" || currentUser?.role === "admin";
+  const isAdmin =
+    (currentUser?.userType as string) === "admin" ||
+    currentUser?.role === "admin";
   const hasAccess = areFriends || isAdmin || isOwnProfile;
 
   // Handle friend request
@@ -220,7 +229,7 @@ export default function UserProfilePage() {
         <div className="mb-4 sm:mb-6">
           <h2 className="text-2xl sm:text-2xl md:text-3xl font-bold text-gray-900 flex flex-wrap items-center gap-2">
             {displayName}
-            {verificationStatus?.status === "approved" && (
+            {verificationStatus?.status && (
               <BadgeCheck className="h-5 w-5 sm:h-6 sm:w-6 text-blue-500 shrink-0" />
             )}
           </h2>
@@ -230,23 +239,28 @@ export default function UserProfilePage() {
             <div className="flex flex-wrap gap-3 sm:gap-4 mt-2 mb-3 sm:mb-4 text-gray-600 text-sm">
               <div className="flex items-center gap-2">
                 <Mail className="h-4 w-4 shrink-0" />
-                <Link href={`mailto:${user.email}`} className="text-sm truncate hover:underline cursor-pointer">{user.email}</Link>
+                <Link
+                  href={`mailto:${user.email}`}
+                  className="text-sm truncate hover:underline cursor-pointer"
+                >
+                  {user.email}
+                </Link>
               </div>
             </div>
           )}
 
           <div className="flex gap-2 flex-wrap mt-3 sm:mt-4">
-                {displayRole && (
-                <Badge className="bg-yellow-300 border-yellow-200 px-3 sm:px-4 py-1 rounded-full text-xs sm:text-sm">
-                  {displayRole}
-                </Badge>
-              )}
-              {!hasAccess && verificationStatus?.status === "approved" && (
-                <Badge className="bg-blue-50 text-blue-700 border-blue-200 px-2 sm:px-3 py-1 rounded-full flex items-center gap-1 text-xs sm:text-sm">
-                  <BadgeCheck className="h-3 w-3 sm:h-4 sm:w-4 shrink-0" />
-                  Verified
-                </Badge>
-              )}
+            {displayRole && (
+              <Badge className="bg-yellow-300 border-yellow-200 px-3 sm:px-4 py-1 rounded-full text-xs sm:text-sm">
+                {displayRole}
+              </Badge>
+            )}
+            {!hasAccess && verificationStatus?.status === "approved" && (
+              <Badge className="bg-blue-50 text-blue-700 border-blue-200 px-2 sm:px-3 py-1 rounded-full flex items-center gap-1 text-xs sm:text-sm">
+                <BadgeCheck className="h-3 w-3 sm:h-4 sm:w-4 shrink-0" />
+                Verified
+              </Badge>
+            )}
           </div>
         </div>
         {/* Action Buttons - Hide on own profile */}
@@ -466,25 +480,24 @@ export default function UserProfilePage() {
                   </div>
                 )}
 
-
-                {user?.aiProfileScore >= 0 && (
+                {user?.aiProfileScore !== undefined && (
                   <div>
                     <label className="text-xs sm:text-sm text-gray-500 mb-1 block">
                       Profile Quality Score
                     </label>
                     <p className="text-gray-900 font-medium text-sm sm:text-base">
-                      {user.aiProfileScore}/100
+                      {user?.aiProfileScore ?? 0}/100
                     </p>
                   </div>
                 )}
 
-                {user?.profile?.AiVideoVideoScore >= 0 && (
+                {user?.profile?.AiVideoVideoScore !== undefined && (
                   <div>
                     <label className="text-xs sm:text-sm text-gray-500 mb-1 block">
-                      Video AI Score
+                      Video Interview AI Score
                     </label>
                     <p className="text-gray-900 font-medium text-sm sm:text-base">
-                      {user.profile.AiVideoVideoScore}/100
+                      {user?.profile?.AiVideoVideoScore ?? 0}/100
                     </p>
                   </div>
                 )}
