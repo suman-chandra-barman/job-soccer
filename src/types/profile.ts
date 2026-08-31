@@ -88,7 +88,7 @@ export enum CandidateRole {
   AMATEUR_PLAYER = "Amateur Player",
   HIGH_SCHOOL = "High School Player",
   COLLEGE_UNIVERSITY = "College/University Player",
-  ON_FIELD_STAFF = "On field staff",
+  ON_FIELD_STAFF = "On Field Staff",
   OFFICE_STAFF = "Office Staff",
 }
 
